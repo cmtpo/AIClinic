@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教學與海報資源 - 臺南愛(AI)腸篩計畫</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #FFF7ED; /* 淺橘色背景 */
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- 資料：橫式海報 ---
+        const HORIZONTAL_POSTERS = [
+            { id: 1, title: "診所宣導圖", desc: "診所大腸癌篩檢服務宣導", src: "./1診所宣導圖.png" },
+            { id: 2, title: "診所請款SOP", desc: "診所端請款詳細流程說明", src: "./2診所請款SOP.png" },
+            { id: 3, title: "獲利領取SOP", desc: "獎勵金獲利領取步驟圖解", src: "./3獲利領取SOP.png" },
+            { id: 4, title: "診所獎勵金", desc: "獎勵金制度與發放標準", src: "./4診所獎勵金.png" },
+        ];
+
+        // --- 資料：直式海報 ---
+        const VERTICAL_POSTERS = [
+            { id: 5, title: "直式海報 (1)", desc: "衛教宣導資訊版-1", src: "./直式海報 (1).png" },
+            { id: 6, title: "直式海報 (2)", desc: "衛教宣導資訊版-2", src: "./直式海報 (2).png" },
+            { id: 7, title: "競賽重點摘要", desc: "競賽評比資訊", src: "./競賽重點摘要_圖宣.png" },
+        ];
+
+        // --- Shared Header ---
+        const Header = () => (
+            <header className="bg-white/90 backdrop-blur shadow-sm sticky top-0 z-50 border-b-4 border-orange-400">
+                <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+                    <div className="flex items-center cursor-pointer" onClick={() => window.location.href='index.html'}>
+                        <div className="p-2 rounded-full bg-orange-100 text-orange-600 mr-3">
+                            <i className="ph-fill ph-student text-xl"></i>
+                        </div>
+                        <h1 className="text-lg font-bold text-gray-800">數位教材與海報資源</h1>
+                    </div>
+                    <a href="index.html" className="text-sm text-gray-500 hover:text-gray-800 flex items-center bg-gray-100 px-3 py-1.5 rounded-lg transition-colors">
+                        <i className="ph-bold ph-arrow-u-up-left mr-2"></i> 回首頁
+                    </a>
+                </div>
+            </header>
+        );
+
+        // --- Main Component ---
+        const MaterialsPage = () => {
+            const [activeTab, setActiveTab] = useState('video');
+
+            // 初始化時檢查 URL Hash
+            useEffect(() => {
+                const hash = window.location.hash;
+                if (hash === '#poster') {
+                    setActiveTab('poster');
+                }
+            }, []);
+
+            const handleDownload = (src, title) => {
+                 const link = document.createElement('a');
+                 link.href = src;
+                 link.download = title;
+                 document.body.appendChild(link);
+                 link.click();
+                 document.body.removeChild(link);
+            };
+
+            return (
+                <div className="min-h-screen pb-12">
+                    <Header />
+
+                    {/* Tab Navigation */}
+                    <div className="bg-white border-b border-orange-100 mb-8 sticky top-16 z-40 shadow-sm">
+                        <div className="max-w-4xl mx-auto flex">
+                            <button 
+                                onClick={() => setActiveTab('video')}
+                                className={`flex-1 py-4 text-center font-bold text-lg flex items-center justify-center transition-all ${activeTab === 'video' ? 'text-orange-600 border-b-4 border-orange-500 bg-orange-50' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}
+                            >
+                                <i className="ph-fill ph-monitor-play mr-2 text-2xl"></i> 影片教材
+                            </button>
+                            <button 
+                                onClick={() => setActiveTab('poster')}
+                                className={`flex-1 py-4 text-center font-bold text-lg flex items-center justify-center transition-all ${activeTab === 'poster' ? 'text-pink-600 border-b-4 border-pink-500 bg-pink-50' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}
+                            >
+                                <i className="ph-fill ph-images-square mr-2 text-2xl"></i> 海報專區
+                            </button>
+                        </div>
+                    </div>
+
+                    <main className="max-w-6xl mx-auto px-4">
+                        
+                        {/* Tab Content: Video */}
+                        {activeTab === 'video' && (
+                            <div className="fade-in space-y-8">
+                                <div className="bg-white rounded-3xl p-8 shadow-lg border-2 border-orange-100">
+                                    <div className="flex items-center mb-6">
+                                        <div className="w-12 h-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center text-2xl mr-4 shadow-sm">
+                                            <i className="ph-bold ph-video"></i>
+                                        </div>
+                                        <div>
+                                            <h2 className="text-2xl font-bold text-gray-800">教育訓練與宣導影片</h2>
+                                            <p className="text-gray-500">包含計畫說明、系統操作教學及民眾衛教資訊。</p>
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Video Player */}
+                                    <div className="w-full rounded-2xl overflow-hidden shadow-xl bg-black aspect-video mb-6">
+                                        <iframe 
+                                            className="w-full h-full"
+                                            src="https://www.youtube.com/embed/_WNa0WP02qg?si=djna1HTjRo0mwDgy" 
+                                            title="YouTube video player" 
+                                            frameBorder="0" 
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                            referrerPolicy="strict-origin-when-cross-origin" 
+                                            allowFullScreen>
+                                        </iframe>
+                                    </div>
+
+                                    <div className="text-center">
+                                        <a href="https://youtube.com/playlist?list=PLqzBM0t70yw06TUHe9Mbe15ScsbO-THVy&si=Dqd6Zp7wPoRFAWWx" target="_blank" className="inline-flex items-center px-6 py-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors shadow-md">
+                                            <i className="ph-fill ph-youtube-logo mr-2 text-xl"></i>
+                                            查看 YouTube 完整播放清單
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Tab Content: Poster */}
+                        {activeTab === 'poster' && (
+                            <div className="fade-in">
+                                <div className="mb-8 text-center">
+                                    <h2 className="text-3xl font-black text-gray-800 mb-2">衛教海報資源下載</h2>
+                                    <p className="text-gray-600">提供高解析度圖檔，診所可自行下載列印張貼</p>
+                                </div>
+
+                                {/* Section 1: 橫式海報 */}
+                                <div className="mb-12">
+                                    <div className="flex items-center mb-6">
+                                        <div className="h-8 w-2 bg-pink-500 rounded-full mr-3"></div>
+                                        <h3 className="text-xl font-bold text-gray-800">橫式海報</h3>
+                                    </div>
+                                    <div className="grid md:grid-cols-2 gap-8">
+                                        {HORIZONTAL_POSTERS.map((poster) => (
+                                            <div key={poster.id} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group flex flex-col">
+                                                <div className="relative aspect-[2752/1536] bg-gray-100 overflow-hidden">
+                                                    <img 
+                                                        src={poster.src} 
+                                                        alt={poster.title} 
+                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                                                        onError={(e) => {
+                                                            e.target.onerror = null; 
+                                                            e.target.src='https://placehold.co/2752x1536/e2e8f0/64748b?text=Loading...';
+                                                        }}
+                                                    />
+                                                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center space-y-3">
+                                                        <button onClick={() => handleDownload(poster.src, poster.title)} className="bg-pink-500 text-white px-6 py-2 rounded-full font-bold text-sm hover:bg-pink-600 transition-colors flex items-center shadow-lg">
+                                                            <i className="ph-bold ph-download-simple mr-2"></i> 下載原圖
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div className="p-5 flex-1">
+                                                    <h3 className="text-xl font-bold text-gray-800 mb-1">{poster.title}</h3>
+                                                    <p className="text-sm text-gray-500">{poster.desc}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Section 2: 直式海報 */}
+                                <div>
+                                    <div className="flex items-center mb-6">
+                                        <div className="h-8 w-2 bg-blue-500 rounded-full mr-3"></div>
+                                        <h3 className="text-xl font-bold text-gray-800">直式海報</h3>
+                                    </div>
+                                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                        {VERTICAL_POSTERS.map((poster) => (
+                                            <div key={poster.id} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group flex flex-col">
+                                                <div className="relative aspect-[1373/2048] bg-gray-100 overflow-hidden">
+                                                    <img 
+                                                        src={poster.src} 
+                                                        alt={poster.title} 
+                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                        onError={(e) => {
+                                                            e.target.onerror = null; 
+                                                            e.target.src='https://placehold.co/1373x2048/e2e8f0/64748b?text=Loading...';
+                                                        }}
+                                                    />
+                                                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center space-y-3">
+                                                        <button onClick={() => handleDownload(poster.src, poster.title)} className="bg-blue-500 text-white px-6 py-2 rounded-full font-bold text-sm hover:bg-blue-600 transition-colors flex items-center shadow-lg">
+                                                            <i className="ph-bold ph-download-simple mr-2"></i> 下載原圖
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div className="p-5 flex-1">
+                                                    <h3 className="text-xl font-bold text-gray-800 mb-1">{poster.title}</h3>
+                                                    <p className="text-sm text-gray-500">{poster.desc}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                            </div>
+                        )}
+
+                    </main>
+
+                    <footer className="mt-16 text-center text-gray-400 text-sm pb-8">
+                        © 2025 臺南愛(AI)腸篩計畫
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<MaterialsPage />);
+    </script>
+</body>
+</html>

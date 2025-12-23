@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合作診所專區 - 臺南愛(AI)腸篩計畫</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- Shared Header (Unified Style) ---
+        const Header = ({ title, subtitle, themeColor }) => (
+            <header className={`bg-white shadow-sm sticky top-0 z-50 border-b-4 border-${themeColor}-500`}>
+                <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+                    <div className="flex items-center cursor-pointer" onClick={() => window.location.href = 'index.html'}>
+                        <img src="./logo.jpg" alt="計畫 Logo" className="h-10 w-auto rounded-lg shadow-sm mr-3" onError={(e) => e.target.style.display = 'none'} />
+                        
+                        <div className={`hidden md:block p-2 rounded-full bg-${themeColor}-100 text-${themeColor}-600 mr-3`}>
+                            <i className="ph-fill ph-stethoscope text-xl"></i>
+                        </div>
+                        <div>
+                            <h1 className="text-lg font-bold text-gray-800 leading-none">{title}</h1>
+                            <p className="text-xs text-gray-500 mt-1">{subtitle}</p>
+                        </div>
+                    </div>
+                    <button onClick={() => window.location.href = 'index.html'} className="text-sm text-gray-500 hover:text-gray-800 flex items-center bg-gray-100 px-3 py-1.5 rounded-lg transition-colors">
+                        <i className="ph-bold ph-arrow-u-up-left mr-2"></i> 回首頁
+                    </button>
+                </div>
+            </header>
+        );
+
+        // --- Shared Footer (Unified Style) ---
+        const Footer = () => (
+            <footer className="mt-12 py-8 bg-white border-t border-slate-200 text-center">
+                <p className="text-slate-400 text-xs">© 2025 臺南愛(AI)腸篩計畫 | 台南市醫師公會 x 成大醫院</p>
+            </footer>
+        );
+
+        // --- Clinic Portal (Main Content) ---
+        const ClinicPortal = () => {
+            const [activeSection, setActiveSection] = useState('sop'); // sop, money, docs
+
+            const sidebarItems = [
+                { id: 'sop', label: '執行作業 SOP', icon: 'ph-clipboard-text' },
+                { id: 'money', label: '經費與核銷', icon: 'ph-currency-circle-dollar' },
+                { id: 'docs', label: '表單與寄送', icon: 'ph-files' },
+            ];
+
+            return (
+                <div className="min-h-screen bg-slate-50 fade-in">
+                    <Header title="合作診所專區" subtitle="流程規範、表單與經費核銷" themeColor="blue" />
+
+                    <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8 min-h-[calc(100vh-160px)]">
+                        
+                        {/* Sidebar Navigation */}
+                        <aside className="w-full md:w-64 flex-shrink-0">
+                            <div className="bg-white rounded-2xl shadow-sm p-4 sticky top-24">
+                                <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4 px-2">功能導航</h3>
+                                <nav className="space-y-2">
+                                    {sidebarItems.map(item => (
+                                        <button
+                                            key={item.id}
+                                            onClick={() => setActiveSection(item.id)}
+                                            className={`w-full flex items-center p-3 rounded-xl transition-all ${activeSection === item.id ? 'bg-blue-500 text-white shadow-md' : 'text-gray-600 hover:bg-slate-100'}`}
+                                        >
+                                            <i className={`ph-fill ${item.icon} text-xl mr-3`}></i>
+                                            <span className="font-medium">{item.label}</span>
+                                        </button>
+                                    ))}
+                                </nav>
+                                <div className="mt-8 p-4 bg-blue-50 rounded-xl border border-blue-100">
+                                    <h4 className="font-bold text-blue-800 text-sm mb-3">診所各式文件下載</h4>
+
+                                    <div className="mb-4">
+                                        <a href="https://drive.google.com/file/d/1_rbKTxaCO6SrmK3C0gfYTAbJilHjtida/view?usp=drive_link" target="_blank" className="flex items-center hover:underline hover:text-blue-800 text-xs font-bold text-blue-700 bg-blue-50 p-2 rounded mb-3 border border-blue-200">
+                                            <i className="ph-bold ph-download-simple mr-2"></i> 診所端注意事項
+                                        </a>
+
+                                        <span className="text-xs font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded">診所行政用</span>
+                                        <ul className="space-y-2 text-xs text-blue-600 mt-2">
+                                            <li>
+                                                <a href="https://drive.google.com/file/d/1ngP8eKAZR1T8r3UIHubs1iIC7lmk4SPf/view?usp=sharing" target="_blank" className="flex items-center hover:underline hover:text-blue-800">
+                                                    <i className="ph ph-file-text mr-1"></i> B01 文件送件清單
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://drive.google.com/file/d/1LFM1YnAvIsYEqgyAZk4ErQK730L7RhIh/view?usp=drive_link" target="_blank" className="flex items-center hover:underline hover:text-blue-800">
+                                                    <i className="ph ph-file-text mr-1"></i> B02 撥付確認單
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://drive.google.com/file/d/1AxByazh8tYNTb3CkfT1om9hfLvEsN5zp/view?usp=drive_link" target="_blank" className="flex items-center hover:underline hover:text-blue-800">
+                                                    <i className="ph ph-file-text mr-1"></i> B04 診所獎勵金領據
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div>
+                                        <span className="text-xs font-bold text-orange-500 bg-orange-50 px-2 py-0.5 rounded">民眾簽署用</span>
+                                        <ul className="space-y-2 text-xs text-blue-600 mt-2">
+                                            <li>
+                                                <a href="https://drive.google.com/file/d/1t49GG5qMFgNJAH05etJ_TZmaZFRcg8tB/view?usp=drive_link" target="_blank" className="flex items-center hover:underline hover:text-blue-800">
+                                                    <i className="ph ph-file-text mr-1"></i> A01 糞便篩檢簽收
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://drive.google.com/file/d/1uWMfPjlnsScLKLAIMXp4xREmF0oirw8K/view?usp=drive_link" target="_blank" className="flex items-center hover:underline hover:text-blue-800">
+                                                    <i className="ph ph-file-text mr-1"></i> A02 大腸鏡檢簽收
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+
+                        {/* Main Content Area */}
+                        <main className="flex-1 bg-white rounded-2xl shadow-sm p-6 md:p-8 min-h-[600px]">
+                            
+                            {/* SECTION: SOP */}
+                            {activeSection === 'sop' && (
+                                <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                    <div className="border-b pb-4 mb-6">
+                                        <h2 className="text-2xl font-bold text-gray-800 flex items-center">
+                                            <i className="ph-fill ph-clipboard-text text-blue-500 mr-3"></i> 執行作業 SOP
+                                        </h2>
+                                        <p className="text-gray-500 mt-1">請依照檢查項目選擇對應流程</p>
+                                    </div>
+
+                                    {/* SOP: FIT */}
+                                    <div className="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
+                                        <div className="bg-blue-600 text-white px-6 py-3 font-bold flex items-center">
+                                            <span className="bg-white text-blue-600 text-xs px-2 py-1 rounded mr-2">A</span>
+                                            糞便潛血篩檢 (FIT)
+                                        </div>
+                                        <div className="p-6">
+                                            <div className="flex flex-col md:flex-row gap-4 items-stretch">
+                                                {[
+                                                    { title: "核對資格", text: "確認身分證(設籍台南)、年齡資格，且確認兩年內沒有做過糞檢" },
+                                                    { title: "發放/回收", text: "發放篩檢盒 → 待民眾繳回" },
+                                                    { title: "數位填表", text: "指導民眾掃描 QR Code，填寫 A05 表單", highlight: true },
+                                                    { title: "發放獎勵金", text: "確認填畢 → 請民眾填寫 A01 簽收單 → 發放 $300", highlight: true },
+                                                    { title: "陽性回診", text: "診所將回診日回報至平台並上傳轉診單" }
+                                                ].map((step, idx) => (
+                                                    <div key={idx} className="flex-1 flex flex-col relative group">
+                                                        <div className={`p-4 rounded-lg h-full border-2 ${step.highlight ? 'bg-yellow-50 border-yellow-300' : 'bg-white border-slate-200'} transition-all hover:shadow-md`}>
+                                                            <div className="text-xs font-bold text-slate-400 mb-1">STEP {idx + 1}</div>
+                                                            <div className="font-bold text-slate-800 mb-2">{step.title}</div>
+                                                            <div className="text-sm text-slate-600">{step.text}</div>
+                                                        </div>
+                                                        {idx !== 4 && <div className="hidden md:block absolute top-1/2 -right-3 w-4 h-4 text-slate-300 z-10 transform -translate-y-1/2">➜</div>}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* SOP: Colonoscopy */}
+                                    <div className="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
+                                        <div className="bg-indigo-600 text-white px-6 py-3 font-bold flex items-center">
+                                            <span className="bg-white text-indigo-600 text-xs px-2 py-1 rounded mr-2">B</span>
+                                            大腸鏡檢查 (陽性個案)
+                                        </div>
+                                        <div className="p-6">
+                                            <div className="flex flex-col md:flex-row gap-4">
+                                                {[
+                                                    { title: "收案", text: "收到IC85陽性轉診單個案" },
+                                                    { title: "數位填表", text: "檢查後，掃 QR Code 填寫 A06 表單", highlight: true },
+                                                    { title: "發放獎勵金", text: "確認填畢 → 請民眾填寫 A02 簽收單 → 發放 $300", highlight: true },
+                                                    { title: "追蹤", text: "負責後續追蹤事宜" }
+                                                ].map((step, idx) => (
+                                                    <div key={idx} className="flex-1 flex flex-col relative">
+                                                        <div className={`p-4 rounded-lg h-full border-2 ${step.highlight ? 'bg-yellow-50 border-yellow-300' : 'bg-white border-slate-200'}`}>
+                                                            <div className="text-xs font-bold text-slate-400 mb-1">STEP {idx + 1}</div>
+                                                            <div className="font-bold text-slate-800 mb-2">{step.title}</div>
+                                                            <div className="text-sm text-slate-600">{step.text}</div>
+                                                        </div>
+                                                        {idx !== 3 && <div className="hidden md:block absolute top-1/2 -right-3 w-4 h-4 text-slate-300 z-10 transform -translate-y-1/2">➜</div>}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* SECTION: Money */}
+                            {activeSection === 'money' && (
+                                <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                    <div className="border-b pb-4 mb-6">
+                                        <h2 className="text-2xl font-bold text-gray-800 flex items-center">
+                                            <i className="ph-fill ph-currency-circle-dollar text-green-600 mr-3"></i> 經費與核銷流程
+                                        </h2>
+                                        <div className="bg-yellow-50 text-yellow-800 p-3 rounded-lg mt-4 text-sm flex items-start border border-yellow-200">
+                                            <i className="ph-fill ph-warning-circle text-lg mr-2 mt-0.5"></i>
+                                            這是此計畫最容易出錯的環節，請務必詳閱「補款機制」。
+                                        </div>
+                                    </div>
+
+                                    <div className="grid md:grid-cols-3 gap-6">
+                                        {/* Card 1 */}
+                                        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm relative">
+                                            <div className="absolute top-0 right-0 p-4 opacity-10">
+                                                <i className="ph-fill ph-bank text-6xl"></i>
+                                            </div>
+                                            <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mb-4">1</div>
+                                            <h3 className="font-bold text-lg mb-2">啟動資金</h3>
+                                            <p className="text-gray-600 text-sm">第一批款項由醫師公會直接匯入診所帳戶。</p>
+                                        </div>
+
+                                        {/* Card 2: 80% Rule */}
+                                        <div className="bg-yellow-50 p-6 rounded-xl border-2 border-yellow-400 shadow-md relative transform scale-105 z-10">
+                                            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full">
+                                                關鍵機制
+                                            </div>
+                                            <div className="w-10 h-10 bg-yellow-200 text-yellow-800 rounded-full flex items-center justify-center font-bold mb-4">2</div>
+                                            <h3 className="font-bold text-lg mb-2 text-yellow-900">補款機制 (80%原則)</h3>
+                                            <p className="text-yellow-900 text-sm mb-3">當平台顯示發放達前次 <strong>80%</strong> 時，系統自動計算下一批撥款。</p>
+                                            <div className="bg-white/50 p-2 rounded text-xs text-yellow-800 leading-relaxed">
+                                                <i className="ph-bold ph-arrow-bend-down-right mr-1"></i> <strong>於收款前寄至醫師公會</strong>，第二次領取受試者營養費前郵寄：
+                                                <ul className="list-decimal list-inside mt-1 ml-1">
+                                                    <li>「民眾簽收單」 A01 或 A02</li>
+                                                    <li>「送件清單」 B01</li>
+                                                    <li>「受試者營養費撥付確認單」B02</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        {/* Card 3 */}
+                                        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                                            <div className="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center font-bold mb-4">3</div>
+                                            <h3 className="font-bold text-lg mb-2">每季結算 (診所獎勵)</h3>
+                                            <p className="text-gray-600 text-sm mb-2">平台每季統計名單。</p>
+                                            <ul className="text-xs text-gray-500 space-y-1">
+                                                <li>→ 診所確認收款</li>
+                                                <li>→ 寄回 <strong>B04 領據</strong></li>
+                                                <li>→ 公會核對後撥款</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* SECTION: Docs */}
+                            {activeSection === 'docs' && (
+                                <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                    <div className="border-b pb-4 mb-6">
+                                        <h2 className="text-2xl font-bold text-gray-800 flex items-center">
+                                            <i className="ph-fill ph-files text-purple-600 mr-3"></i> 表單對照與寄送
+                                        </h2>
+                                    </div>
+
+                                    {/* Table */}
+                                    <div className="overflow-x-auto">
+                                        <table className="min-w-full text-sm text-left">
+                                            <thead className="bg-slate-100 text-slate-600 font-bold uppercase">
+                                                <tr>
+                                                    <th className="px-4 py-3 rounded-tl-lg">代號</th>
+                                                    <th className="px-4 py-3">表單名稱</th>
+                                                    <th className="px-4 py-3">用途</th>
+                                                    <th className="px-4 py-3 rounded-tr-lg">處理方式</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="divide-y divide-slate-200">
+                                                <tr className="hover:bg-slate-50">
+                                                    <td className="px-4 py-3 font-mono font-bold text-blue-600">A01</td>
+                                                    <td className="px-4 py-3">民眾簽收單 (FIT)</td>
+                                                    <td className="px-4 py-3">證明民眾已領300元</td>
+                                                    <td className="px-4 py-3"><span className="text-red-500 font-bold">正本寄回</span> + 掃描檔Email</td>
+                                                </tr>
+                                                <tr className="hover:bg-slate-50">
+                                                    <td className="px-4 py-3 font-mono font-bold text-blue-600">A02</td>
+                                                    <td className="px-4 py-3">民眾簽收單 (大腸鏡)</td>
+                                                    <td className="px-4 py-3">證明民眾已領300元</td>
+                                                    <td className="px-4 py-3"><span className="text-red-500 font-bold">正本寄回</span> + 掃描檔Email</td>
+                                                </tr>
+                                                <tr className="hover:bg-slate-50">
+                                                    <td className="px-4 py-3 font-mono font-bold text-gray-600">B01</td>
+                                                    <td className="px-4 py-3">送件清單</td>
+                                                    <td className="px-4 py-3">彙整當次送件資料</td>
+                                                    <td className="px-4 py-3"><span className="text-red-500 font-bold">正本寄回</span>，一份自存</td>
+                                                </tr>
+                                                 <tr className="hover:bg-slate-50">
+                                                    <td className="px-4 py-3 font-mono font-bold text-gray-600">B02</td>
+                                                    <td className="px-4 py-3">受試者營養費撥付確認單</td>
+                                                    <td className="px-4 py-3">確認收到公會匯款</td>
+                                                    <td className="px-4 py-3">於匯款前提出</td>
+                                                </tr>
+                                                <tr className="hover:bg-slate-50">
+                                                    <td className="px-4 py-3 font-mono font-bold text-gray-600">B04</td>
+                                                    <td className="px-4 py-3">診所獎勵金領據</td>
+                                                    <td className="px-4 py-3">領取診所獎勵金</td>
+                                                    <td className="px-4 py-3">每季結算後寄回</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    {/* Mailing Info Cards */}
+                                    <div className="grid md:grid-cols-2 gap-6 mt-8">
+                                        <div className="bg-white border-2 border-slate-200 rounded-xl p-5 flex items-start min-w-0">
+                                            <div className="bg-slate-100 p-3 rounded-full mr-4 text-slate-600 flex-shrink-0">
+                                                <i className="ph-fill ph-mailbox text-2xl"></i>
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <h4 className="font-bold text-slate-800 mb-1">紙本正本寄送</h4>
+                                                <p className="text-slate-600 text-sm">70163 臺南市東區裕德一街2號</p>
+                                                <p className="text-slate-500 text-xs mt-1">(台南市醫師公會 收)</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="bg-white border-2 border-slate-200 rounded-xl p-5 flex items-start min-w-0">
+                                            <div className="bg-slate-100 p-3 rounded-full mr-4 text-slate-600 flex-shrink-0">
+                                                <i className="ph-fill ph-envelope-simple text-2xl"></i>
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <h4 className="font-bold text-slate-800 mb-1">電子掃描檔 (副本)</h4>
+                                                <a href="mailto:tma.nckuh@gmail.com" className="text-blue-600 hover:text-blue-800 hover:underline text-sm font-mono select-all bg-slate-50 p-1 rounded break-all whitespace-normal block">
+                                                    tma.nckuh@gmail.com
+                                                </a>
+                                                <p className="text-slate-500 text-xs mt-1">請務必同步寄送電子檔</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Warnings */}
+                                    <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-r-lg">
+                                        <h4 className="text-red-800 font-bold mb-2 flex items-center"><i className="ph-fill ph-warning mr-2"></i> 特別注意</h4>
+                                        <ul className="list-disc list-inside text-red-700 text-sm space-y-1">
+                                            <li>民眾簽名必須<strong>親簽</strong>，若家屬代簽需註明「代」，且<strong>本人仍須親自到場參與</strong>。</li>
+                                            <li>需協助填寫問卷 (MOU簽訂時完成一份即可)。</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            )}
+
+                        </main>
+                    </div>
+                    <Footer />
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<ClinicPortal />);
+    </script>
+</body>
+</html>
