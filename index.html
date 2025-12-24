@@ -20,7 +20,7 @@
         body {
             font-family: 'Noto Sans TC', sans-serif;
             background-color: #F8FAFC;
-            overflow-x: hidden;
+            overflow-x: hidden; /* 防止水平卷軸產生空白 */
         }
         
         .fade-in-up {
@@ -33,25 +33,13 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .marquee-container {
-            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+        /* 隱藏滾動條但保留功能 */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
         }
-        
-        .marquee-track {
-            display: flex;
-            gap: 1.5rem;
-            animation: marquee 40s linear infinite;
-            width: max-content;
-        }
-
-        .marquee-track:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
         .blob {
@@ -60,6 +48,7 @@
             filter: blur(60px);
             z-index: -1;
             opacity: 0.6;
+            max-width: 100%; /* 防止裝飾溢出 */
         }
     </style>
 </head>
@@ -67,7 +56,9 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        // --- 橫式海報資料 (與 materials.html 同步) ---
+        const { useState, useEffect, useRef } = React;
+
+        // --- 橫式海報資料 ---
         const MARQUEE_POSTERS = [
             { id: 1, title: "診所宣導圖", src: "./1診所宣導圖.png" },
             { id: 2, title: "診所請款SOP", src: "./2診所請款SOP.png" },
@@ -76,28 +67,54 @@
         ];
 
         const LandingPage = () => {
-            
+            const scrollRef = useRef(null);
+            const [isPaused, setIsPaused] = useState(false);
+
             const goToPosters = () => {
                 window.location.href = 'materials.html#poster';
             };
 
+            // 自動捲動邏輯
+            useEffect(() => {
+                const scrollContainer = scrollRef.current;
+                if (!scrollContainer) return;
+
+                let animationFrameId;
+
+                const scroll = () => {
+                    if (!isPaused) {
+                        if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
+                            // 當捲動到一半（因為內容重複了一次），無縫跳回開頭
+                            scrollContainer.scrollLeft = 0;
+                        } else {
+                            scrollContainer.scrollLeft += 1; // 調整速度：數字越大越快
+                        }
+                    }
+                    animationFrameId = requestAnimationFrame(scroll);
+                };
+
+                animationFrameId = requestAnimationFrame(scroll);
+
+                return () => cancelAnimationFrame(animationFrameId);
+            }, [isPaused]);
+
             return (
-                <div className="min-h-screen relative flex flex-col">
+                <div className="min-h-screen relative flex flex-col w-full overflow-hidden">
                     {/* 背景裝飾 */}
-                    <div className="blob bg-blue-200 w-96 h-96 top-0 left-0 translate-x-[-30%] translate-y-[-30%]"></div>
-                    <div className="blob bg-purple-200 w-80 h-80 bottom-0 right-0 translate-x-[20%] translate-y-[20%]"></div>
+                    <div className="blob bg-blue-200 w-64 h-64 md:w-96 md:h-96 top-0 left-0 translate-x-[-30%] translate-y-[-30%]"></div>
+                    <div className="blob bg-purple-200 w-64 h-64 md:w-80 md:h-80 bottom-0 right-0 translate-x-[20%] translate-y-[20%]"></div>
 
                     {/* Header */}
-                    <header className="px-6 py-6 flex justify-between items-center max-w-7xl mx-auto w-full">
+                    <header className="px-4 md:px-6 py-6 flex justify-between items-center max-w-7xl mx-auto w-full">
                         <div className="flex items-center space-x-3 cursor-pointer" onClick={() => window.location.reload()}>
-                            <img src="./logo.jpg" alt="Logo" className="h-10 w-auto rounded-lg shadow-sm" onError={(e) => e.target.style.display='none'} />
+                            <img src="./logo.jpg" alt="Logo" className="h-8 md:h-10 w-auto rounded-lg shadow-sm" onError={(e) => e.target.style.display='none'} />
                             <div>
-                                <h1 className="text-xl font-bold text-slate-800 tracking-tight">臺南愛(AI)腸篩</h1>
+                                <h1 className="text-lg md:text-xl font-bold text-slate-800 tracking-tight">臺南愛(AI)腸篩</h1>
                                 <p className="text-xs text-slate-500 font-medium">診所端入口網</p>
                             </div>
                         </div>
-                        <div className="text-sm font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded-full">
-                            v2.2 競賽評比版
+                        <div className="text-xs md:text-sm font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded-full whitespace-nowrap">
+                            v2.3
                         </div>
                     </header>
 
@@ -105,25 +122,25 @@
                     <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col items-center">
                         
                         {/* 1. Hero Title */}
-                        <div className="text-center mb-10 fade-in-up w-full" style={{animationDelay: '0s'}}>
-                            <div className="inline-block px-4 py-1.5 bg-blue-600 text-white rounded-full text-sm font-bold mb-5 shadow-md tracking-wider">
+                        <div className="text-center mb-10 fade-in-up w-full px-2" style={{animationDelay: '0s'}}>
+                            <div className="inline-block px-4 py-1.5 bg-blue-600 text-white rounded-full text-xs md:text-sm font-bold mb-5 shadow-md tracking-wider">
                                 健康台灣深耕計畫
                             </div>
-                            <h2 className="text-4xl md:text-6xl font-black text-slate-800 leading-tight mb-4 tracking-tight">
+                            <h2 className="text-3xl md:text-6xl font-black text-slate-800 leading-tight mb-4 tracking-tight">
                                 臺南愛（AI）腸篩
                             </h2>
-                            <h3 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-6 leading-relaxed max-w-4xl mx-auto">
+                            <h3 className="text-xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-6 leading-relaxed max-w-4xl mx-auto">
                                 大腸癌擴篩完治 x AI轉診智慧平台精進計畫
                             </h3>
-                            <p className="text-slate-500 text-lg md:text-xl font-medium max-w-2xl mx-auto">
+                            <p className="text-slate-500 text-base md:text-xl font-medium max-w-2xl mx-auto">
                                 整合 AI 輔助判讀與智慧轉診系統，提供診所端最完整的操作指引與衛教資源。
                             </p>
                         </div>
 
-                        {/* 2. Marquee Section (快速瀏覽) */}
+                        {/* 2. Marquee Section (可滑動式跑馬燈) */}
                         <div className="w-full mb-12 fade-in-up" style={{animationDelay: '0.2s'}}>
                             <div className="flex justify-between items-end px-4 mb-4 max-w-6xl mx-auto">
-                                <h3 className="text-lg font-bold text-slate-700 flex items-center">
+                                <h3 className="text-base md:text-lg font-bold text-slate-700 flex items-center">
                                     <i className="ph-duotone ph-sparkle text-yellow-500 mr-2"></i>
                                     最新衛教海報預覽
                                 </h3>
@@ -132,14 +149,22 @@
                                 </button>
                             </div>
                             
-                            <div className="marquee-container w-full overflow-hidden py-4 bg-white/50 backdrop-blur-sm border-y border-slate-100">
-                                <div className="marquee-track">
-                                    {[...MARQUEE_POSTERS, ...MARQUEE_POSTERS, ...MARQUEE_POSTERS].map((poster, index) => (
+                            <div 
+                                className="w-full overflow-x-auto no-scrollbar bg-white/50 backdrop-blur-sm border-y border-slate-100 py-4"
+                                onMouseEnter={() => setIsPaused(true)}
+                                onMouseLeave={() => setIsPaused(false)}
+                                onTouchStart={() => setIsPaused(true)}
+                                onTouchEnd={() => setIsPaused(false)}
+                                ref={scrollRef}
+                            >
+                                <div className="flex w-max gap-4 px-4">
+                                    {/* 重複渲染兩次以實現無縫循環效果 */}
+                                    {[...MARQUEE_POSTERS, ...MARQUEE_POSTERS].map((poster, index) => (
                                         <div 
                                             key={`${poster.id}-${index}`} 
                                             onClick={goToPosters}
-                                            className="relative flex-shrink-0 cursor-pointer group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white"
-                                            style={{width: '360px', aspectRatio: '2752/1536'}}
+                                            className="relative flex-shrink-0 cursor-pointer group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white"
+                                            style={{width: 'clamp(280px, 40vw, 360px)', aspectRatio: '2752/1536'}}
                                         >
                                             <img 
                                                 src={poster.src} 
@@ -150,22 +175,23 @@
                                                     e.target.src='https://placehold.co/2752x1536/e2e8f0/64748b?text=Loading...';
                                                 }}
                                             />
+                                            {/* 遮罩效果 */}
                                             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                                 <span className="text-white font-bold border border-white px-4 py-2 rounded-full backdrop-blur-md">
                                                     點擊下載
                                                 </span>
                                             </div>
-                                            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/60 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <p className="text-white text-sm font-bold truncate">{poster.title}</p>
-                                            </div>
                                         </div>
                                     ))}
                                 </div>
                             </div>
+                            <p className="text-center text-xs text-slate-400 mt-2 md:hidden">
+                                <i className="ph-bold ph-hand-swipe-left mr-1"></i>左右滑動查看更多
+                            </p>
                         </div>
 
                         {/* 3. Cards Navigation */}
-                        <div className="grid md:grid-cols-3 gap-6 w-full max-w-6xl px-4 fade-in-up" style={{animationDelay: '0.4s'}}>
+                        <div className="grid md:grid-cols-3 gap-6 w-full max-w-6xl px-4 fade-in-up pb-10" style={{animationDelay: '0.4s'}}>
                             
                             {/* Card: 合作診所 */}
                             <a href="clinic.html" className="group relative bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl hover:shadow-blue-200/50 transition-all duration-300 border border-slate-100 hover:border-blue-200 flex flex-col items-center text-center overflow-hidden">
@@ -193,7 +219,7 @@
                                 </span>
                             </a>
 
-                            {/* Card: 競賽評比 (New) */}
+                            {/* Card: 競賽評比 */}
                             <a href="competition.html" className="group relative bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl hover:shadow-yellow-200/50 transition-all duration-300 border border-slate-100 hover:border-yellow-300 flex flex-col items-center text-center overflow-hidden">
                                 <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-yellow-400 to-yellow-600"></div>
                                 <div className="w-16 h-16 bg-yellow-50 text-yellow-600 rounded-2xl flex items-center justify-center mb-4 text-3xl group-hover:scale-110 group-hover:bg-yellow-500 group-hover:text-white transition-all duration-300">
