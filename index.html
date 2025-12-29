@@ -58,12 +58,11 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // --- 橫式海報資料 ---
+        // --- 橫式海報資料 (Updated) ---
         const MARQUEE_POSTERS = [
             { id: 1, title: "診所宣導圖", src: "./1診所宣導圖.png" },
-            { id: 2, title: "診所請款SOP", src: "./2診所請款SOP.png" },
-            { id: 3, title: "獲利領取SOP", src: "./3獲利領取SOP.png" },
-            { id: 4, title: "診所獎勵金", src: "./4診所獎勵金.png" },
+            { id: 2, title: "診所請款與撥款SOP (1)", src: "./診所請款與撥款SOP(1).png" },
+            { id: 3, title: "診所請款與撥款SOP (2)", src: "./診所請款與撥款SOP(2).png" },
         ];
 
         const LandingPage = () => {
@@ -114,7 +113,7 @@
                             </div>
                         </div>
                         <div className="text-xs md:text-sm font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded-full whitespace-nowrap">
-                            v2.3
+                            v2.4
                         </div>
                     </header>
 
@@ -132,8 +131,10 @@
                             <h3 className="text-xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-6 leading-relaxed max-w-4xl mx-auto">
                                 大腸癌擴篩完治 x AI轉診智慧平台精進計畫
                             </h3>
-                            <p className="text-slate-500 text-base md:text-xl font-medium max-w-2xl mx-auto">
-                                整合 AI 輔助判讀與智慧轉診系統，提供診所端最完整的操作指引與衛教資源。
+                            {/* 修正後的標題排版 */}
+                            <p className="text-slate-500 text-base md:text-xl font-medium max-w-3xl mx-auto leading-relaxed">
+                                整合 AI 輔助判讀與智慧轉診系統，<br className="hidden md:block" />
+                                提供診所端最完整的操作指引與衛教資源。
                             </p>
                         </div>
 
@@ -158,13 +159,13 @@
                                 ref={scrollRef}
                             >
                                 <div className="flex w-max gap-4 px-4">
-                                    {/* 重複渲染兩次以實現無縫循環效果 */}
-                                    {[...MARQUEE_POSTERS, ...MARQUEE_POSTERS].map((poster, index) => (
+                                    {/* 重複渲染多次以確保內容足夠長進行循環 */}
+                                    {[...MARQUEE_POSTERS, ...MARQUEE_POSTERS, ...MARQUEE_POSTERS].map((poster, index) => (
                                         <div 
                                             key={`${poster.id}-${index}`} 
                                             onClick={goToPosters}
                                             className="relative flex-shrink-0 cursor-pointer group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white"
-                                            style={{width: 'clamp(280px, 40vw, 360px)', aspectRatio: '2752/1536'}}
+                                            style={{width: 'clamp(280px, 40vw, 360px)', aspectRatio: '16/9'}}
                                         >
                                             <img 
                                                 src={poster.src} 
@@ -172,7 +173,7 @@
                                                 className="w-full h-full object-cover" 
                                                 onError={(e) => {
                                                     e.target.onerror = null; 
-                                                    e.target.src='https://placehold.co/2752x1536/e2e8f0/64748b?text=Loading...';
+                                                    e.target.src='https://placehold.co/1280x720/e2e8f0/64748b?text=Loading...';
                                                 }}
                                             />
                                             {/* 遮罩效果 */}
@@ -193,40 +194,46 @@
                         {/* 3. Cards Navigation */}
                         <div className="grid md:grid-cols-3 gap-6 w-full max-w-6xl px-4 fade-in-up pb-10" style={{animationDelay: '0.4s'}}>
                             
-                            {/* Card: 合作診所 */}
+                            {/* Card 1: 合作診所 (Updated) */}
                             <a href="clinic.html" className="group relative bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl hover:shadow-blue-200/50 transition-all duration-300 border border-slate-100 hover:border-blue-200 flex flex-col items-center text-center overflow-hidden">
                                 <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-blue-400 to-blue-600"></div>
                                 <div className="w-16 h-16 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center mb-4 text-3xl group-hover:scale-110 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
                                     <i className="ph-duotone ph-stethoscope"></i>
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-800 mb-2">合作診所專區</h3>
-                                <p className="text-slate-500 mb-6 text-sm flex-1">標準作業流程(SOP)、<br/>表單下載與經費核銷。</p>
+                                <p className="text-slate-500 mb-6 text-sm flex-1 leading-relaxed">
+                                    執行作業 SOP、系統操作指引<br/>與每季經費核銷。
+                                </p>
                                 <span className="mt-auto px-4 py-2 rounded-xl bg-blue-50 text-blue-600 font-bold text-sm group-hover:bg-blue-600 group-hover:text-white transition-colors w-full">
                                     進入專區
                                 </span>
                             </a>
 
-                            {/* Card: 教材專區 */}
+                            {/* Card 2: 教材專區 (Updated) */}
                             <a href="materials.html" className="group relative bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl hover:shadow-orange-200/50 transition-all duration-300 border border-slate-100 hover:border-orange-200 flex flex-col items-center text-center overflow-hidden">
                                 <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-orange-400 to-red-500"></div>
                                 <div className="w-16 h-16 bg-orange-50 text-orange-500 rounded-2xl flex items-center justify-center mb-4 text-3xl group-hover:scale-110 group-hover:bg-orange-500 group-hover:text-white transition-all duration-300">
                                     <i className="ph-duotone ph-graduation-cap"></i>
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-800 mb-2">數位教材與海報</h3>
-                                <p className="text-slate-500 mb-6 text-sm flex-1">教學影片、衛教影片、<br/>及高畫質宣導海報。</p>
+                                <p className="text-slate-500 mb-6 text-sm flex-1 leading-relaxed">
+                                    教學影片、衛教海報、<br/>QR Code 樣式與文件下載。
+                                </p>
                                 <span className="mt-auto px-4 py-2 rounded-xl bg-orange-50 text-orange-600 font-bold text-sm group-hover:bg-orange-600 group-hover:text-white transition-colors w-full">
                                     前往瀏覽
                                 </span>
                             </a>
 
-                            {/* Card: 競賽評比 */}
+                            {/* Card 3: 競賽評比 (Updated) */}
                             <a href="competition.html" className="group relative bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl hover:shadow-yellow-200/50 transition-all duration-300 border border-slate-100 hover:border-yellow-300 flex flex-col items-center text-center overflow-hidden">
                                 <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-yellow-400 to-yellow-600"></div>
                                 <div className="w-16 h-16 bg-yellow-50 text-yellow-600 rounded-2xl flex items-center justify-center mb-4 text-3xl group-hover:scale-110 group-hover:bg-yellow-500 group-hover:text-white transition-all duration-300">
                                     <i className="ph-duotone ph-trophy"></i>
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-800 mb-2">競賽評比專區</h3>
-                                <p className="text-slate-500 mb-6 text-sm flex-1">FOBT與大腸鏡檢<br/>競賽獎勵辦法與排名。</p>
+                                <p className="text-slate-500 mb-6 text-sm flex-1 leading-relaxed">
+                                    FOBT 與大腸鏡檢<br/>競賽獎勵辦法與排名。
+                                </p>
                                 <span className="mt-auto px-4 py-2 rounded-xl bg-yellow-50 text-yellow-700 font-bold text-sm group-hover:bg-yellow-600 group-hover:text-white transition-colors w-full">
                                     查看辦法
                                 </span>
@@ -236,9 +243,65 @@
 
                     </main>
 
-                    {/* Footer */}
-                    <footer className="mt-12 py-8 bg-white border-t border-slate-200 text-center">
-                        <p className="text-slate-400 text-xs">© 2025 臺南愛(AI)腸篩計畫 | 台南市醫師公會 x 成大醫院</p>
+                    {/* Footer (New Detailed Version) */}
+                    <footer className="mt-8 bg-white border-t border-slate-200 pt-10 pb-6">
+                        <div className="max-w-7xl mx-auto px-4 md:px-6">
+                            <div className="grid md:grid-cols-3 gap-8 mb-8">
+                                {/* Brand/Logo Area */}
+                                <div className="text-center md:text-left">
+                                    <div className="flex items-center justify-center md:justify-start mb-3">
+                                        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white mr-2 shadow-sm">
+                                            <i className="ph-bold ph-first-aid"></i>
+                                        </div>
+                                        <span className="font-bold text-slate-800 text-lg">臺南愛(AI)腸篩計畫</span>
+                                    </div>
+                                    <p className="text-xs text-slate-400 leading-relaxed">
+                                        致力於運用 AI 技術提升大腸癌篩檢效率，<br/>
+                                        打造便民、高效的智慧醫療轉診服務。
+                                    </p>
+                                </div>
+
+                                {/* Contact 1: NCKU */}
+                                <div className="text-center md:text-left">
+                                    <h4 className="font-bold text-slate-700 text-sm mb-3 flex items-center justify-center md:justify-start">
+                                        <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                                        成大醫院計畫執行小組
+                                    </h4>
+                                    <ul className="text-sm text-slate-500 space-y-2">
+                                        <li className="flex items-center justify-center md:justify-start">
+                                            <i className="ph-fill ph-phone text-blue-400 mr-2"></i> 
+                                            (06) 208-3662 / (06) 208-0758
+                                        </li>
+                                        <li className="flex items-center justify-center md:justify-start">
+                                            <i className="ph-fill ph-envelope text-blue-400 mr-2"></i> 
+                                            <a href="mailto:tma.nckuh@gmail.com" className="hover:text-blue-600 hover:underline">tma.nckuh@gmail.com</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                {/* Contact 2: Medical Association */}
+                                <div className="text-center md:text-left">
+                                    <h4 className="font-bold text-slate-700 text-sm mb-3 flex items-center justify-center md:justify-start">
+                                        <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                        醫師公會聯絡窗口
+                                    </h4>
+                                    <ul className="text-sm text-slate-500 space-y-2">
+                                        <li className="flex items-center justify-center md:justify-start">
+                                            <i className="ph-fill ph-user text-green-400 mr-2"></i> 
+                                            周舒程 小姐
+                                        </li>
+                                        <li className="flex items-center justify-center md:justify-start">
+                                            <i className="ph-fill ph-phone text-green-400 mr-2"></i> 
+                                            (06) 331-2058
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div className="border-t border-slate-100 pt-6 text-center">
+                                <p className="text-slate-400 text-xs">© 2025 臺南愛(AI)腸篩計畫 | 台南市醫師公會 x 成大醫院</p>
+                            </div>
+                        </div>
                     </footer>
                 </div>
             );
