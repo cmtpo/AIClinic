@@ -53,6 +53,41 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
+        // --- Dropdown Component for Docs (Matches Clinic) ---
+        const DocDropdown = ({ icon, label, color, options }) => {
+            const [isOpen, setIsOpen] = useState(false);
+            
+            return (
+                <div className="relative w-full">
+                    <button 
+                        onClick={() => setIsOpen(!isOpen)}
+                        className={`w-full flex items-center justify-between p-3 rounded-xl transition-colors font-medium text-sm text-${color}-600 bg-white border border-${color}-200 hover:bg-${color}-50`}
+                    >
+                        <div className="flex items-center">
+                            <i className={`ph-bold ${icon} mr-2`}></i>
+                            {label}
+                        </div>
+                        <i className={`ph-bold ph-caret-down transition-transform ${isOpen ? 'rotate-180' : ''}`}></i>
+                    </button>
+                    
+                    {isOpen && (
+                        <div className="absolute left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-100">
+                            {options.map((opt, idx) => (
+                                <a 
+                                    key={idx}
+                                    href={opt.url}
+                                    target="_blank"
+                                    className="block px-4 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-blue-600 border-b last:border-b-0 border-slate-100"
+                                >
+                                    {opt.name}
+                                </a>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
         // --- 資料：橫式海報 ---
         const HORIZONTAL_POSTERS = [
             { id: 1, title: "診所宣導圖", desc: "診所大腸癌篩檢服務宣導", src: "./1診所宣導圖.png" },
@@ -79,7 +114,7 @@
         // --- 資料：QR Code (Together) ---
         const QR_TOGETHER = Array.from({ length: 6 }, (_, i) => ({
             id: `t${i + 1}`,
-            title: `模板樣式 ${i + 1}`,
+            title: `合併樣式 ${i + 1}`,
             src: `./QR CODE together/together (${i + 1}).png`
         }));
 
@@ -230,7 +265,7 @@
                             <div className="fade-in pb-20">
                                 <div className="mb-8 text-center pt-2">
                                     <h2 className="text-3xl font-black text-gray-800 mb-2">衛教海報與素材</h2>
-                                    <p className="text-gray-600">提供高解析度圖檔與 QR Code 模板，診所可自行下載列印張貼</p>
+                                    <p className="text-gray-600">提供高解析度圖檔與 QR Code 素材，診所可自行下載列印張貼</p>
                                 </div>
 
                                 {/* Section 1: 橫式海報 */}
@@ -332,7 +367,7 @@
                                 <div id="sec-qr-together" className="scroll-mt-48">
                                     <div className="flex items-center mb-6">
                                         <div className="h-8 w-2 bg-green-500 rounded-full mr-3"></div>
-                                        <h3 className="text-xl font-bold text-gray-800">QR Code 外框模板 (合併式)</h3>
+                                        <h3 className="text-xl font-bold text-gray-800">QR Code 合併樣式</h3>
                                     </div>
                                     <p className="text-sm text-gray-500 mb-4 ml-1">將兩種檢查項目的 QR Code 合併於同一張海報，節省張貼空間。</p>
                                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -395,9 +430,14 @@
                                         </div>
                                         <h3 className="font-bold text-xl text-slate-800 mb-2">行政核銷用</h3>
                                         <p className="text-sm text-slate-500 mb-4">診所端請款必備表單</p>
-                                        <div className="space-y-2">
+                                        <div className="space-y-3">
+                                            {/* B01 Dropdown */}
+                                            <a href="https://drive.google.com/file/d/13dqt5XfhB6uk-d4AoSS7aaqgWmZLFqrH/view?usp=sharing" target="_blank" className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
+                                                <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> B01 送件清單</span>
+                                                <i className="ph-bold ph-download-simple"></i>
+                                            </a>
+                                            
                                             {[
-                                                { name: "B01 送件清單", link: "https://drive.google.com/file/d/1ngP8eKAZR1T8r3UIHubs1iIC7lmk4SPf/view?usp=sharing" },
                                                 { name: "B02 撥付確認單", link: "https://drive.google.com/file/d/1LFM1YnAvIsYEqgyAZk4ErQK730L7RhIh/view?usp=drive_link" },
                                                 { name: "B04 診所領據", link: "https://drive.google.com/file/d/1AxByazh8tYNTb3CkfT1om9hfLvEsN5zp/view?usp=drive_link" },
                                                 { name: "診所注意事項", link: "https://drive.google.com/file/d/1_rbKTxaCO6SrmK3C0gfYTAbJilHjtida/view?usp=drive_link" },
@@ -417,15 +457,28 @@
                                         </div>
                                         <h3 className="font-bold text-xl text-slate-800 mb-2">民眾簽署用</h3>
                                         <p className="text-sm text-slate-500 mb-4">領取 $300 獎勵金證明</p>
-                                        <div className="space-y-2">
-                                            <a href="https://drive.google.com/file/d/1t49GG5qMFgNJAH05etJ_TZmaZFRcg8tB/view?usp=drive_link" target="_blank" className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-orange-50 text-slate-600 hover:text-orange-700 transition-colors font-medium text-sm">
-                                                <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-orange-400"></i> A01 糞便篩檢簽收單</span>
-                                                <i className="ph-bold ph-download-simple"></i>
-                                            </a>
-                                            <a href="https://drive.google.com/file/d/1uWMfPjlnsScLKLAIMXp4xREmF0oirw8K/view?usp=drive_link" target="_blank" className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-orange-50 text-slate-600 hover:text-orange-700 transition-colors font-medium text-sm">
-                                                <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-orange-400"></i> A02 大腸鏡檢簽收單</span>
-                                                <i className="ph-bold ph-download-simple"></i>
-                                            </a>
+                                        <div className="space-y-3">
+                                            {/* A01 Dropdown */}
+                                            <DocDropdown 
+                                                icon="ph-file-text"
+                                                label="A01 糞便篩檢簽收"
+                                                color="orange"
+                                                options={[
+                                                    { name: "完成糞便篩檢300元禮券簽收單 (有欄位/無須填電話)", url: "https://drive.google.com/file/d/1jm9RnXYRGQtExT21ra5yVP3AFO5EyITQ/view?usp=sharing" },
+                                                    { name: "完成糞便篩檢300元禮券簽收單 (無QR碼/無須填電話)", url: "https://drive.google.com/file/d/1GxUxvUj5rkwm5xRT3XZIDFRfts5IrCw7/view?usp=sharing" }
+                                                ]}
+                                            />
+
+                                            {/* A02 Dropdown */}
+                                            <DocDropdown 
+                                                icon="ph-file-text"
+                                                label="A02 大腸鏡檢簽收"
+                                                color="orange"
+                                                options={[
+                                                    { name: "完成大腸鏡檢查300元禮券簽收單 (無QR版/無須填電話)", url: "https://drive.google.com/file/d/1o60QX3TNDiWEtKEvY3XG29LnIXZS9IDN/view?usp=sharing" },
+                                                    { name: "完成大腸鏡檢查300元禮券簽收單 (無QR版/填電話)", url: "https://drive.google.com/file/d/1ASlNOdKKRMIIZbmWaut_N44JyVrwfwnC/view?usp=sharing" }
+                                                ]}
+                                            />
                                         </div>
                                     </div>
                                 </div>
