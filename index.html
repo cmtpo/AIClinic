@@ -21,6 +21,7 @@
             font-family: 'Noto Sans TC', sans-serif;
             background-color: #F8FAFC;
             overflow-x: hidden; /* 防止水平卷軸產生空白 */
+            scroll-behavior: smooth;
         }
         
         .fade-in-up {
@@ -50,6 +51,12 @@
             opacity: 0.6;
             max-width: 100%; /* 防止裝飾溢出 */
         }
+        
+        /* Drawer Backdrop Fade */
+        .backdrop-enter { opacity: 0; }
+        .backdrop-enter-active { opacity: 1; transition: opacity 300ms; }
+        .backdrop-exit { opacity: 1; }
+        .backdrop-exit-active { opacity: 0; transition: opacity 300ms; }
     </style>
 </head>
 <body>
@@ -58,7 +65,213 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // --- 橫式海報資料 (Updated) ---
+        // --- Back To Top Component ---
+        const BackToTop = () => {
+            const [isVisible, setIsVisible] = useState(false);
+
+            useEffect(() => {
+                const toggleVisibility = () => {
+                    if (window.pageYOffset > 300) {
+                        setIsVisible(true);
+                    } else {
+                        setIsVisible(false);
+                    }
+                };
+
+                window.addEventListener("scroll", toggleVisibility);
+                return () => window.removeEventListener("scroll", toggleVisibility);
+            }, []);
+
+            const scrollToTop = () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            };
+
+            return (
+                <div className={`fixed bottom-6 right-6 z-40 transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}>
+                    <button 
+                        onClick={scrollToTop}
+                        className="bg-blue-600 hover:bg-blue-700 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+                        aria-label="返回頂部"
+                    >
+                        <i className="ph-bold ph-arrow-up text-xl"></i>
+                    </button>
+                </div>
+            );
+        };
+
+        // --- Navigation Drawer Component ---
+        const NavigationDrawer = ({ isOpen, onClose, onSectionChange }) => {
+            // 定義導航項目
+            const navItems = [
+                { 
+                    id: 'home',
+                    title: '首頁', 
+                    url: 'index.html', 
+                    icon: 'ph-house',
+                    active: true, // index.html 是當前頁面
+                    subItems: [
+                        { id: 'marquee-section', label: '最新衛教海報' },
+                        { id: 'cards-section', label: '各專區入口' }
+                    ]
+                },
+                { 
+                    id: 'clinic',
+                    title: '合作診所專區', 
+                    url: 'clinic.html', 
+                    icon: 'ph-stethoscope', 
+                    active: false,
+                    subItems: [
+                        { id: 'sop', label: '執行作業 SOP' }, // 對應 clinic.html 的狀態 ID
+                        { id: 'money', label: '經費與核銷' },
+                        { id: 'docs', label: '表單與寄送' },
+                        { id: 'qa', label: '必做任務與 QA' }
+                    ]
+                },
+                { 
+                    id: 'materials',
+                    title: '數位教材與海報', 
+                    url: 'materials.html', 
+                    icon: 'ph-graduation-cap',
+                    active: false,
+                    subItems: [
+                        { id: 'video', label: '影片教材' }, // 對應 materials.html 的 tab ID
+                        { id: 'poster', label: '海報與模板' },
+                        { id: 'doc', label: '文件下載' }
+                    ]
+                },
+                { 
+                    id: 'competition',
+                    title: '競賽評比專區', 
+                    url: 'competition.html', 
+                    icon: 'ph-trophy',
+                    active: false,
+                },
+            ];
+
+            // 狀態管理：記錄哪些選單是展開的
+            const [expandedMenus, setExpandedMenus] = useState({});
+
+            useEffect(() => {
+                if (isOpen) {
+                    const initialExpanded = {};
+                    navItems.forEach(item => {
+                        if (item.active && item.subItems) {
+                            initialExpanded[item.id] = true;
+                        }
+                    });
+                    setExpandedMenus(initialExpanded);
+                }
+            }, [isOpen]);
+
+            const toggleMenu = (itemId) => {
+                setExpandedMenus(prev => ({
+                    ...prev,
+                    [itemId]: !prev[itemId]
+                }));
+            };
+
+            return (
+                <>
+                    {/* Backdrop (遮罩) */}
+                    <div 
+                        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                        onClick={onClose}
+                    />
+
+                    {/* Drawer (側邊欄) */}
+                    <div className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-[70] transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'} flex flex-col`}>
+                        {/* Drawer Header */}
+                        <div className="p-5 border-b border-slate-100 flex justify-between items-center bg-blue-50">
+                            <h3 className="font-bold text-slate-800 flex items-center">
+                                <i className="ph-fill ph-list text-blue-600 mr-2 text-xl"></i>
+                                網站導航
+                            </h3>
+                            <button onClick={onClose} className="w-8 h-8 rounded-full bg-white text-slate-500 hover:text-red-500 hover:bg-red-50 flex items-center justify-center transition-colors">
+                                <i className="ph-bold ph-x text-lg"></i>
+                            </button>
+                        </div>
+
+                        {/* Drawer Content */}
+                        <div className="flex-1 overflow-y-auto p-4 space-y-2">
+                            {navItems.map((item) => (
+                                <div key={item.id} className="mb-2">
+                                    <div className={`flex items-center w-full rounded-xl transition-all ${item.active ? 'bg-blue-100 text-blue-800' : 'text-slate-600 hover:bg-slate-50'}`}>
+                                        {/* 主要連結區域 - 點擊大標題直接跳轉 */}
+                                        <a 
+                                            href={item.active ? '#' : item.url}
+                                            onClick={(e) => {
+                                                if (item.active) e.preventDefault();
+                                            }}
+                                            className="flex-1 flex items-center p-3 font-bold"
+                                        >
+                                            <i className={`ph-fill ${item.icon} mr-3 text-xl ${item.active ? 'text-blue-600' : 'text-slate-400'}`}></i>
+                                            {item.title}
+                                            {item.active && <span className="ml-2 text-[10px] bg-blue-200 text-blue-800 px-2 py-0.5 rounded-full">目前</span>}
+                                        </a>
+
+                                        {/* 展開/收合按鈕 */}
+                                        {item.subItems && (
+                                            <button 
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    toggleMenu(item.id);
+                                                }}
+                                                className="p-3 text-slate-400 hover:text-blue-600 focus:outline-none"
+                                            >
+                                                <i className={`ph-bold ph-caret-down transition-transform duration-300 ${expandedMenus[item.id] ? 'rotate-180' : ''}`}></i>
+                                            </button>
+                                        )}
+                                    </div>
+
+                                    {/* 子選單 (Collapse/Expand) */}
+                                    <div 
+                                        className={`overflow-hidden transition-all duration-300 ease-in-out ${expandedMenus[item.id] ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0'}`}
+                                    >
+                                        {item.subItems && (
+                                            <div className="ml-4 pl-4 border-l-2 border-slate-100 space-y-1">
+                                                {item.subItems.map(sub => (
+                                                    <button
+                                                        key={sub.id || sub.label} // 使用 label 作為 key fallback
+                                                        onClick={() => {
+                                                            if (item.active && onSectionChange) {
+                                                                // 如果是在當前頁面，執行內部捲動
+                                                                onSectionChange(sub.id);
+                                                                onClose();
+                                                            } else {
+                                                                // 如果不是當前頁面
+                                                                // clinic.html 使用的是 React state 切換，不是傳統 hash anchor
+                                                                // 這裡我們傳遞 hash，但目標頁面 (clinic.html) 需要有邏輯去讀取 hash 並設定 state
+                                                                // 對於 clinic.html, 我們將 hash 設為 #sop, #money 等
+                                                                const targetUrl = sub.id ? `${item.url}#${sub.id}` : item.url;
+                                                                window.location.href = targetUrl;
+                                                            }
+                                                        }}
+                                                        className={`block w-full text-left py-2 px-3 text-sm rounded-lg transition-colors text-slate-500 hover:text-slate-800 hover:bg-slate-50`}
+                                                    >
+                                                        {sub.label}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Drawer Footer */}
+                        <div className="p-4 border-t border-slate-100 bg-slate-50 text-center">
+                            <p className="text-xs text-slate-400">臺南愛(AI)腸篩計畫</p>
+                        </div>
+                    </div>
+                </>
+            );
+        };
+
+        // --- 橫式海報資料 ---
         const MARQUEE_POSTERS = [
             { id: 1, title: "診所宣導圖", src: "./1診所宣導圖.png" },
             { id: 2, title: "診所請款與撥款SOP (1)", src: "./診所請款與撥款SOP(1).png" },
@@ -68,9 +281,24 @@
         const LandingPage = () => {
             const scrollRef = useRef(null);
             const [isPaused, setIsPaused] = useState(false);
+            const [isGlobalNavOpen, setIsGlobalNavOpen] = useState(false);
 
             const goToPosters = () => {
                 window.location.href = 'materials.html#poster';
+            };
+
+            // 處理頁面內捲動 (僅限 index.html 內部區塊)
+            const handleSectionChange = (id) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    const headerOffset = 80;
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
             };
 
             // 自動捲動邏輯
@@ -103,8 +331,18 @@
                     <div className="blob bg-blue-200 w-64 h-64 md:w-96 md:h-96 top-0 left-0 translate-x-[-30%] translate-y-[-30%]"></div>
                     <div className="blob bg-purple-200 w-64 h-64 md:w-80 md:h-80 bottom-0 right-0 translate-x-[20%] translate-y-[20%]"></div>
 
+                    {/* Back To Top Button */}
+                    <BackToTop />
+
+                    {/* Navigation Drawer */}
+                    <NavigationDrawer 
+                        isOpen={isGlobalNavOpen}
+                        onClose={() => setIsGlobalNavOpen(false)}
+                        onSectionChange={handleSectionChange}
+                    />
+
                     {/* Header */}
-                    <header className="px-4 md:px-6 py-6 flex justify-between items-center max-w-7xl mx-auto w-full">
+                    <header className="px-4 md:px-6 py-6 flex justify-between items-center max-w-7xl mx-auto w-full sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm md:shadow-none md:bg-transparent rounded-b-2xl md:rounded-none">
                         <div className="flex items-center space-x-3 cursor-pointer" onClick={() => window.location.reload()}>
                             <img src="./logo.jpg" alt="Logo" className="h-8 md:h-10 w-auto rounded-lg shadow-sm" onError={(e) => e.target.style.display='none'} />
                             <div>
@@ -112,8 +350,20 @@
                                 <p className="text-xs text-slate-500 font-medium">診所端入口網</p>
                             </div>
                         </div>
-                        <div className="text-xs md:text-sm font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded-full whitespace-nowrap">
-                            v2.4
+                        
+                        <div className="flex items-center gap-3">
+                            <div className="hidden md:block text-xs md:text-sm font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded-full whitespace-nowrap">
+                                v2.8
+                            </div>
+                            
+                            {/* Menu Button */}
+                            <button 
+                                onClick={() => setIsGlobalNavOpen(true)}
+                                className="w-10 h-10 rounded-xl bg-white hover:bg-blue-50 text-slate-600 hover:text-blue-600 flex items-center justify-center transition-all shadow-sm focus:ring-2 focus:ring-blue-200"
+                                aria-label="開啟選單"
+                            >
+                                <i className="ph-bold ph-list text-2xl"></i>
+                            </button>
                         </div>
                     </header>
 
@@ -131,7 +381,6 @@
                             <h3 className="text-xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-6 leading-relaxed max-w-4xl mx-auto">
                                 大腸癌擴篩完治 x AI轉診智慧平台精進計畫
                             </h3>
-                            {/* 修正後的標題排版 */}
                             <p className="text-slate-500 text-base md:text-xl font-medium max-w-3xl mx-auto leading-relaxed">
                                 整合 AI 輔助判讀與智慧轉診系統，<br className="hidden md:block" />
                                 提供診所端最完整的操作指引與衛教資源。
@@ -139,7 +388,7 @@
                         </div>
 
                         {/* 2. Marquee Section (可滑動式跑馬燈) */}
-                        <div className="w-full mb-12 fade-in-up" style={{animationDelay: '0.2s'}}>
+                        <div id="marquee-section" className="w-full mb-12 fade-in-up" style={{animationDelay: '0.2s'}}>
                             <div className="flex justify-between items-end px-4 mb-4 max-w-6xl mx-auto">
                                 <h3 className="text-base md:text-lg font-bold text-slate-700 flex items-center">
                                     <i className="ph-duotone ph-sparkle text-yellow-500 mr-2"></i>
@@ -192,7 +441,7 @@
                         </div>
 
                         {/* 3. Cards Navigation */}
-                        <div className="grid md:grid-cols-3 gap-6 w-full max-w-6xl px-4 fade-in-up pb-10" style={{animationDelay: '0.4s'}}>
+                        <div id="cards-section" className="grid md:grid-cols-3 gap-6 w-full max-w-6xl px-4 fade-in-up pb-10" style={{animationDelay: '0.4s'}}>
                             
                             {/* Card 1: 合作診所 (Updated) */}
                             <a href="clinic.html" className="group relative bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl hover:shadow-blue-200/50 transition-all duration-300 border border-slate-100 hover:border-blue-200 flex flex-col items-center text-center overflow-hidden">
