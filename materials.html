@@ -53,37 +53,40 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // --- Dropdown Component for Docs (Matches Clinic) ---
+        // --- Dropdown Component for Docs (Accordion Style - Matches Clinic) ---
         const DocDropdown = ({ icon, label, color, options }) => {
             const [isOpen, setIsOpen] = useState(false);
             
             return (
-                <div className="relative w-full">
+                <div className="w-full mb-2 last:mb-0 transition-all duration-300">
                     <button 
                         onClick={() => setIsOpen(!isOpen)}
-                        className={`w-full flex items-center justify-between p-3 rounded-xl transition-colors font-medium text-sm text-${color}-600 bg-white border border-${color}-200 hover:bg-${color}-50`}
+                        className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all text-xs font-bold text-${color}-600 bg-white border-${color}-200 hover:bg-${color}-50 shadow-sm`}
                     >
-                        <div className="flex items-center">
-                            <i className={`ph-bold ${icon} mr-2`}></i>
-                            {label}
+                        <div className="flex items-center text-left overflow-hidden">
+                            <i className={`ph-bold ${icon} mr-2 flex-shrink-0 text-base`}></i>
+                            <span className="truncate">{label}</span>
                         </div>
-                        <i className={`ph-bold ph-caret-down transition-transform ${isOpen ? 'rotate-180' : ''}`}></i>
+                        <i className={`ph-bold ph-caret-down transition-transform duration-300 ${isOpen ? 'rotate-180' : ''} ml-2 flex-shrink-0`}></i>
                     </button>
                     
-                    {isOpen && (
-                        <div className="absolute left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-100">
+                    <div 
+                        className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'}`}
+                    >
+                        <div className={`bg-slate-50 border border-slate-200 rounded-xl overflow-hidden border-l-4 border-l-${color}-400`}>
                             {options.map((opt, idx) => (
                                 <a 
                                     key={idx}
                                     href={opt.url}
                                     target="_blank"
-                                    className="block px-4 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-blue-600 border-b last:border-b-0 border-slate-100"
+                                    className="block px-3 py-2.5 text-[11px] text-slate-600 hover:bg-white hover:text-blue-600 border-b last:border-b-0 border-slate-200 break-words leading-relaxed flex items-start group"
                                 >
-                                    {opt.name}
+                                    <i className="ph-fill ph-download-simple mr-2 mt-0.5 text-slate-400 group-hover:text-blue-500 transition-colors"></i>
+                                    <span>{opt.name}</span>
                                 </a>
                             ))}
                         </div>
-                    )}
+                    </div>
                 </div>
             );
         };
@@ -414,10 +417,10 @@
                                         <h3 className="font-bold text-xl text-slate-800 mb-2">寄件信封封面</h3>
                                         <p className="text-sm text-slate-500 mb-6 flex-1">公會專用格式，建議列印貼於信封上，加速行政處理。</p>
                                         <div className="flex gap-2">
-                                            <a href="./診所表單回寄信封封面.pdf" download className="flex-1 flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-500 hover:text-white py-3 rounded-xl text-sm font-bold transition-all">
+                                            <a href="https://drive.google.com/file/d/1iJynplXGAEMlns0k6yLAXmRaG7Rm9Rwl/view?usp=drive_link" target="_blank" className="flex-1 flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 py-2 rounded-xl text-sm font-bold transition-all shadow-sm hover:shadow hover:-translate-y-0.5">
                                                 <i className="ph-fill ph-file-pdf mr-2 text-lg"></i> PDF
                                             </a>
-                                            <a href="./診所表單回寄信封封面.doc" download className="flex-1 flex items-center justify-center bg-blue-50 text-blue-600 hover:bg-blue-500 hover:text-white py-3 rounded-xl text-sm font-bold transition-all">
+                                            <a href="https://docs.google.com/document/d/1JjL04OHbMmp4TueMK4ZOk6taV4WAYoOI/edit?usp=drive_link&ouid=105783939254236817390&rtpof=true&sd=true" target="_blank" className="flex-1 flex items-center justify-center bg-blue-50 text-blue-600 hover:bg-blue-100 py-2 rounded-xl text-sm font-bold transition-all shadow-sm hover:shadow hover:-translate-y-0.5">
                                                 <i className="ph-fill ph-file-doc mr-2 text-lg"></i> Word
                                             </a>
                                         </div>
@@ -431,22 +434,22 @@
                                         <h3 className="font-bold text-xl text-slate-800 mb-2">行政核銷用</h3>
                                         <p className="text-sm text-slate-500 mb-4">診所端請款必備表單</p>
                                         <div className="space-y-3">
-                                            {/* B01 Dropdown */}
-                                            <a href="https://drive.google.com/file/d/13dqt5XfhB6uk-d4AoSS7aaqgWmZLFqrH/view?usp=sharing" target="_blank" className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
+                                            <a href="https://drive.google.com/file/d/13dqt5XfhB6uk-d4AoSS7aaqgWmZLFqrH/view?usp=drive_link" target="_blank" className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
                                                 <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> B01 送件清單</span>
                                                 <i className="ph-bold ph-download-simple"></i>
                                             </a>
-                                            
-                                            {[
-                                                { name: "B02 撥付確認單", link: "https://drive.google.com/file/d/1LFM1YnAvIsYEqgyAZk4ErQK730L7RhIh/view?usp=drive_link" },
-                                                { name: "B04 診所領據", link: "https://drive.google.com/file/d/1AxByazh8tYNTb3CkfT1om9hfLvEsN5zp/view?usp=drive_link" },
-                                                { name: "診所注意事項", link: "https://drive.google.com/file/d/1_rbKTxaCO6SrmK3C0gfYTAbJilHjtida/view?usp=drive_link" },
-                                            ].map((doc, i) => (
-                                                <a key={i} href={doc.link} target="_blank" className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
-                                                    <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> {doc.name}</span>
-                                                    <i className="ph-bold ph-download-simple"></i>
-                                                </a>
-                                            ))}
+                                            <a href="https://drive.google.com/file/d/1KGGI0xdKKT22BB1_7TtyHnQgvpc7ykIL/view?usp=drive_link" target="_blank" className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
+                                                <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> B02 撥付確認單</span>
+                                                <i className="ph-bold ph-download-simple"></i>
+                                            </a>
+                                            <a href="https://drive.google.com/file/d/1MhOxsppi68M7w8nod0YiheOmcFpzWkEA/view?usp=drive_link" target="_blank" className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
+                                                <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> B04 診所獎勵金領據</span>
+                                                <i className="ph-bold ph-download-simple"></i>
+                                            </a>
+                                            <a href="https://drive.google.com/file/d/15mgzaffxRQhRGCoMiZWF8HbbkbpKDjjV/view?usp=drive_link" target="_blank" className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
+                                                <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> 診所端注意事項</span>
+                                                <i className="ph-bold ph-download-simple"></i>
+                                            </a>
                                         </div>
                                     </div>
 
@@ -464,8 +467,10 @@
                                                 label="A01 糞便篩檢簽收"
                                                 color="orange"
                                                 options={[
-                                                    { name: "完成糞便篩檢300元禮券簽收單 (有欄位/無須填電話)", url: "https://drive.google.com/file/d/1jm9RnXYRGQtExT21ra5yVP3AFO5EyITQ/view?usp=sharing" },
-                                                    { name: "完成糞便篩檢300元禮券簽收單 (無QR碼/無須填電話)", url: "https://drive.google.com/file/d/1GxUxvUj5rkwm5xRT3XZIDFRfts5IrCw7/view?usp=sharing" }
+                                                    { name: "病人標籤貼 / 無須填電話", url: "https://drive.google.com/file/d/1GxUxvUj5rkwm5xRT3XZIDFRfts5IrCw7/view?usp=drive_link" },
+                                                    { name: "病人標籤貼 / 填電話", url: "https://drive.google.com/file/d/1-K4unKb3NDMe1KOgVQy3J5NKdNJPHZH0/view?usp=drive_link" },
+                                                    { name: "有框QRCode框 / 病人標籤貼 / 無須填電話", url: "https://drive.google.com/file/d/1jm9RnXYRGQtExT21ra5yVP3AFO5EyITQ/view?usp=drive_link" },
+                                                    { name: "紙本簽名通用版", url: "https://drive.google.com/file/d/1nBaQr9VOqGluPKsZwI7RjRStRSLHLK8G/view?usp=drive_link" }
                                                 ]}
                                             />
 
@@ -475,8 +480,9 @@
                                                 label="A02 大腸鏡檢簽收"
                                                 color="orange"
                                                 options={[
-                                                    { name: "完成大腸鏡檢查300元禮券簽收單 (無QR版/無須填電話)", url: "https://drive.google.com/file/d/1o60QX3TNDiWEtKEvY3XG29LnIXZS9IDN/view?usp=sharing" },
-                                                    { name: "完成大腸鏡檢查300元禮券簽收單 (無QR版/填電話)", url: "https://drive.google.com/file/d/1ASlNOdKKRMIIZbmWaut_N44JyVrwfwnC/view?usp=sharing" }
+                                                    { name: "病人標籤貼 / 無須填電話", url: "https://drive.google.com/file/d/1o60QX3TNDiWEtKEvY3XG29LnIXZS9IDN/view?usp=drive_link" },
+                                                    { name: "病人標籤貼 / 填電話", url: "https://drive.google.com/file/d/1ASlNOdKKRMIIZbmWaut_N44JyVrwfwnC/view?usp=drive_link" },
+                                                    { name: "紙本簽名通用版", url: "https://drive.google.com/file/d/1UHiyABMNWQsOcyngoZa_RRt1WTjEHTc8/view?usp=drive_link" }
                                                 ]}
                                             />
                                         </div>
