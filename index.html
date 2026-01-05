@@ -271,11 +271,13 @@
             );
         };
 
-        // --- 橫式海報資料 ---
+        // --- 橫式海報資料 (首頁跑馬燈更新順序 1~5) ---
         const MARQUEE_POSTERS = [
-            { id: 1, title: "診所宣導圖", src: "./1診所宣導圖.png" },
-            { id: 2, title: "診所請款與撥款SOP (1)", src: "./診所請款與撥款SOP(1).png" },
-            { id: 3, title: "診所請款與撥款SOP (2)", src: "./診所請款與撥款SOP(2).png" },
+            { id: 1, title: "診所請款與撥款SOP (1)", src: "./診所請款與撥款SOP(1).png" },
+            { id: 2, title: "診所請款與撥款SOP (2)", src: "./診所請款與撥款SOP(2).png" },
+            { id: 3, title: "診所宣導圖", src: "./1診所宣導圖.png" },
+            { id: 4, title: "您的健康，我們買單", src: "./您的健康，我們買單_V2.png" },
+            { id: 5, title: "民眾宣導圖", src: "./民眾宣導圖.png" },
         ];
 
         const LandingPage = () => {
@@ -353,7 +355,7 @@
                         
                         <div className="flex items-center gap-3">
                             <div className="hidden md:block text-xs md:text-sm font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded-full whitespace-nowrap">
-                                v2.8
+                                v2.9
                             </div>
                             
                             {/* Menu Button */}
@@ -492,7 +494,7 @@
 
                     </main>
 
-                    {/* Footer (New Detailed Version) */}
+                    {/* Footer */}
                     <footer className="mt-8 bg-white border-t border-slate-200 pt-10 pb-6">
                         <div className="max-w-7xl mx-auto px-4 md:px-6">
                             <div className="grid md:grid-cols-3 gap-8 mb-8">
