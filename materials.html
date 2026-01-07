@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>教學與海報資源 - 臺南愛(AI)腸篩計畫</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2GEKEXG4VF"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-2GEKEXG4VF');
+    </script>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- React & ReactDOM -->
@@ -14,36 +24,64 @@
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
 
     <style>
         body {
             font-family: 'Noto Sans TC', sans-serif;
-            background-color: #FFF7ED; /* 淺橘色背景 */
+            background-color: #FFF7ED;
+            /* 淺橘色背景 */
             scroll-behavior: smooth;
         }
+
         .fade-in {
             animation: fadeIn 0.5s ease-in-out;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         /* 隱藏滾動條但保留功能 */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
+
         .no-scrollbar {
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
         /* Drawer Backdrop Fade */
-        .backdrop-enter { opacity: 0; }
-        .backdrop-enter-active { opacity: 1; transition: opacity 300ms; }
-        .backdrop-exit { opacity: 1; }
-        .backdrop-exit-active { opacity: 0; transition: opacity 300ms; }
+        .backdrop-enter {
+            opacity: 0;
+        }
+
+        .backdrop-enter-active {
+            opacity: 1;
+            transition: opacity 300ms;
+        }
+
+        .backdrop-exit {
+            opacity: 1;
+        }
+
+        .backdrop-exit-active {
+            opacity: 0;
+            transition: opacity 300ms;
+        }
     </style>
 </head>
+
 <body>
     <div id="root"></div>
 
@@ -69,7 +107,7 @@
 
             return (
                 <div className={`fixed bottom-6 right-6 z-40 transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}>
-                    <button 
+                    <button
                         onClick={scrollToTop}
                         className="bg-orange-600 hover:bg-orange-700 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
                         aria-label="返回頂部"
@@ -83,10 +121,10 @@
         // --- Navigation Drawer Component ---
         const NavigationDrawer = ({ isOpen, onClose, activeSection, onSectionChange }) => {
             const navItems = [
-                { 
+                {
                     id: 'home',
-                    title: '首頁', 
-                    url: 'index.html', 
+                    title: '首頁',
+                    url: 'index.html',
                     icon: 'ph-house',
                     active: false,
                     subItems: [
@@ -94,11 +132,11 @@
                         { id: 'cards-section', label: '各專區入口' }
                     ]
                 },
-                { 
+                {
                     id: 'clinic',
-                    title: '合作診所專區', 
-                    url: 'clinic.html', 
-                    icon: 'ph-stethoscope', 
+                    title: '合作診所專區',
+                    url: 'clinic.html',
+                    icon: 'ph-stethoscope',
                     active: false,
                     subItems: [
                         { id: 'sop', label: '執行作業 SOP' },
@@ -107,10 +145,10 @@
                         { id: 'qa', label: '必做任務與 QA' }
                     ]
                 },
-                { 
+                {
                     id: 'materials',
-                    title: '數位教材與海報', 
-                    url: 'materials.html', 
+                    title: '數位教材與海報',
+                    url: 'materials.html',
                     icon: 'ph-graduation-cap',
                     active: true, // 當前頁面
                     subItems: [
@@ -119,10 +157,10 @@
                         { id: 'doc', label: '文件下載' }
                     ]
                 },
-                { 
+                {
                     id: 'competition',
-                    title: '競賽評比專區', 
-                    url: 'competition.html', 
+                    title: '競賽評比專區',
+                    url: 'competition.html',
                     icon: 'ph-trophy',
                     active: false,
                 },
@@ -151,7 +189,7 @@
 
             return (
                 <>
-                    <div 
+                    <div
                         className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
                         onClick={onClose}
                     />
@@ -169,7 +207,7 @@
                             {navItems.map((item) => (
                                 <div key={item.id} className="mb-2">
                                     <div className={`flex items-center w-full rounded-xl transition-all ${item.active ? 'bg-orange-100 text-orange-800' : 'text-slate-600 hover:bg-slate-50'}`}>
-                                        <a 
+                                        <a
                                             href={item.active ? '#' : item.url}
                                             onClick={(e) => {
                                                 if (item.active) e.preventDefault();
@@ -181,7 +219,7 @@
                                             {item.active && <span className="ml-2 text-[10px] bg-orange-200 text-orange-800 px-2 py-0.5 rounded-full">目前</span>}
                                         </a>
                                         {item.subItems && (
-                                            <button 
+                                            <button
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     e.stopPropagation();
@@ -230,10 +268,10 @@
         // --- Dropdown Component for Docs ---
         const DocDropdown = ({ icon, label, color, options }) => {
             const [isOpen, setIsOpen] = useState(false);
-            
+
             return (
                 <div className="w-full mb-2 last:mb-0 transition-all duration-300">
-                    <button 
+                    <button
                         onClick={() => setIsOpen(!isOpen)}
                         className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all text-xs font-bold text-${color}-600 bg-white border-${color}-200 hover:bg-${color}-50 shadow-sm`}
                     >
@@ -243,14 +281,22 @@
                         </div>
                         <i className={`ph-bold ph-caret-down transition-transform duration-300 ${isOpen ? 'rotate-180' : ''} ml-2 flex-shrink-0`}></i>
                     </button>
-                    
+
                     <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'}`}>
                         <div className={`bg-slate-50 border border-slate-200 rounded-xl overflow-hidden border-l-4 border-l-${color}-400`}>
                             {options.map((opt, idx) => (
-                                <a 
+                                <a
                                     key={idx}
                                     href={opt.url}
                                     target="_blank"
+                                    onClick={() => {
+                                        if (typeof gtag === 'function') {
+                                            gtag('event', 'download', {
+                                                'event_category': 'admin_doc',
+                                                'event_label': opt.name
+                                            });
+                                        }
+                                    }}
                                     className="block px-3 py-2.5 text-[11px] text-slate-600 hover:bg-white hover:text-blue-600 border-b last:border-b-0 border-slate-200 break-words leading-relaxed flex items-start group"
                                 >
                                     <i className="ph-fill ph-download-simple mr-2 mt-0.5 text-slate-400 group-hover:text-blue-500 transition-colors"></i>
@@ -268,7 +314,7 @@
             { id: 1, title: "診所請款與撥款SOP (1)", desc: "請款流程步驟說明", src: "./診所請款與撥款SOP(1).png" },
             { id: 2, title: "診所請款與撥款SOP (2)", desc: "撥款注意事項與時程", src: "./診所請款與撥款SOP(2).png" },
             { id: 3, title: "診所宣導圖", desc: "診所大腸癌篩檢服務宣導", src: "./1診所宣導圖.png" },
-            { id: 4, title: "您的健康，我們買單", desc: "獎勵活動辦法與金額說明", src: "./您的健康，我們買單_V2.png" },            
+            { id: 4, title: "您的健康，我們買單", desc: "獎勵活動辦法與金額說明", src: "./您的健康，我們買單_V2.png" },
             { id: 5, title: "民眾宣導圖", desc: "大腸癌篩檢的重要性與資格說明", src: "./民眾宣導圖.png" },
             { id: 6, title: "愛腸篩流程圖", desc: "簡單易懂的篩檢與領獎流程", src: "./愛腸篩流程圖.png" },
         ];
@@ -299,7 +345,7 @@
         const Header = ({ onMenuClick }) => (
             <header className="bg-white/90 backdrop-blur shadow-sm sticky top-0 z-50 border-b-4 border-orange-400">
                 <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-                    <div className="flex items-center cursor-pointer" onClick={() => window.location.href='index.html'}>
+                    <div className="flex items-center cursor-pointer" onClick={() => window.location.href = 'index.html'}>
                         <div className="p-2 rounded-full bg-orange-100 text-orange-600 mr-3">
                             <i className="ph-fill ph-student text-xl"></i>
                         </div>
@@ -309,7 +355,7 @@
                         <a href="index.html" className="hidden md:flex text-sm text-gray-500 hover:text-gray-800 items-center bg-gray-100 px-3 py-1.5 rounded-lg transition-colors mr-2">
                             <i className="ph-bold ph-arrow-u-up-left mr-2"></i> 回首頁
                         </a>
-                        <button 
+                        <button
                             onClick={onMenuClick}
                             className="w-10 h-10 rounded-xl bg-slate-50 hover:bg-orange-50 text-slate-600 hover:text-orange-600 flex items-center justify-center transition-all focus:ring-2 focus:ring-orange-200"
                             aria-label="開啟選單"
@@ -323,7 +369,7 @@
 
         // --- Main Component ---
         const MaterialsPage = () => {
-            const [activeTab, setActiveTab] = useState('video'); 
+            const [activeTab, setActiveTab] = useState('video');
             const [isGlobalNavOpen, setIsGlobalNavOpen] = useState(false);
 
             useEffect(() => {
@@ -341,18 +387,27 @@
             };
 
             const handleDownload = (src, title) => {
-                 const link = document.createElement('a');
-                 link.href = src;
-                 link.download = title;
-                 document.body.appendChild(link);
-                 link.click();
-                 document.body.removeChild(link);
+                // Google Analytics Tracking
+                if (typeof gtag === 'function') {
+                    gtag('event', 'download', {
+                        'event_category': 'poster',
+                        'event_label': title,
+                        'file_name': src
+                    });
+                }
+
+                const link = document.createElement('a');
+                link.href = src;
+                link.download = title;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             };
 
             const scrollToSection = (id) => {
                 const element = document.getElementById(id);
                 if (element) {
-                    const headerOffset = 200; 
+                    const headerOffset = 200;
                     const elementPosition = element.getBoundingClientRect().top;
                     const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
                     window.scrollTo({
@@ -365,9 +420,9 @@
             return (
                 <div className="min-h-screen pb-12 relative">
                     <BackToTop />
-                    
-                    <NavigationDrawer 
-                        isOpen={isGlobalNavOpen} 
+
+                    <NavigationDrawer
+                        isOpen={isGlobalNavOpen}
                         onClose={() => setIsGlobalNavOpen(false)}
                         activeSection={activeTab}
                         onSectionChange={handleSectionChange}
@@ -378,26 +433,26 @@
                     {/* Main Tab Navigation (Sticky) */}
                     <div className="bg-white border-b border-orange-100 mb-8 sticky top-16 z-40 shadow-sm">
                         <div className="max-w-5xl mx-auto flex">
-                             <button 
+                            <button
                                 onClick={() => setActiveTab('video')}
                                 className={`flex-1 py-4 text-center font-bold text-lg flex items-center justify-center transition-all ${activeTab === 'video' ? 'text-orange-600 border-b-4 border-orange-500 bg-orange-50' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}
                             >
                                 <i className="ph-fill ph-monitor-play mr-2 text-xl md:text-2xl"></i> 影片教材
                             </button>
-                            <button 
+                            <button
                                 onClick={() => setActiveTab('poster')}
                                 className={`flex-1 py-4 text-center font-bold text-lg flex items-center justify-center transition-all ${activeTab === 'poster' ? 'text-pink-600 border-b-4 border-pink-500 bg-pink-50' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}
                             >
                                 <i className="ph-fill ph-images-square mr-2 text-xl md:text-2xl"></i> 海報與模板
                             </button>
-                             <button 
+                            <button
                                 onClick={() => setActiveTab('doc')}
                                 className={`flex-1 py-4 text-center font-bold text-lg flex items-center justify-center transition-all ${activeTab === 'doc' ? 'text-blue-600 border-b-4 border-blue-500 bg-blue-50' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}
                             >
                                 <i className="ph-fill ph-files mr-2 text-xl md:text-2xl"></i> 文件下載
                             </button>
                         </div>
-                        
+
                         {/* Sub-navigation for Posters */}
                         {activeTab === 'poster' && (
                             <div className="bg-slate-50 border-t border-slate-200 py-2 overflow-x-auto no-scrollbar shadow-inner">
@@ -436,21 +491,30 @@
                                             <p className="text-gray-500">包含計畫說明、系統操作教學及民眾衛教資訊。</p>
                                         </div>
                                     </div>
-                                    
+
                                     <div className="w-full rounded-2xl overflow-hidden shadow-xl bg-black aspect-video mb-6">
-                                        <iframe 
+                                        <iframe
                                             className="w-full h-full"
-                                            src="https://www.youtube.com/embed/_WNa0WP02qg?si=djna1HTjRo0mwDgy" 
-                                            title="YouTube video player" 
-                                            frameBorder="0" 
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                            referrerPolicy="strict-origin-when-cross-origin" 
+                                            src="https://youtube.com/shorts/29a1tZIn3ng"
+                                            title="YouTube video player"
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerPolicy="strict-origin-when-cross-origin"
                                             allowFullScreen>
                                         </iframe>
                                     </div>
 
                                     <div className="text-center">
-                                        <a href="https://youtube.com/playlist?list=PLqzBM0t70yw06TUHe9Mbe15ScsbO-THVy&si=Dqd6Zp7wPoRFAWWx" target="_blank" className="inline-flex items-center px-6 py-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors shadow-md">
+                                        <a href="https://youtube.com/playlist?list=PLqzBM0t70yw06TUHe9Mbe15ScsbO-THVy&si=Dqd6Zp7wPoRFAWWx" target="_blank"
+                                            onClick={() => {
+                                                if (typeof gtag === 'function') {
+                                                    gtag('event', 'click_external', {
+                                                        'event_category': 'outbound',
+                                                        'event_label': 'youtube_playlist'
+                                                    });
+                                                }
+                                            }}
+                                            className="inline-flex items-center px-6 py-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors shadow-md">
                                             <i className="ph-fill ph-youtube-logo mr-2 text-xl"></i>
                                             查看 YouTube 完整播放清單
                                         </a>
@@ -477,13 +541,13 @@
                                         {HORIZONTAL_POSTERS.map((poster) => (
                                             <div key={poster.id} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group flex flex-col">
                                                 <div className="relative aspect-[16/9] bg-gray-100 overflow-hidden">
-                                                    <img 
-                                                        src={poster.src} 
-                                                        alt={poster.title} 
-                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                                                    <img
+                                                        src={poster.src}
+                                                        alt={poster.title}
+                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                                         onError={(e) => {
-                                                            e.target.onerror = null; 
-                                                            e.target.src='https://placehold.co/1200x675/e2e8f0/64748b?text=Image+Loading...';
+                                                            e.target.onerror = null;
+                                                            e.target.src = 'https://placehold.co/1200x675/e2e8f0/64748b?text=Image+Loading...';
                                                         }}
                                                     />
                                                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center space-y-3">
@@ -511,13 +575,13 @@
                                         {VERTICAL_POSTERS.map((poster) => (
                                             <div key={poster.id} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group flex flex-col">
                                                 <div className="relative aspect-[2/3] bg-gray-100 overflow-hidden">
-                                                    <img 
-                                                        src={poster.src} 
-                                                        alt={poster.title} 
+                                                    <img
+                                                        src={poster.src}
+                                                        alt={poster.title}
                                                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                                         onError={(e) => {
-                                                            e.target.onerror = null; 
-                                                            e.target.src='https://placehold.co/1000x1500/e2e8f0/64748b?text=Image+Loading...';
+                                                            e.target.onerror = null;
+                                                            e.target.src = 'https://placehold.co/1000x1500/e2e8f0/64748b?text=Image+Loading...';
                                                         }}
                                                     />
                                                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center space-y-3">
@@ -551,9 +615,9 @@
                                                         {item.tag}
                                                     </div>
                                                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                                         <button onClick={() => handleDownload(item.src, item.title)} className="text-white bg-purple-600 p-3 rounded-full shadow-lg hover:bg-purple-700 transform hover:scale-110 transition-all">
+                                                        <button onClick={() => handleDownload(item.src, item.title)} className="text-white bg-purple-600 p-3 rounded-full shadow-lg hover:bg-purple-700 transform hover:scale-110 transition-all">
                                                             <i className="ph-bold ph-download-simple text-xl"></i>
-                                                         </button>
+                                                        </button>
                                                     </div>
                                                 </div>
                                                 <h4 className="text-center font-bold text-slate-700 text-sm">{item.title}</h4>
@@ -573,19 +637,19 @@
                                         {QR_TOGETHER.map((item) => (
                                             <div key={item.id} className="bg-white rounded-xl shadow-md p-3 border border-green-100 hover:border-green-300 transition-all group">
                                                 <div className="aspect-[3/4] bg-slate-50 rounded-lg overflow-hidden mb-3 border border-slate-100 relative">
-                                                    <img 
-                                                        src={item.src} 
-                                                        alt={item.title} 
-                                                        className="w-full h-full object-contain" 
+                                                    <img
+                                                        src={item.src}
+                                                        alt={item.title}
+                                                        className="w-full h-full object-contain"
                                                         onError={(e) => {
-                                                            e.target.onerror = null; 
-                                                            e.target.src='https://placehold.co/400x533/f0fdf4/166534?text=Template';
+                                                            e.target.onerror = null;
+                                                            e.target.src = 'https://placehold.co/400x533/f0fdf4/166534?text=Template';
                                                         }}
                                                     />
                                                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                                         <button onClick={() => handleDownload(item.src, item.title)} className="text-white bg-green-600 p-3 rounded-full shadow-lg hover:bg-green-700 transform hover:scale-110 transition-all">
+                                                        <button onClick={() => handleDownload(item.src, item.title)} className="text-white bg-green-600 p-3 rounded-full shadow-lg hover:bg-green-700 transform hover:scale-110 transition-all">
                                                             <i className="ph-bold ph-download-simple text-xl"></i>
-                                                         </button>
+                                                        </button>
                                                     </div>
                                                 </div>
                                                 <h4 className="text-center font-bold text-slate-700 text-sm">{item.title}</h4>
@@ -613,10 +677,10 @@
                                         <h3 className="font-bold text-xl text-slate-800 mb-2">寄件信封封面</h3>
                                         <p className="text-sm text-slate-500 mb-6 flex-1">公會專用格式，建議列印貼於信封上，加速行政處理。</p>
                                         <div className="flex gap-2">
-                                            <a href="https://drive.google.com/file/d/1wno7T6VeutF78JhvJsUvuNitfKXqugoC/view?usp=drive_link" target="_blank" className="flex-1 flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 py-2 rounded-xl text-sm font-bold transition-all shadow-sm hover:shadow hover:-translate-y-0.5">
+                                            <a href="https://drive.google.com/file/d/1wno7T6VeutF78JhvJsUvuNitfKXqugoC/view?usp=drive_link" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'admin_doc', 'event_label': '寄件信封封面-PDF' })} className="flex-1 flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 py-2 rounded-xl text-sm font-bold transition-all shadow-sm hover:shadow hover:-translate-y-0.5">
                                                 <i className="ph-fill ph-file-pdf mr-2 text-lg"></i> PDF
                                             </a>
-                                            <a href="https://docs.google.com/document/d/1Y3tgBThCRw6MkOGEwdQpWfk1bAGu5rZt/edit?usp=drive_link&ouid=105148262710817039603&rtpof=true&sd=true" target="_blank" className="flex-1 flex items-center justify-center bg-blue-50 text-blue-600 hover:bg-blue-100 py-2 rounded-xl text-sm font-bold transition-all shadow-sm hover:shadow hover:-translate-y-0.5">
+                                            <a href="https://docs.google.com/document/d/1Y3tgBThCRw6MkOGEwdQpWfk1bAGu5rZt/edit?usp=drive_link&ouid=105148262710817039603&rtpof=true&sd=true" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'admin_doc', 'event_label': '寄件信封封面-Word' })} className="flex-1 flex items-center justify-center bg-blue-50 text-blue-600 hover:bg-blue-100 py-2 rounded-xl text-sm font-bold transition-all shadow-sm hover:shadow hover:-translate-y-0.5">
                                                 <i className="ph-fill ph-file-doc mr-2 text-lg"></i> Word
                                             </a>
                                         </div>
@@ -631,29 +695,29 @@
                                         <p className="text-sm text-slate-500 mb-4">診所端請款必備表單</p>
                                         <div className="space-y-3">
                                             {/* B01 (Old B02) */}
-                                            <a href="https://drive.google.com/file/d/1I5pERYTjJxXbn1epqojyRjxVmix_u5Er/view?usp=drive_link" target="_blank" className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
-                                                <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> 公會 撥款確認單 B01</span>
+                                            <a href="https://drive.google.com/file/d/1I5pERYTjJxXbn1epqojyRjxVmix_u5Er/view?usp=drive_link" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'admin_doc', 'event_label': 'B01 公會 撥款確認單' })} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
+                                                <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> B01 公會 撥款確認單</span>
                                                 <i className="ph-bold ph-download-simple"></i>
                                             </a>
                                             {/* B02 (Old B04) */}
-                                            <a href="https://drive.google.com/file/d/1yl5WO849kkvwm0exQFQuUdv5Nf4OFhK6/view?usp=drive_link" target="_blank" className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
-                                                <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> 公會 診所獎勵領據 B02</span>
+                                            <a href="https://drive.google.com/file/d/1yl5WO849kkvwm0exQFQuUdv5Nf4OFhK6/view?usp=drive_link" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'admin_doc', 'event_label': 'B02 公會 診所獎勵金領據' })} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
+                                                <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> B02 公會 診所獎勵金領據</span>
                                                 <i className="ph-bold ph-download-simple"></i>
                                             </a>
                                             {/* B03 (Old B01) */}
-                                            <a href="https://drive.google.com/file/d/1krl229ocdg48NzFwRxyxWRwlaHh1go92/view?usp=drive_link" target="_blank" className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
-                                                <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> 公會 送件清單 B03</span>
+                                            <a href="https://drive.google.com/file/d/1krl229ocdg48NzFwRxyxWRwlaHh1go92/view?usp=drive_link" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'admin_doc', 'event_label': 'B03 公會 診所送件清單' })} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
+                                                <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> B03 公會 診所送件清單</span>
                                                 <i className="ph-bold ph-download-simple"></i>
                                             </a>
-                                            <a href="https://drive.google.com/file/d/1MPDBy_xjOmgwndERKy1KIV3z42Y2pCxa/view?usp=drive_link" target="_blank" className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
+                                            <a href="https://drive.google.com/file/d/1MPDBy_xjOmgwndERKy1KIV3z42Y2pCxa/view?usp=drive_link" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'admin_doc', 'event_label': '診所端注意事項' })} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
                                                 <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> 診所端注意事項</span>
                                                 <i className="ph-bold ph-download-simple"></i>
                                             </a>
                                         </div>
                                     </div>
 
-                                     {/* 3. 民眾簽署用 */}
-                                     <div className="bg-white border-2 border-orange-100 rounded-3xl p-6 hover:shadow-xl transition-shadow group">
+                                    {/* 3. 民眾簽署用 */}
+                                    <div className="bg-white border-2 border-orange-100 rounded-3xl p-6 hover:shadow-xl transition-shadow group">
                                         <div className="w-12 h-12 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600 mb-4 text-2xl group-hover:bg-orange-600 group-hover:text-white transition-colors">
                                             <i className="ph-fill ph-user-check"></i>
                                         </div>
@@ -661,29 +725,29 @@
                                         <p className="text-sm text-slate-500 mb-4">領取 $300 獎勵金證明</p>
                                         <div className="space-y-3">
                                             {/* A01 Dropdown (Renamed) */}
-                                            <DocDropdown 
+                                            <DocDropdown
                                                 icon="ph-file-text"
-                                                label="民眾 FOBT A01"
+                                                label="A01 民眾領款簽收單 (FOBT篩檢)"
                                                 color="orange"
                                                 options={[
                                                     { name: "紙本簽名通用版", url: "https://drive.google.com/file/d/1M3pEVWqnisWfgbUb-CmCDnVHaPscwM2I/view?usp=drive_link" },
                                                     { name: "病人標籤貼 / 無須填電話", url: "https://drive.google.com/file/d/19ygxpEjvDb_3-cU8KK9zZnQ2ujsDdIf0/view?usp=drive_link" },
                                                     { name: "病人標籤貼 / 填電話", url: "https://drive.google.com/file/d/14K6GKTywYpRyTEOeWK2phBzWZuB3G32a/view?usp=drive_link" },
                                                     { name: "有框QRCode框 / 病人標籤貼 / 無須填電話", url: "https://drive.google.com/file/d/19ygxpEjvDb_3-cU8KK9zZnQ2ujsDdIf0/view?usp=drive_link" }
-                                                    
+
                                                 ]}
                                             />
 
                                             {/* A02 Dropdown (Renamed) */}
-                                            <DocDropdown 
+                                            <DocDropdown
                                                 icon="ph-file-text"
-                                                label="民眾 大腸鏡 A02"
+                                                label="A02 民眾領款簽收單 (大腸鏡檢查)"
                                                 color="orange"
                                                 options={[
                                                     { name: "紙本簽名通用版", url: "https://drive.google.com/file/d/1yUxTCCXwuruxn14bStgH3lJ38lSTLZKN/view?usp=drive_link" },
                                                     { name: "病人標籤貼 / 無須填電話", url: "https://drive.google.com/file/d/1fb7aqSARVKPDx-KCn7vhGBxXfgAGuLfA/view?usp=drive_link" },
                                                     { name: "病人標籤貼 / 填電話", url: "https://drive.google.com/file/d/1GFkZKbHsEir8hN0Ix87hJ8Ow6BeEgEqo/view?usp=drive_link" }
-                                                    
+
                                                 ]}
                                             />
                                         </div>
@@ -705,4 +769,5 @@
         root.render(<MaterialsPage />);
     </script>
 </body>
+
 </html>

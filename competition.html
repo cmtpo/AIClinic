@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>競賽評比專區 - 臺南愛(AI)腸篩計畫</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2GEKEXG4VF"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-2GEKEXG4VF');
+    </script>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- React & ReactDOM -->
@@ -14,47 +24,77 @@
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
 
     <style>
         body {
             font-family: 'Noto Sans TC', sans-serif;
-            background-color: #FEF9C3; /* 淺黃色背景 */
+            background-color: #FEF9C3;
+            /* 淺黃色背景 */
             scroll-behavior: smooth;
         }
+
         .fade-in {
             animation: fadeIn 0.5s ease-in-out;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         /* 自定義側邊欄滾動條 */
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
         }
+
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f5f9; 
+            background: #f1f5f9;
             border-radius: 4px;
         }
+
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
+            background: #cbd5e1;
             border-radius: 4px;
         }
+
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
+            background: #94a3b8;
         }
+
         /* Drawer Backdrop Fade */
-        .backdrop-enter { opacity: 0; }
-        .backdrop-enter-active { opacity: 1; transition: opacity 300ms; }
-        .backdrop-exit { opacity: 1; }
-        .backdrop-exit-active { opacity: 0; transition: opacity 300ms; }
-        
+        .backdrop-enter {
+            opacity: 0;
+        }
+
+        .backdrop-enter-active {
+            opacity: 1;
+            transition: opacity 300ms;
+        }
+
+        .backdrop-exit {
+            opacity: 1;
+        }
+
+        .backdrop-exit-active {
+            opacity: 0;
+            transition: opacity 300ms;
+        }
+
         .medal-icon {
             filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.2));
         }
     </style>
 </head>
+
 <body>
     <div id="root"></div>
 
@@ -80,7 +120,7 @@
 
             return (
                 <div className={`fixed bottom-6 right-6 z-40 transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}>
-                    <button 
+                    <button
                         onClick={scrollToTop}
                         className="bg-yellow-600 hover:bg-yellow-700 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2"
                         aria-label="返回頂部"
@@ -94,10 +134,10 @@
         // --- Navigation Drawer Component (新增) ---
         const NavigationDrawer = ({ isOpen, onClose, activeSection, onSectionChange }) => {
             const navItems = [
-                { 
+                {
                     id: 'home',
-                    title: '首頁', 
-                    url: 'index.html', 
+                    title: '首頁',
+                    url: 'index.html',
                     icon: 'ph-house',
                     active: false,
                     subItems: [
@@ -105,11 +145,11 @@
                         { id: 'cards-section', label: '各專區入口' }
                     ]
                 },
-                { 
+                {
                     id: 'clinic',
-                    title: '合作診所專區', 
-                    url: 'clinic.html', 
-                    icon: 'ph-stethoscope', 
+                    title: '合作診所專區',
+                    url: 'clinic.html',
+                    icon: 'ph-stethoscope',
                     active: false,
                     subItems: [
                         { id: 'sop', label: '執行作業 SOP' },
@@ -118,10 +158,10 @@
                         { id: 'qa', label: '必做任務與 QA' }
                     ]
                 },
-                { 
+                {
                     id: 'materials',
-                    title: '數位教材與海報', 
-                    url: 'materials.html', 
+                    title: '數位教材與海報',
+                    url: 'materials.html',
                     icon: 'ph-graduation-cap',
                     active: false,
                     subItems: [
@@ -130,10 +170,10 @@
                         { id: 'doc', label: '文件下載' }
                     ]
                 },
-                { 
+                {
                     id: 'competition',
-                    title: '競賽評比專區', 
-                    url: 'competition.html', 
+                    title: '競賽評比專區',
+                    url: 'competition.html',
                     icon: 'ph-trophy',
                     active: true, // 當前頁面
                 },
@@ -162,7 +202,7 @@
 
             return (
                 <>
-                    <div 
+                    <div
                         className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
                         onClick={onClose}
                     />
@@ -180,7 +220,7 @@
                             {navItems.map((item) => (
                                 <div key={item.id} className="mb-2">
                                     <div className={`flex items-center w-full rounded-xl transition-all ${item.active ? 'bg-yellow-100 text-yellow-800' : 'text-slate-600 hover:bg-slate-50'}`}>
-                                        <a 
+                                        <a
                                             href={item.active ? '#' : item.url}
                                             onClick={(e) => {
                                                 if (item.active) e.preventDefault();
@@ -192,7 +232,7 @@
                                             {item.active && <span className="ml-2 text-[10px] bg-yellow-200 text-yellow-800 px-2 py-0.5 rounded-full">目前</span>}
                                         </a>
                                         {item.subItems && (
-                                            <button 
+                                            <button
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     e.stopPropagation();
@@ -242,7 +282,7 @@
         const Header = ({ onMenuClick }) => (
             <header className="bg-white/90 backdrop-blur shadow-sm sticky top-0 z-50 border-b-4 border-yellow-500">
                 <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-                    <div className="flex items-center cursor-pointer" onClick={() => window.location.href='index.html'}>
+                    <div className="flex items-center cursor-pointer" onClick={() => window.location.href = 'index.html'}>
                         <div className="p-2 rounded-full bg-yellow-100 text-yellow-600 mr-3">
                             <i className="ph-fill ph-trophy text-xl"></i>
                         </div>
@@ -252,7 +292,7 @@
                         <a href="index.html" className="hidden md:flex text-sm text-gray-500 hover:text-gray-800 flex items-center bg-gray-100 px-3 py-1.5 rounded-lg transition-colors mr-2">
                             <i className="ph-bold ph-arrow-u-up-left mr-2"></i> 回首頁
                         </a>
-                        <button 
+                        <button
                             onClick={onMenuClick}
                             className="w-10 h-10 rounded-xl bg-slate-50 hover:bg-yellow-50 text-slate-600 hover:text-yellow-600 flex items-center justify-center transition-all focus:ring-2 focus:ring-yellow-200"
                             aria-label="開啟選單"
@@ -299,9 +339,9 @@
             return (
                 <div className="min-h-screen bg-yellow-50 fade-in relative">
                     <BackToTop />
-                    
-                    <NavigationDrawer 
-                        isOpen={isGlobalNavOpen} 
+
+                    <NavigationDrawer
+                        isOpen={isGlobalNavOpen}
                         onClose={() => setIsGlobalNavOpen(false)}
                         onSectionChange={scrollToSection}
                     />
@@ -310,19 +350,19 @@
 
                     {/* Lightbox Overlay */}
                     {lightboxImg && (
-                        <div 
+                        <div
                             className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300"
                             onClick={() => setLightboxImg(null)}
                         >
-                            <button 
+                            <button
                                 className="absolute top-4 right-4 text-white bg-white/20 hover:bg-white/40 rounded-full w-10 h-10 flex items-center justify-center transition-colors"
                                 onClick={() => setLightboxImg(null)}
                             >
                                 <i className="ph-bold ph-x text-xl"></i>
                             </button>
-                            <img 
-                                src={lightboxImg} 
-                                alt="Full screen preview" 
+                            <img
+                                src={lightboxImg}
+                                alt="Full screen preview"
                                 className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl animate-in zoom-in-95 duration-200"
                                 onClick={(e) => e.stopPropagation()} // Prevent closing when clicking the image itself
                             />
@@ -330,7 +370,7 @@
                     )}
 
                     <main className="max-w-5xl mx-auto px-4 py-8 fade-in">
-                        
+
                         {/* 1. Hero Section */}
                         <div className="text-center mb-12">
                             <h2 className="text-3xl md:text-4xl font-black text-slate-800 mb-4 tracking-tight">
@@ -354,9 +394,18 @@
                                 </h3>
                                 <p className="text-slate-500 text-sm">詳細積分計算公式與同分判定標準請參閱附件。</p>
                             </div>
-                            <a 
-                                href="https://drive.google.com/file/d/18I-NzYz5EyMgXQ2F3ierGcI45mC491Ah/view?usp=sharing" 
+                            <a
+                                href="https://drive.google.com/file/d/18I-NzYz5EyMgXQ2F3ierGcI45mC491Ah/view?usp=sharing"
                                 target="_blank"
+                                onClick={() => {
+                                    if (typeof gtag === 'function') {
+                                        gtag('event', 'download', {
+                                            'event_category': 'competition_doc',
+                                            'event_label': '完整競賽評分辦法-PDF',
+                                            'file_name': '完整競賽評分辦法-PDF'
+                                        });
+                                    }
+                                }}
                                 className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-yellow-300/50 flex items-center whitespace-nowrap"
                             >
                                 <i className="ph-bold ph-download-simple mr-2"></i>
@@ -370,22 +419,30 @@
                                 <i className="ph-fill ph-presentation-chart text-yellow-600 mr-2"></i>
                                 競賽重點摘要圖
                             </h3>
-                            <div 
+                            <div
                                 className="bg-white p-2 rounded-2xl shadow-xl border-4 border-yellow-100 overflow-hidden max-w-3xl w-full cursor-zoom-in group relative"
-                                onClick={() => setLightboxImg("./競賽重點摘要_圖宣.png")}
+                                onClick={() => {
+                                    setLightboxImg("./競賽重點摘要_圖宣.png");
+                                    if (typeof gtag === 'function') {
+                                        gtag('event', 'view_image', {
+                                            'event_category': 'competition_visual',
+                                            'event_label': '競賽重點摘要_圖宣'
+                                        });
+                                    }
+                                }}
                             >
                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors z-10 flex items-center justify-center">
                                     <div className="opacity-0 group-hover:opacity-100 bg-black/60 text-white px-4 py-2 rounded-full text-sm font-bold backdrop-blur-sm transition-opacity">
                                         <i className="ph-bold ph-arrows-out-simple mr-2"></i> 點擊放大檢視
                                     </div>
                                 </div>
-                                <img 
-                                    src="./競賽重點摘要_圖宣.png" 
-                                    alt="競賽重點摘要海報" 
+                                <img
+                                    src="./競賽重點摘要_圖宣.png"
+                                    alt="競賽重點摘要海報"
                                     className="w-full h-auto rounded-xl"
                                     onError={(e) => {
-                                        e.target.onerror = null; 
-                                        e.target.src='https://placehold.co/1715x2445/FEF9C3/CA8A04?text=競賽重點摘要_圖宣.png';
+                                        e.target.onerror = null;
+                                        e.target.src = 'https://placehold.co/1715x2445/FEF9C3/CA8A04?text=競賽重點摘要_圖宣.png';
                                     }}
                                 />
                             </div>
@@ -456,7 +513,7 @@
                                 獎勵名額與獎金 (每組皆有)
                             </h3>
                             <p className="text-slate-500 text-sm mb-6">總獎金高達 50 萬元，兩組合計共 120 個獲獎名額</p>
-                            
+
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                 <div className="bg-gradient-to-br from-yellow-100 to-yellow-50 rounded-xl p-4 border border-yellow-200 shadow-sm flex flex-col items-center">
                                     <div className="text-4xl mb-2 medal-icon">🥇</div>
@@ -493,4 +550,5 @@
         root.render(<CompetitionPage />);
     </script>
 </body>
+
 </html>
