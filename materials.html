@@ -495,7 +495,7 @@
                                     <div className="w-full rounded-2xl overflow-hidden shadow-xl bg-black aspect-video mb-6">
                                         <iframe
                                             className="w-full h-full"
-                                            src="https://youtube.com/shorts/29a1tZIn3ng"
+                                            src="https://www.youtube.com/embed/29a1tZIn3ng?si=qoU1me-ScOrKExLB"
                                             title="YouTube video player"
                                             frameBorder="0"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -521,247 +521,252 @@
                                     </div>
                                 </div>
                             </div>
-                        )}
+                        )
+                        }
 
                         {/* Tab Content 2: Poster & Templates */}
-                        {activeTab === 'poster' && (
-                            <div className="fade-in pb-20">
-                                <div className="mb-8 text-center pt-2">
-                                    <h2 className="text-3xl font-black text-gray-800 mb-2">衛教海報與素材</h2>
-                                    <p className="text-gray-600">提供高解析度圖檔與 QR Code 素材，診所可自行下載列印張貼</p>
-                                </div>
+                        {
+                            activeTab === 'poster' && (
+                                <div className="fade-in pb-20">
+                                    <div className="mb-8 text-center pt-2">
+                                        <h2 className="text-3xl font-black text-gray-800 mb-2">衛教海報與素材</h2>
+                                        <p className="text-gray-600">提供高解析度圖檔與 QR Code 素材，診所可自行下載列印張貼</p>
+                                    </div>
 
-                                {/* Section 1: 橫式海報 */}
-                                <div id="sec-horizontal" className="mb-12 scroll-mt-48">
-                                    <div className="flex items-center mb-6">
-                                        <div className="h-8 w-2 bg-pink-500 rounded-full mr-3"></div>
-                                        <h3 className="text-xl font-bold text-gray-800">橫式海報 / 診所 SOP</h3>
-                                    </div>
-                                    <div className="grid md:grid-cols-2 gap-8">
-                                        {HORIZONTAL_POSTERS.map((poster) => (
-                                            <div key={poster.id} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group flex flex-col">
-                                                <div className="relative aspect-[16/9] bg-gray-100 overflow-hidden">
-                                                    <img
-                                                        src={poster.src}
-                                                        alt={poster.title}
-                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                                        onError={(e) => {
-                                                            e.target.onerror = null;
-                                                            e.target.src = 'https://placehold.co/1200x675/e2e8f0/64748b?text=Image+Loading...';
-                                                        }}
-                                                    />
-                                                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center space-y-3">
-                                                        <button onClick={() => handleDownload(poster.src, poster.title)} className="bg-pink-500 text-white px-6 py-2 rounded-full font-bold text-sm hover:bg-pink-600 transition-colors flex items-center shadow-lg">
-                                                            <i className="ph-bold ph-download-simple mr-2"></i> 下載原圖
-                                                        </button>
+                                    {/* Section 1: 橫式海報 */}
+                                    <div id="sec-horizontal" className="mb-12 scroll-mt-48">
+                                        <div className="flex items-center mb-6">
+                                            <div className="h-8 w-2 bg-pink-500 rounded-full mr-3"></div>
+                                            <h3 className="text-xl font-bold text-gray-800">橫式海報 / 診所 SOP</h3>
+                                        </div>
+                                        <div className="grid md:grid-cols-2 gap-8">
+                                            {HORIZONTAL_POSTERS.map((poster) => (
+                                                <div key={poster.id} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group flex flex-col">
+                                                    <div className="relative aspect-[16/9] bg-gray-100 overflow-hidden">
+                                                        <img
+                                                            src={poster.src}
+                                                            alt={poster.title}
+                                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                            onError={(e) => {
+                                                                e.target.onerror = null;
+                                                                e.target.src = 'https://placehold.co/1200x675/e2e8f0/64748b?text=Image+Loading...';
+                                                            }}
+                                                        />
+                                                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center space-y-3">
+                                                            <button onClick={() => handleDownload(poster.src, poster.title)} className="bg-pink-500 text-white px-6 py-2 rounded-full font-bold text-sm hover:bg-pink-600 transition-colors flex items-center shadow-lg">
+                                                                <i className="ph-bold ph-download-simple mr-2"></i> 下載原圖
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div className="p-5 flex-1">
+                                                        <h3 className="text-xl font-bold text-gray-800 mb-1">{poster.title}</h3>
+                                                        <p className="text-sm text-gray-500">{poster.desc}</p>
                                                     </div>
                                                 </div>
-                                                <div className="p-5 flex-1">
-                                                    <h3 className="text-xl font-bold text-gray-800 mb-1">{poster.title}</h3>
-                                                    <p className="text-sm text-gray-500">{poster.desc}</p>
-                                                </div>
-                                            </div>
-                                        ))}
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
 
-                                {/* Section 2: 直式海報 */}
-                                <div id="sec-vertical" className="mb-12 scroll-mt-48">
-                                    <div className="flex items-center mb-6">
-                                        <div className="h-8 w-2 bg-blue-500 rounded-full mr-3"></div>
-                                        <h3 className="text-xl font-bold text-gray-800">直式海報</h3>
-                                    </div>
-                                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                        {VERTICAL_POSTERS.map((poster) => (
-                                            <div key={poster.id} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group flex flex-col">
-                                                <div className="relative aspect-[2/3] bg-gray-100 overflow-hidden">
-                                                    <img
-                                                        src={poster.src}
-                                                        alt={poster.title}
-                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                                        onError={(e) => {
-                                                            e.target.onerror = null;
-                                                            e.target.src = 'https://placehold.co/1000x1500/e2e8f0/64748b?text=Image+Loading...';
-                                                        }}
-                                                    />
-                                                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center space-y-3">
-                                                        <button onClick={() => handleDownload(poster.src, poster.title)} className="bg-blue-500 text-white px-6 py-2 rounded-full font-bold text-sm hover:bg-blue-600 transition-colors flex items-center shadow-lg">
-                                                            <i className="ph-bold ph-download-simple mr-2"></i> 下載原圖
-                                                        </button>
+                                    {/* Section 2: 直式海報 */}
+                                    <div id="sec-vertical" className="mb-12 scroll-mt-48">
+                                        <div className="flex items-center mb-6">
+                                            <div className="h-8 w-2 bg-blue-500 rounded-full mr-3"></div>
+                                            <h3 className="text-xl font-bold text-gray-800">直式海報</h3>
+                                        </div>
+                                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                            {VERTICAL_POSTERS.map((poster) => (
+                                                <div key={poster.id} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group flex flex-col">
+                                                    <div className="relative aspect-[2/3] bg-gray-100 overflow-hidden">
+                                                        <img
+                                                            src={poster.src}
+                                                            alt={poster.title}
+                                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                            onError={(e) => {
+                                                                e.target.onerror = null;
+                                                                e.target.src = 'https://placehold.co/1000x1500/e2e8f0/64748b?text=Image+Loading...';
+                                                            }}
+                                                        />
+                                                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center space-y-3">
+                                                            <button onClick={() => handleDownload(poster.src, poster.title)} className="bg-blue-500 text-white px-6 py-2 rounded-full font-bold text-sm hover:bg-blue-600 transition-colors flex items-center shadow-lg">
+                                                                <i className="ph-bold ph-download-simple mr-2"></i> 下載原圖
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div className="p-5 flex-1">
+                                                        <h3 className="text-xl font-bold text-gray-800 mb-1">{poster.title}</h3>
+                                                        <p className="text-sm text-gray-500">{poster.desc}</p>
                                                     </div>
                                                 </div>
-                                                <div className="p-5 flex-1">
-                                                    <h3 className="text-xl font-bold text-gray-800 mb-1">{poster.title}</h3>
-                                                    <p className="text-sm text-gray-500">{poster.desc}</p>
-                                                </div>
-                                            </div>
-                                        ))}
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
 
-                                {/* Section 3: QR Code Templates (Separate) */}
-                                <div id="sec-qr-separate" className="mb-12 scroll-mt-48">
-                                    <div className="flex items-center mb-6">
-                                        <div className="h-8 w-2 bg-purple-500 rounded-full mr-3"></div>
-                                        <h3 className="text-xl font-bold text-gray-800">QR Code 外框模板 (單張式)</h3>
-                                    </div>
-                                    <p className="text-sm text-gray-500 mb-4 ml-1">適用於診所空間有限，或只想張貼單一檢查項目時使用。</p>
-                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                                        {QR_SEPARATE.map((item) => (
-                                            <div key={item.id} className="bg-white rounded-xl shadow-md p-3 border border-purple-100 hover:border-purple-300 transition-all group">
-                                                <div className="aspect-[3/4] bg-slate-50 rounded-lg overflow-hidden mb-3 border border-slate-100 relative">
-                                                    <img src={item.src} alt={item.title} className="w-full h-full object-contain" />
-                                                    <div className="absolute top-2 right-2 bg-white/90 backdrop-blur text-purple-600 text-[10px] font-bold px-2 py-0.5 rounded shadow-sm border border-purple-100">
-                                                        {item.tag}
+                                    {/* Section 3: QR Code Templates (Separate) */}
+                                    <div id="sec-qr-separate" className="mb-12 scroll-mt-48">
+                                        <div className="flex items-center mb-6">
+                                            <div className="h-8 w-2 bg-purple-500 rounded-full mr-3"></div>
+                                            <h3 className="text-xl font-bold text-gray-800">QR Code 外框模板 (單張式)</h3>
+                                        </div>
+                                        <p className="text-sm text-gray-500 mb-4 ml-1">適用於診所空間有限，或只想張貼單一檢查項目時使用。</p>
+                                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                                            {QR_SEPARATE.map((item) => (
+                                                <div key={item.id} className="bg-white rounded-xl shadow-md p-3 border border-purple-100 hover:border-purple-300 transition-all group">
+                                                    <div className="aspect-[3/4] bg-slate-50 rounded-lg overflow-hidden mb-3 border border-slate-100 relative">
+                                                        <img src={item.src} alt={item.title} className="w-full h-full object-contain" />
+                                                        <div className="absolute top-2 right-2 bg-white/90 backdrop-blur text-purple-600 text-[10px] font-bold px-2 py-0.5 rounded shadow-sm border border-purple-100">
+                                                            {item.tag}
+                                                        </div>
+                                                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                            <button onClick={() => handleDownload(item.src, item.title)} className="text-white bg-purple-600 p-3 rounded-full shadow-lg hover:bg-purple-700 transform hover:scale-110 transition-all">
+                                                                <i className="ph-bold ph-download-simple text-xl"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                                        <button onClick={() => handleDownload(item.src, item.title)} className="text-white bg-purple-600 p-3 rounded-full shadow-lg hover:bg-purple-700 transform hover:scale-110 transition-all">
-                                                            <i className="ph-bold ph-download-simple text-xl"></i>
-                                                        </button>
-                                                    </div>
+                                                    <h4 className="text-center font-bold text-slate-700 text-sm">{item.title}</h4>
                                                 </div>
-                                                <h4 className="text-center font-bold text-slate-700 text-sm">{item.title}</h4>
-                                            </div>
-                                        ))}
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
 
-                                {/* Section 4: QR Code Templates (Together) */}
-                                <div id="sec-qr-together" className="scroll-mt-48">
-                                    <div className="flex items-center mb-6">
-                                        <div className="h-8 w-2 bg-green-500 rounded-full mr-3"></div>
-                                        <h3 className="text-xl font-bold text-gray-800">QR Code 合併樣式</h3>
-                                    </div>
-                                    <p className="text-sm text-gray-500 mb-4 ml-1">將兩種檢查項目的 QR Code 合併於同一張海報，節省張貼空間。</p>
-                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                                        {QR_TOGETHER.map((item) => (
-                                            <div key={item.id} className="bg-white rounded-xl shadow-md p-3 border border-green-100 hover:border-green-300 transition-all group">
-                                                <div className="aspect-[3/4] bg-slate-50 rounded-lg overflow-hidden mb-3 border border-slate-100 relative">
-                                                    <img
-                                                        src={item.src}
-                                                        alt={item.title}
-                                                        className="w-full h-full object-contain"
-                                                        onError={(e) => {
-                                                            e.target.onerror = null;
-                                                            e.target.src = 'https://placehold.co/400x533/f0fdf4/166534?text=Template';
-                                                        }}
-                                                    />
-                                                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                                        <button onClick={() => handleDownload(item.src, item.title)} className="text-white bg-green-600 p-3 rounded-full shadow-lg hover:bg-green-700 transform hover:scale-110 transition-all">
-                                                            <i className="ph-bold ph-download-simple text-xl"></i>
-                                                        </button>
+                                    {/* Section 4: QR Code Templates (Together) */}
+                                    <div id="sec-qr-together" className="scroll-mt-48">
+                                        <div className="flex items-center mb-6">
+                                            <div className="h-8 w-2 bg-green-500 rounded-full mr-3"></div>
+                                            <h3 className="text-xl font-bold text-gray-800">QR Code 合併樣式</h3>
+                                        </div>
+                                        <p className="text-sm text-gray-500 mb-4 ml-1">將兩種檢查項目的 QR Code 合併於同一張海報，節省張貼空間。</p>
+                                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                                            {QR_TOGETHER.map((item) => (
+                                                <div key={item.id} className="bg-white rounded-xl shadow-md p-3 border border-green-100 hover:border-green-300 transition-all group">
+                                                    <div className="aspect-[3/4] bg-slate-50 rounded-lg overflow-hidden mb-3 border border-slate-100 relative">
+                                                        <img
+                                                            src={item.src}
+                                                            alt={item.title}
+                                                            className="w-full h-full object-contain"
+                                                            onError={(e) => {
+                                                                e.target.onerror = null;
+                                                                e.target.src = 'https://placehold.co/400x533/f0fdf4/166534?text=Template';
+                                                            }}
+                                                        />
+                                                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                            <button onClick={() => handleDownload(item.src, item.title)} className="text-white bg-green-600 p-3 rounded-full shadow-lg hover:bg-green-700 transform hover:scale-110 transition-all">
+                                                                <i className="ph-bold ph-download-simple text-xl"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
+                                                    <h4 className="text-center font-bold text-slate-700 text-sm">{item.title}</h4>
                                                 </div>
-                                                <h4 className="text-center font-bold text-slate-700 text-sm">{item.title}</h4>
-                                            </div>
-                                        ))}
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        )}
+                            )
+                        }
 
                         {/* Tab Content 3: Documents */}
-                        {activeTab === 'doc' && (
-                            <div className="fade-in space-y-6">
-                                <div className="text-center mb-8 pt-2">
-                                    <h2 className="text-3xl font-black text-gray-800 mb-2">行政文件資源下載</h2>
-                                    <p className="text-gray-600">集中管理診所行政、核銷與民眾簽署所需的各式文件</p>
+                        {
+                            activeTab === 'doc' && (
+                                <div className="fade-in space-y-6">
+                                    <div className="text-center mb-8 pt-2">
+                                        <h2 className="text-3xl font-black text-gray-800 mb-2">行政文件資源下載</h2>
+                                        <p className="text-gray-600">集中管理診所行政、核銷與民眾簽署所需的各式文件</p>
+                                    </div>
+
+                                    <div className="grid md:grid-cols-3 gap-6">
+                                        {/* 1. 寄件封面 */}
+                                        <div className="bg-white border-2 border-slate-100 rounded-3xl p-6 flex flex-col hover:shadow-xl transition-shadow group">
+                                            <div className="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-600 mb-4 text-2xl group-hover:bg-slate-600 group-hover:text-white transition-colors">
+                                                <i className="ph-fill ph-envelope-open"></i>
+                                            </div>
+                                            <h3 className="font-bold text-xl text-slate-800 mb-2">寄件信封封面</h3>
+                                            <p className="text-sm text-slate-500 mb-6 flex-1">公會專用格式，建議列印貼於信封上，加速行政處理。</p>
+                                            <div className="flex gap-2">
+                                                <a href="https://drive.google.com/file/d/1wno7T6VeutF78JhvJsUvuNitfKXqugoC/view?usp=drive_link" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'admin_doc', 'event_label': '寄件信封封面-PDF' })} className="flex-1 flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 py-2 rounded-xl text-sm font-bold transition-all shadow-sm hover:shadow hover:-translate-y-0.5">
+                                                    <i className="ph-fill ph-file-pdf mr-2 text-lg"></i> PDF
+                                                </a>
+                                                <a href="https://docs.google.com/document/d/1Y3tgBThCRw6MkOGEwdQpWfk1bAGu5rZt/edit?usp=drive_link&ouid=105148262710817039603&rtpof=true&sd=true" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'admin_doc', 'event_label': '寄件信封封面-Word' })} className="flex-1 flex items-center justify-center bg-blue-50 text-blue-600 hover:bg-blue-100 py-2 rounded-xl text-sm font-bold transition-all shadow-sm hover:shadow hover:-translate-y-0.5">
+                                                    <i className="ph-fill ph-file-doc mr-2 text-lg"></i> Word
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        {/* 2. 行政核銷表單 */}
+                                        <div className="bg-white border-2 border-blue-100 rounded-3xl p-6 hover:shadow-xl transition-shadow group">
+                                            <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 mb-4 text-2xl group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                                <i className="ph-fill ph-calculator"></i>
+                                            </div>
+                                            <h3 className="font-bold text-xl text-slate-800 mb-2">行政核銷用</h3>
+                                            <p className="text-sm text-slate-500 mb-4">診所端請款必備表單</p>
+                                            <div className="space-y-3">
+                                                {/* B01 (Old B02) */}
+                                                <a href="https://drive.google.com/file/d/1I5pERYTjJxXbn1epqojyRjxVmix_u5Er/view?usp=drive_link" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'admin_doc', 'event_label': 'B01 公會 撥款確認單' })} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
+                                                    <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> B01 公會 撥款確認單</span>
+                                                    <i className="ph-bold ph-download-simple"></i>
+                                                </a>
+                                                {/* B02 (Old B04) */}
+                                                <a href="https://drive.google.com/file/d/1yl5WO849kkvwm0exQFQuUdv5Nf4OFhK6/view?usp=drive_link" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'admin_doc', 'event_label': 'B02 公會 診所獎勵金領據' })} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
+                                                    <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> B02 公會 診所獎勵金領據</span>
+                                                    <i className="ph-bold ph-download-simple"></i>
+                                                </a>
+                                                {/* B03 (Old B01) */}
+                                                <a href="https://drive.google.com/file/d/1krl229ocdg48NzFwRxyxWRwlaHh1go92/view?usp=drive_link" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'admin_doc', 'event_label': 'B03 公會 診所送件清單' })} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
+                                                    <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> B03 公會 診所送件清單</span>
+                                                    <i className="ph-bold ph-download-simple"></i>
+                                                </a>
+                                                <a href="https://drive.google.com/file/d/1MPDBy_xjOmgwndERKy1KIV3z42Y2pCxa/view?usp=drive_link" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'admin_doc', 'event_label': '診所端注意事項' })} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
+                                                    <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> 診所端注意事項</span>
+                                                    <i className="ph-bold ph-download-simple"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        {/* 3. 民眾簽署用 */}
+                                        <div className="bg-white border-2 border-orange-100 rounded-3xl p-6 hover:shadow-xl transition-shadow group">
+                                            <div className="w-12 h-12 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600 mb-4 text-2xl group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                                                <i className="ph-fill ph-user-check"></i>
+                                            </div>
+                                            <h3 className="font-bold text-xl text-slate-800 mb-2">民眾簽署用</h3>
+                                            <p className="text-sm text-slate-500 mb-4">領取 $300 獎勵金證明</p>
+                                            <div className="space-y-3">
+                                                {/* A01 Dropdown (Renamed) */}
+                                                <DocDropdown
+                                                    icon="ph-file-text"
+                                                    label="A01 民眾領款簽收單 (FOBT篩檢)"
+                                                    color="orange"
+                                                    options={[
+                                                        { name: "紙本簽名通用版", url: "https://drive.google.com/file/d/1M3pEVWqnisWfgbUb-CmCDnVHaPscwM2I/view?usp=drive_link" },
+                                                        { name: "病人標籤貼 / 無須填電話", url: "https://drive.google.com/file/d/19ygxpEjvDb_3-cU8KK9zZnQ2ujsDdIf0/view?usp=drive_link" },
+                                                        { name: "病人標籤貼 / 填電話", url: "https://drive.google.com/file/d/14K6GKTywYpRyTEOeWK2phBzWZuB3G32a/view?usp=drive_link" },
+                                                        { name: "有框QRCode框 / 病人標籤貼 / 無須填電話", url: "https://drive.google.com/file/d/19ygxpEjvDb_3-cU8KK9zZnQ2ujsDdIf0/view?usp=drive_link" }
+
+                                                    ]}
+                                                />
+
+                                                {/* A02 Dropdown (Renamed) */}
+                                                <DocDropdown
+                                                    icon="ph-file-text"
+                                                    label="A02 民眾領款簽收單 (大腸鏡檢查)"
+                                                    color="orange"
+                                                    options={[
+                                                        { name: "紙本簽名通用版", url: "https://drive.google.com/file/d/1yUxTCCXwuruxn14bStgH3lJ38lSTLZKN/view?usp=drive_link" },
+                                                        { name: "病人標籤貼 / 無須填電話", url: "https://drive.google.com/file/d/1fb7aqSARVKPDx-KCn7vhGBxXfgAGuLfA/view?usp=drive_link" },
+                                                        { name: "病人標籤貼 / 填電話", url: "https://drive.google.com/file/d/1GFkZKbHsEir8hN0Ix87hJ8Ow6BeEgEqo/view?usp=drive_link" }
+
+                                                    ]}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                            )
+                        }
 
-                                <div className="grid md:grid-cols-3 gap-6">
-                                    {/* 1. 寄件封面 */}
-                                    <div className="bg-white border-2 border-slate-100 rounded-3xl p-6 flex flex-col hover:shadow-xl transition-shadow group">
-                                        <div className="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-600 mb-4 text-2xl group-hover:bg-slate-600 group-hover:text-white transition-colors">
-                                            <i className="ph-fill ph-envelope-open"></i>
-                                        </div>
-                                        <h3 className="font-bold text-xl text-slate-800 mb-2">寄件信封封面</h3>
-                                        <p className="text-sm text-slate-500 mb-6 flex-1">公會專用格式，建議列印貼於信封上，加速行政處理。</p>
-                                        <div className="flex gap-2">
-                                            <a href="https://drive.google.com/file/d/1wno7T6VeutF78JhvJsUvuNitfKXqugoC/view?usp=drive_link" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'admin_doc', 'event_label': '寄件信封封面-PDF' })} className="flex-1 flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 py-2 rounded-xl text-sm font-bold transition-all shadow-sm hover:shadow hover:-translate-y-0.5">
-                                                <i className="ph-fill ph-file-pdf mr-2 text-lg"></i> PDF
-                                            </a>
-                                            <a href="https://docs.google.com/document/d/1Y3tgBThCRw6MkOGEwdQpWfk1bAGu5rZt/edit?usp=drive_link&ouid=105148262710817039603&rtpof=true&sd=true" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'admin_doc', 'event_label': '寄件信封封面-Word' })} className="flex-1 flex items-center justify-center bg-blue-50 text-blue-600 hover:bg-blue-100 py-2 rounded-xl text-sm font-bold transition-all shadow-sm hover:shadow hover:-translate-y-0.5">
-                                                <i className="ph-fill ph-file-doc mr-2 text-lg"></i> Word
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    {/* 2. 行政核銷表單 */}
-                                    <div className="bg-white border-2 border-blue-100 rounded-3xl p-6 hover:shadow-xl transition-shadow group">
-                                        <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 mb-4 text-2xl group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                                            <i className="ph-fill ph-calculator"></i>
-                                        </div>
-                                        <h3 className="font-bold text-xl text-slate-800 mb-2">行政核銷用</h3>
-                                        <p className="text-sm text-slate-500 mb-4">診所端請款必備表單</p>
-                                        <div className="space-y-3">
-                                            {/* B01 (Old B02) */}
-                                            <a href="https://drive.google.com/file/d/1I5pERYTjJxXbn1epqojyRjxVmix_u5Er/view?usp=drive_link" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'admin_doc', 'event_label': 'B01 公會 撥款確認單' })} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
-                                                <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> B01 公會 撥款確認單</span>
-                                                <i className="ph-bold ph-download-simple"></i>
-                                            </a>
-                                            {/* B02 (Old B04) */}
-                                            <a href="https://drive.google.com/file/d/1yl5WO849kkvwm0exQFQuUdv5Nf4OFhK6/view?usp=drive_link" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'admin_doc', 'event_label': 'B02 公會 診所獎勵金領據' })} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
-                                                <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> B02 公會 診所獎勵金領據</span>
-                                                <i className="ph-bold ph-download-simple"></i>
-                                            </a>
-                                            {/* B03 (Old B01) */}
-                                            <a href="https://drive.google.com/file/d/1krl229ocdg48NzFwRxyxWRwlaHh1go92/view?usp=drive_link" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'admin_doc', 'event_label': 'B03 公會 診所送件清單' })} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
-                                                <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> B03 公會 診所送件清單</span>
-                                                <i className="ph-bold ph-download-simple"></i>
-                                            </a>
-                                            <a href="https://drive.google.com/file/d/1MPDBy_xjOmgwndERKy1KIV3z42Y2pCxa/view?usp=drive_link" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'admin_doc', 'event_label': '診所端注意事項' })} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-700 transition-colors font-medium text-sm">
-                                                <span className="flex items-center"><i className="ph-bold ph-file-text mr-2 text-blue-400"></i> 診所端注意事項</span>
-                                                <i className="ph-bold ph-download-simple"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    {/* 3. 民眾簽署用 */}
-                                    <div className="bg-white border-2 border-orange-100 rounded-3xl p-6 hover:shadow-xl transition-shadow group">
-                                        <div className="w-12 h-12 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600 mb-4 text-2xl group-hover:bg-orange-600 group-hover:text-white transition-colors">
-                                            <i className="ph-fill ph-user-check"></i>
-                                        </div>
-                                        <h3 className="font-bold text-xl text-slate-800 mb-2">民眾簽署用</h3>
-                                        <p className="text-sm text-slate-500 mb-4">領取 $300 獎勵金證明</p>
-                                        <div className="space-y-3">
-                                            {/* A01 Dropdown (Renamed) */}
-                                            <DocDropdown
-                                                icon="ph-file-text"
-                                                label="A01 民眾領款簽收單 (FOBT篩檢)"
-                                                color="orange"
-                                                options={[
-                                                    { name: "紙本簽名通用版", url: "https://drive.google.com/file/d/1M3pEVWqnisWfgbUb-CmCDnVHaPscwM2I/view?usp=drive_link" },
-                                                    { name: "病人標籤貼 / 無須填電話", url: "https://drive.google.com/file/d/19ygxpEjvDb_3-cU8KK9zZnQ2ujsDdIf0/view?usp=drive_link" },
-                                                    { name: "病人標籤貼 / 填電話", url: "https://drive.google.com/file/d/14K6GKTywYpRyTEOeWK2phBzWZuB3G32a/view?usp=drive_link" },
-                                                    { name: "有框QRCode框 / 病人標籤貼 / 無須填電話", url: "https://drive.google.com/file/d/19ygxpEjvDb_3-cU8KK9zZnQ2ujsDdIf0/view?usp=drive_link" }
-
-                                                ]}
-                                            />
-
-                                            {/* A02 Dropdown (Renamed) */}
-                                            <DocDropdown
-                                                icon="ph-file-text"
-                                                label="A02 民眾領款簽收單 (大腸鏡檢查)"
-                                                color="orange"
-                                                options={[
-                                                    { name: "紙本簽名通用版", url: "https://drive.google.com/file/d/1yUxTCCXwuruxn14bStgH3lJ38lSTLZKN/view?usp=drive_link" },
-                                                    { name: "病人標籤貼 / 無須填電話", url: "https://drive.google.com/file/d/1fb7aqSARVKPDx-KCn7vhGBxXfgAGuLfA/view?usp=drive_link" },
-                                                    { name: "病人標籤貼 / 填電話", url: "https://drive.google.com/file/d/1GFkZKbHsEir8hN0Ix87hJ8Ow6BeEgEqo/view?usp=drive_link" }
-
-                                                ]}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                    </main>
+                    </main >
 
                     <footer className="mt-16 text-center text-gray-400 text-sm pb-8">
                         © 2025 臺南愛(AI)腸篩計畫
                     </footer>
-                </div>
+                </div >
             );
         };
 
