@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>臺南愛(AI)腸篩計畫 - 診所端入口網</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & ReactDOM -->
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Noto Sans TC", sans-serif;
+        background-color: #f8fafc;
+        overflow-x: hidden;
+        /* 防止水平卷軸產生空白 */
+        scroll-behavior: smooth;
+      }
+
+      .fade-in-up {
+        animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* 隱藏滾動條但保留功能 */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(60px);
+        z-index: -1;
+        opacity: 0.6;
+        max-width: 100%;
+        /* 防止裝飾溢出 */
+      }
+
+      /* Drawer Backdrop Fade */
+      .backdrop-enter {
+        opacity: 0;
+      }
+
+      .backdrop-enter-active {
+        opacity: 1;
+        transition: opacity 300ms;
+      }
+
+      .backdrop-exit {
+        opacity: 1;
+      }
+
+      .backdrop-exit-active {
+        opacity: 0;
+        transition: opacity 300ms;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useState, useEffect, useRef } = React;
+
+      // --- Back To Top Component ---
+      const BackToTop = () => {
+        const [isVisible, setIsVisible] = useState(false);
+
+        useEffect(() => {
+          const toggleVisibility = () => {
+            if (window.pageYOffset > 300) {
+              setIsVisible(true);
+            } else {
+              setIsVisible(false);
+            }
+          };
+
+          window.addEventListener("scroll", toggleVisibility);
+          return () => window.removeEventListener("scroll", toggleVisibility);
+        }, []);
+
+        const scrollToTop = () => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        };
+
+        return (
+          <div
+            className={`fixed bottom-6 right-6 z-40 transition-all duration-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 pointer-events-none"}`}
+          >
+            <button
+              onClick={scrollToTop}
+              className="bg-blue-600 hover:bg-blue-700 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+              aria-label="返回頂部"
+            >
+              <i className="ph-bold ph-arrow-up text-xl"></i>
+            </button>
+          </div>
+        );
+      };
+
+      // --- Navigation Drawer Component ---
+      const NavigationDrawer = ({ isOpen, onClose, onSectionChange }) => {
+        // 定義導航項目
+        const navItems = [
+          {
+            id: "home",
+            title: "首頁",
+            url: "index.html",
+            icon: "ph-house",
+            active: true, // index.html 是當前頁面
+            subItems: [
+              { id: "marquee-section", label: "最新衛教海報" },
+              { id: "cards-section", label: "各專區入口" },
+            ],
+          },
+          {
+            id: "clinic",
+            title: "合作診所專區",
+            url: "clinic.html",
+            icon: "ph-stethoscope",
+            active: false,
+            subItems: [
+              { id: "sop", label: "執行作業 SOP" }, // 對應 clinic.html 的狀態 ID
+              { id: "money", label: "經費與核銷" },
+              { id: "docs", label: "表單與寄送" },
+              { id: "qa", label: "必做任務與 QA" },
+            ],
+          },
+          {
+            id: "materials",
+            title: "數位教材與海報",
+            url: "materials.html",
+            icon: "ph-graduation-cap",
+            active: false,
+            subItems: [
+              { id: "video", label: "影片教材" }, // 對應 materials.html 的 tab ID
+              { id: "briefing", label: "說明會簡報" },
+              { id: "poster", label: "海報與模板" },
+              { id: "doc", label: "文件下載" },
+            ],
+          },
+          {
+            id: "competition",
+            title: "競賽評比專區",
+            url: "competition.html",
+            icon: "ph-trophy",
+            active: false,
+          },
+        ];
+
+        // 狀態管理：記錄哪些選單是展開的
+        const [expandedMenus, setExpandedMenus] = useState({});
+
+        useEffect(() => {
+          if (isOpen) {
+            const initialExpanded = {};
+            navItems.forEach((item) => {
+              if (item.active && item.subItems) {
+                initialExpanded[item.id] = true;
+              }
+            });
+            setExpandedMenus(initialExpanded);
+          }
+        }, [isOpen]);
+
+        const toggleMenu = (itemId) => {
+          setExpandedMenus((prev) => ({
+            ...prev,
+            [itemId]: !prev[itemId],
+          }));
+        };
+
+        return (
+          <>
+            {/* Backdrop (遮罩) */}
+            <div
+              className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+              onClick={onClose}
+            />
+
+            {/* Drawer (側邊欄) */}
+            <div
+              className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-[70] transform transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "translate-x-full"} flex flex-col`}
+            >
+              {/* Drawer Header */}
+              <div className="p-5 border-b border-slate-100 flex justify-between items-center bg-blue-50">
+                <h3 className="font-bold text-slate-800 flex items-center">
+                  <i className="ph-fill ph-list text-blue-600 mr-2 text-xl"></i>
+                  網站導航
+                </h3>
+                <button
+                  onClick={onClose}
+                  className="w-8 h-8 rounded-full bg-white text-slate-500 hover:text-red-500 hover:bg-red-50 flex items-center justify-center transition-colors"
+                >
+                  <i className="ph-bold ph-x text-lg"></i>
+                </button>
+              </div>
+
+              {/* Drawer Content */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-2">
+                {navItems.map((item) => (
+                  <div key={item.id} className="mb-2">
+                    <div
+                      className={`flex items-center w-full rounded-xl transition-all ${item.active ? "bg-blue-100 text-blue-800" : "text-slate-600 hover:bg-slate-50"}`}
+                    >
+                      {/* 主要連結區域 - 點擊大標題直接跳轉 */}
+                      <a
+                        href={item.active ? "#" : item.url}
+                        onClick={(e) => {
+                          if (item.active) e.preventDefault();
+                        }}
+                        className="flex-1 flex items-center p-3 font-bold"
+                      >
+                        <i
+                          className={`ph-fill ${item.icon} mr-3 text-xl ${item.active ? "text-blue-600" : "text-slate-400"}`}
+                        ></i>
+                        {item.title}
+                        {item.active && (
+                          <span className="ml-2 text-[10px] bg-blue-200 text-blue-800 px-2 py-0.5 rounded-full">
+                            目前
+                          </span>
+                        )}
+                      </a>
+
+                      {/* 展開/收合按鈕 */}
+                      {item.subItems && (
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            toggleMenu(item.id);
+                          }}
+                          className="p-3 text-slate-400 hover:text-blue-600 focus:outline-none"
+                        >
+                          <i
+                            className={`ph-bold ph-caret-down transition-transform duration-300 ${expandedMenus[item.id] ? "rotate-180" : ""}`}
+                          ></i>
+                        </button>
+                      )}
+                    </div>
+
+                    {/* 子選單 (Collapse/Expand) */}
+                    <div
+                      className={`overflow-hidden transition-all duration-300 ease-in-out ${expandedMenus[item.id] ? "max-h-96 opacity-100 mt-2" : "max-h-0 opacity-0"}`}
+                    >
+                      {item.subItems && (
+                        <div className="ml-4 pl-4 border-l-2 border-slate-100 space-y-1">
+                          {item.subItems.map((sub) => (
+                            <button
+                              key={sub.id || sub.label} // 使用 label 作為 key fallback
+                              onClick={() => {
+                                if (item.active && onSectionChange) {
+                                  // 如果是在當前頁面，執行內部捲動
+                                  onSectionChange(sub.id);
+                                  onClose();
+                                } else {
+                                  // 如果不是當前頁面
+                                  // clinic.html 使用的是 React state 切換，不是傳統 hash anchor
+                                  // 這裡我們傳遞 hash，但目標頁面 (clinic.html) 需要有邏輯去讀取 hash 並設定 state
+                                  // 對於 clinic.html, 我們將 hash 設為 #sop, #money 等
+                                  const targetUrl = sub.id
+                                    ? `${item.url}#${sub.id}`
+                                    : item.url;
+                                  window.location.href = targetUrl;
+                                }
+                              }}
+                              className={`block w-full text-left py-2 px-3 text-sm rounded-lg transition-colors text-slate-500 hover:text-slate-800 hover:bg-slate-50`}
+                            >
+                              {sub.label}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Drawer Footer */}
+              <div className="p-4 border-t border-slate-100 bg-slate-50 text-center">
+                <p className="text-xs text-slate-400">臺南愛(AI)腸篩計畫</p>
+              </div>
+            </div>
+          </>
+        );
+      };
+
+      // --- 橫式海報資料 (首頁跑馬燈更新順序 1~5) ---
+      const MARQUEE_POSTERS = [
+        {
+          id: 1,
+          title: "診所請款與撥款SOP (1)",
+          src: "https://lh3.googleusercontent.com/d/166bQt9JOd9Lq3NGgl-7K1eRFBUOz0yYp",
+        },
+        {
+          id: 2,
+          title: "診所請款與撥款SOP (2)",
+          src: "https://lh3.googleusercontent.com/d/1ZfcYvOWi8ywXxR-OWnSOfQAntEYnjqG1",
+        },
+        {
+          id: 3,
+          title: "診所宣導圖",
+          src: "https://lh3.googleusercontent.com/d/1OzWtC3vFG5glJwmCmEznKHR-Ff03CmQJ",
+        },
+        {
+          id: 4,
+          title: "您的健康，我們買單",
+          src: "https://lh3.googleusercontent.com/d/1I5It0x39P6u2JXmg0fV86h4j_-Wla88R",
+        },
+        {
+          id: 5,
+          title: "民眾宣導圖",
+          src: "https://lh3.googleusercontent.com/d/1_gD6MLtFOkZL955X5iIHIwLAADKiN2tx",
+        },
+        {
+          id: 6,
+          title: "民眾FOBT",
+          src: "https://lh3.googleusercontent.com/d/1_6EII25d8jYvm8qi3GGAzyloQKV353BQ",
+        },
+      ];
+
+      const LandingPage = () => {
+        const scrollRef = useRef(null);
+        const [isPaused, setIsPaused] = useState(false);
+        const [isGlobalNavOpen, setIsGlobalNavOpen] = useState(false);
+
+        const goToPosters = () => {
+          window.location.href = "materials.html#poster";
+        };
+
+        // 處理頁面內捲動 (僅限 index.html 內部區塊)
+        const handleSectionChange = (id) => {
+          const element = document.getElementById(id);
+          if (element) {
+            const headerOffset = 80;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition =
+              elementPosition + window.pageYOffset - headerOffset;
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth",
+            });
+          }
+        };
+
+        // 自動捲動邏輯
+        useEffect(() => {
+          const scrollContainer = scrollRef.current;
+          if (!scrollContainer) return;
+
+          let animationFrameId;
+
+          const scroll = () => {
+            if (!isPaused) {
+              if (
+                scrollContainer.scrollLeft >=
+                scrollContainer.scrollWidth / 2
+              ) {
+                // 當捲動到一半（因為內容重複了一次），無縫跳回開頭
+                scrollContainer.scrollLeft = 0;
+              } else {
+                scrollContainer.scrollLeft += 1; // 調整速度：數字越大越快
+              }
+            }
+            animationFrameId = requestAnimationFrame(scroll);
+          };
+
+          animationFrameId = requestAnimationFrame(scroll);
+
+          return () => cancelAnimationFrame(animationFrameId);
+        }, [isPaused]);
+
+        return (
+          <div className="min-h-screen relative flex flex-col w-full overflow-hidden">
+            {/* 背景裝飾 */}
+            <div className="blob bg-blue-200 w-64 h-64 md:w-96 md:h-96 top-0 left-0 translate-x-[-30%] translate-y-[-30%]"></div>
+            <div className="blob bg-purple-200 w-64 h-64 md:w-80 md:h-80 bottom-0 right-0 translate-x-[20%] translate-y-[20%]"></div>
+
+            {/* Back To Top Button */}
+            <BackToTop />
+
+            {/* Navigation Drawer */}
+            <NavigationDrawer
+              isOpen={isGlobalNavOpen}
+              onClose={() => setIsGlobalNavOpen(false)}
+              onSectionChange={handleSectionChange}
+            />
+
+            {/* Header */}
+            <header className="px-4 md:px-6 py-6 flex justify-between items-center max-w-7xl mx-auto w-full sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm md:shadow-none md:bg-transparent rounded-b-2xl md:rounded-none">
+              <div
+                className="flex items-center space-x-3 cursor-pointer"
+                onClick={() => window.location.reload()}
+              >
+                <div className="w-10 h-10 md:w-11 md:h-11 bg-blue-600 rounded-xl flex items-center justify-center shadow-md flex-shrink-0">
+                  <i className="ph-bold ph-plus text-white text-xl md:text-2xl"></i>
+                </div>
+                <div className="flex flex-col justify-center">
+                  <h1 className="text-lg md:text-xl font-bold text-slate-800 tracking-tight leading-none mb-0.5">
+                    臺南愛(AI)腸篩計畫
+                  </h1>
+                  <p className="text-[12px] text-slate-500 font-medium tracking-wide hidden md:block max-w-[280px] lg:max-w-md truncate">
+                    致力於運用 AI
+                    技術提升大腸癌篩檢效率，打造便民、高效的智慧醫療轉診服務。
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="hidden md:block text-xs md:text-sm font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded-full whitespace-nowrap">
+                  v3.0
+                </div>
+
+                {/* Menu Button */}
+                <button
+                  onClick={() => setIsGlobalNavOpen(true)}
+                  className="w-10 h-10 rounded-xl bg-white hover:bg-blue-50 text-slate-600 hover:text-blue-600 flex items-center justify-center transition-all shadow-sm focus:ring-2 focus:ring-blue-200"
+                  aria-label="開啟選單"
+                >
+                  <i className="ph-bold ph-list text-2xl"></i>
+                </button>
+              </div>
+            </header>
+
+            {/* Main Content */}
+            <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col items-center">
+              {/* 1. Hero Title */}
+              <div
+                className="text-center mb-10 fade-in-up w-full px-2"
+                style={{ animationDelay: "0s" }}
+              >
+                <div className="inline-block px-4 py-1.5 bg-blue-600 text-white rounded-full text-xs md:text-sm font-bold mb-5 shadow-md tracking-wider">
+                  健康台灣深耕計畫
+                </div>
+                <h2 className="text-3xl md:text-6xl font-black text-slate-800 leading-tight mb-4 tracking-tight">
+                  臺南愛（AI）腸篩
+                </h2>
+                <h3 className="text-xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-6 leading-relaxed max-w-4xl mx-auto">
+                  大腸癌擴篩完治 x AI轉診智慧平台精進計畫
+                </h3>
+                <p className="text-slate-500 text-base md:text-xl font-medium max-w-3xl mx-auto leading-relaxed">
+                  整合 AI 輔助判讀與智慧轉診系統，
+                  <br className="hidden md:block" />
+                  提供診所端最完整的操作指引與衛教資源。
+                </p>
+              </div>
+
+              {/* 2. Marquee Section (可滑動式跑馬燈) */}
+              <div
+                id="marquee-section"
+                className="w-full mb-12 fade-in-up"
+                style={{ animationDelay: "0.2s" }}
+              >
+                <div className="flex justify-between items-end px-4 mb-4 max-w-6xl mx-auto">
+                  <h3 className="text-base md:text-lg font-bold text-slate-700 flex items-center">
+                    <i className="ph-duotone ph-sparkle text-yellow-500 mr-2"></i>
+                    最新衛教海報預覽
+                  </h3>
+                  <button
+                    onClick={goToPosters}
+                    className="text-sm text-blue-500 hover:text-blue-700 font-bold flex items-center transition-colors"
+                  >
+                    查看全部 <i className="ph-bold ph-arrow-right ml-1"></i>
+                  </button>
+                </div>
+
+                <div
+                  className="w-full overflow-x-auto no-scrollbar bg-white/50 backdrop-blur-sm border-y border-slate-100 py-4"
+                  onMouseEnter={() => setIsPaused(true)}
+                  onMouseLeave={() => setIsPaused(false)}
+                  onTouchStart={() => setIsPaused(true)}
+                  onTouchEnd={() => setIsPaused(false)}
+                  ref={scrollRef}
+                >
+                  <div className="flex w-max gap-4 px-4">
+                    {/* 重複渲染多次以確保內容足夠長進行循環 */}
+                    {[
+                      ...MARQUEE_POSTERS,
+                      ...MARQUEE_POSTERS,
+                      ...MARQUEE_POSTERS,
+                    ].map((poster, index) => (
+                      <div
+                        key={`${poster.id}-${index}`}
+                        onClick={goToPosters}
+                        className="relative flex-shrink-0 cursor-pointer group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white"
+                        style={{
+                          width: "clamp(280px, 40vw, 360px)",
+                          aspectRatio: "16/9",
+                        }}
+                      >
+                        <img
+                          src={poster.src}
+                          alt={poster.title}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src =
+                              "https://placehold.co/1280x720/e2e8f0/64748b?text=Loading...";
+                          }}
+                        />
+                        {/* 遮罩效果 */}
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <span className="text-white font-bold border border-white px-4 py-2 rounded-full backdrop-blur-md">
+                            點擊下載
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-center text-xs text-slate-400 mt-2 md:hidden">
+                  <i className="ph-bold ph-hand-swipe-left mr-1"></i>
+                  左右滑動查看更多
+                </p>
+              </div>
+
+              {/* 3. Cards Navigation */}
+              <div
+                id="cards-section"
+                className="grid md:grid-cols-3 gap-6 w-full max-w-6xl px-4 fade-in-up pb-10"
+                style={{ animationDelay: "0.4s" }}
+              >
+                {/* Card 1: 合作診所 (Updated) */}
+                <a
+                  href="clinic.html"
+                  className="group relative bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl hover:shadow-blue-200/50 transition-all duration-300 border border-slate-100 hover:border-blue-200 flex flex-col items-center text-center overflow-hidden"
+                >
+                  <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-blue-400 to-blue-600"></div>
+                  <div className="w-16 h-16 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center mb-4 text-3xl group-hover:scale-110 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+                    <i className="ph-duotone ph-stethoscope"></i>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-800 mb-2">
+                    合作診所專區
+                  </h3>
+                  <p className="text-slate-500 mb-6 text-sm flex-1 leading-relaxed">
+                    執行作業 SOP、系統操作指引
+                    <br />
+                    與每季經費核銷。
+                  </p>
+                  <span className="mt-auto px-4 py-2 rounded-xl bg-blue-50 text-blue-600 font-bold text-sm group-hover:bg-blue-600 group-hover:text-white transition-colors w-full">
+                    進入專區
+                  </span>
+                </a>
+
+                {/* Card 2: 教材專區 (Updated) */}
+                <a
+                  href="materials.html"
+                  className="group relative bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl hover:shadow-orange-200/50 transition-all duration-300 border border-slate-100 hover:border-orange-200 flex flex-col items-center text-center overflow-hidden"
+                >
+                  <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-orange-400 to-red-500"></div>
+                  <div className="w-16 h-16 bg-orange-50 text-orange-500 rounded-2xl flex items-center justify-center mb-4 text-3xl group-hover:scale-110 group-hover:bg-orange-500 group-hover:text-white transition-all duration-300">
+                    <i className="ph-duotone ph-graduation-cap"></i>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-800 mb-2">
+                    數位教材與海報
+                  </h3>
+                  <p className="text-slate-500 mb-6 text-sm flex-1 leading-relaxed">
+                    教學影片、衛教海報、說明會、
+                    <br />
+                    QR Code 樣式與文件下載。
+                  </p>
+                  <span className="mt-auto px-4 py-2 rounded-xl bg-orange-50 text-orange-600 font-bold text-sm group-hover:bg-orange-600 group-hover:text-white transition-colors w-full">
+                    前往瀏覽
+                  </span>
+                </a>
+
+                {/* Card 3: 競賽評比 (Updated) */}
+                <a
+                  href="competition.html"
+                  className="group relative bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl hover:shadow-yellow-200/50 transition-all duration-300 border border-slate-100 hover:border-yellow-300 flex flex-col items-center text-center overflow-hidden"
+                >
+                  <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-yellow-400 to-yellow-600"></div>
+                  <div className="w-16 h-16 bg-yellow-50 text-yellow-600 rounded-2xl flex items-center justify-center mb-4 text-3xl group-hover:scale-110 group-hover:bg-yellow-500 group-hover:text-white transition-all duration-300">
+                    <i className="ph-duotone ph-trophy"></i>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-800 mb-2">
+                    競賽評比專區
+                  </h3>
+                  <p className="text-slate-500 mb-6 text-sm flex-1 leading-relaxed">
+                    FOBT 與大腸鏡檢
+                    <br />
+                    競賽獎勵辦法與排名。
+                  </p>
+                  <span className="mt-auto px-4 py-2 rounded-xl bg-yellow-50 text-yellow-700 font-bold text-sm group-hover:bg-yellow-600 group-hover:text-white transition-colors w-full">
+                    查看辦法
+                  </span>
+                </a>
+              </div>
+            </main>
+
+            {/* Footer */}
+            <footer className="mt-8 bg-white border-t border-slate-200 pt-10 pb-6">
+              <div className="max-w-7xl mx-auto px-4 md:px-6">
+                <div className="grid md:grid-cols-3 gap-8 mb-10">
+                  {/* Contact 1: NCKU */}
+                  <div className="text-center md:text-left">
+                    <h4 className="font-bold text-slate-800 text-base mb-6 relative inline-block">
+                      <span className="w-2 h-2 bg-blue-500 rounded-full mr-2 inline-block"></span>
+                      成大醫院計畫小組
+                      <span className="absolute -bottom-2 left-4 w-1/2 h-0.5 bg-blue-100 rounded-full hidden md:block"></span>
+                    </h4>
+                    <ul className="text-sm text-slate-500 space-y-2">
+                      <li className="flex items-center justify-center md:justify-start">
+                        <i className="ph-fill ph-phone text-blue-400 mr-2"></i>
+                        (06) 208-3662 / (06) 208-0758
+                      </li>
+                      <li className="flex items-center justify-center md:justify-start">
+                        <i className="ph-fill ph-envelope text-blue-400 mr-2"></i>
+                        <a
+                          href="mailto:tma.nckuh@gmail.com"
+                          className="hover:text-blue-600 hover:underline font-bold"
+                        >
+                          tma.nckuh@gmail.com
+                        </a>
+                      </li>
+                      <li className="flex items-start justify-center md:justify-start">
+                        <i className="ph-fill ph-clock text-blue-400 mr-2 mt-0.5"></i>
+                        <div className="text-left py-0.5 px-2 bg-slate-50 rounded text-xs">
+                          平日 08:00-12:00 / 13:00-17:00
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* Contact 2: Medical Association */}
+                  <div className="text-center md:text-left">
+                    <h4 className="font-bold text-slate-800 text-base mb-6 relative inline-block">
+                      <span className="w-2 h-2 bg-green-500 rounded-full mr-2 inline-block"></span>
+                      醫師公會
+                      <span className="absolute -bottom-2 left-4 w-1/2 h-0.5 bg-green-100 rounded-full hidden md:block"></span>
+                    </h4>
+                    <ul className="text-sm text-slate-500 space-y-2">
+                      <li className="flex items-center justify-center md:justify-start">
+                        <i className="ph-fill ph-user text-green-400 mr-2"></i>
+                        周小姐
+                      </li>
+                      <li className="flex items-center justify-center md:justify-start">
+                        <div className="flex items-center justify-center">
+                            <i className="ph-bold ph-map-pin text-green-500 mr-2"></i>
+                            <span className="text-gray-600 text-sm">台南市中西區民生路一段 82 號 2 樓</span>
+                        </div>
+                      </li>
+                      <li className="flex items-start justify-center md:justify-start">
+                        <i className="ph-fill ph-clock text-blue-400 mr-2 mt-0.5"></i>
+                        <div className="text-left py-0.5 px-2 bg-slate-50 rounded text-xs">
+                          平日 09:00-12:00 / 13:00-17:00
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* Contact 3: LINE Official */}
+                  <div className="text-center md:text-left">
+                    <h4 className="font-bold text-slate-800 text-base mb-6 relative inline-block">
+                      <span className="w-2 h-2 bg-[#06C755] rounded-full mr-2 inline-block"></span>
+                      計畫官方 LINE
+                      <span className="absolute -bottom-2 left-4 w-1/2 h-0.5 bg-[#06C755]/20 rounded-full hidden md:block"></span>
+                    </h4>
+
+                    <div className="bg-gradient-to-br from-[#06C755]/10 to-[#06C755]/5 border border-[#06C755]/20 rounded-2xl p-5 md:p-6 text-center shadow-sm hover:shadow-md transition-shadow">
+                      <p className="text-sm font-extrabold text-[#06C755] mb-4">
+                        健康台灣深耕計畫
+                      </p>
+                      <a
+                        href="https://lin.ee/ca9byaV"
+                        target="_blank"
+                        className="w-full bg-[#06C755] hover:bg-[#05b34c] text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center transition-all transform hover:scale-[1.02] shadow-sm"
+                      >
+                        <i className="ph-fill ph-chat-circle-dots mr-2 text-xl"></i>
+                        加入好友 (@776qjbre)
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-slate-100 pt-8 text-center">
+                  <p className="text-slate-400 text-xs font-medium">
+                    © 2025 臺南愛(AI)腸篩計畫 | 台南市醫師公會 x 成大醫院
+                  </p>
+                </div>
+              </div>
+            </footer>
+          </div>
+        );
+      };
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<LandingPage />);
+    </script>
+  </body>
+</html>
