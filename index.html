@@ -405,6 +405,20 @@
           return () => cancelAnimationFrame(animationFrameId);
         }, [isPaused]);
 
+        // Right-click protection for images (Strict Mode)
+        useEffect(() => {
+            const handleContextmenu = (e) => {
+                // Prevent context menu on images and their overlays
+                if (e.target.tagName === 'IMG' || e.target.closest('.group')) {
+                    e.preventDefault();
+                }
+            };
+            document.addEventListener('contextmenu', handleContextmenu, { capture: true }); // Use capture phase
+            return () => {
+                document.removeEventListener('contextmenu', handleContextmenu, { capture: true });
+            };
+        }, []);
+
         return (
           <div className="min-h-screen relative flex flex-col w-full overflow-hidden">
             {/* 背景裝飾 */}
@@ -534,10 +548,14 @@
                           }}
                         />
                         {/* 遮罩效果 */}
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-20">
                           <span className="text-white font-bold border border-white px-4 py-2 rounded-full backdrop-blur-md">
                             點擊下載
                           </span>
+                        </div>
+                        {/* Watermark */}
+                        <div className="absolute bottom-1 right-2 text-[8px] md:text-[10px] text-white/50 font-bold drop-shadow-sm pointer-events-none z-10 bg-black/10 px-1 rounded backdrop-blur-[1px]">
+                            © 2025 大腸癌擴篩完治 × AI 轉診智慧平台精進計畫
                         </div>
                       </div>
                     ))}

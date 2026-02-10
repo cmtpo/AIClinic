@@ -72,6 +72,20 @@
                 };
             }, []);
 
+            // Right-click protection for images (Strict Mode)
+            useEffect(() => {
+                const handleContextmenu = (e) => {
+                    // Prevent context menu on images and their overlays
+                    if (e.target.tagName === 'IMG' || e.target.closest('.group')) {
+                        e.preventDefault();
+                    }
+                };
+                document.addEventListener('contextmenu', handleContextmenu, { capture: true }); // Use capture phase
+                return () => {
+                    document.removeEventListener('contextmenu', handleContextmenu, { capture: true });
+                };
+            }, []);
+
             return (
                 <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
                     {/* Background Pattern */}

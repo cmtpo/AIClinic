@@ -327,7 +327,7 @@
         const VERTICAL_POSTERS = [
             { id: 10, title: "健康號火車宣導", desc: "臺南人專屬！領$600出發，符合資格快上車", src: "https://lh3.googleusercontent.com/d/1PlMeO-3WWslmY8p41iR-JoVZWIX_uyXg" },
             { id: 11, title: "顧腸健康領$600", desc: "臺南市民專屬！政府補助做篩檢，健康現金雙重送", src: "https://lh3.googleusercontent.com/d/1kg6T5Y_Ajor9DMLKR0ss14tiPKJ-72B5" },
-            { id: 12, title: "早篩早安心，轉診真放心", desc: "大腸癌早期發現，治療效果佳，享受試者營養費", src: "https://lh3.googleusercontent.com/d/1Z8_ih4hYydGZyMCwtQfWvHicw-OXVMAV" },
+            { id: 12, title: "早篩早安心，轉診真放心", desc: "大腸癌早期發現，治療效果佳，享受試者營養費", src: "https://lh3.googleusercontent.com/d/1WXhO_nnGrwLgkk_OjPJNBx5H3L1C_5xw" },
             { id: 7, title: "直式海報 (1)", desc: "衛教宣導資訊版-1", src: "https://lh3.googleusercontent.com/d/1H61Vu3FOQWc9S0MwN10XfOfLk_p5q8ck" },
             { id: 8, title: "直式海報 (2)", desc: "衛教宣導資訊版-2", src: "https://lh3.googleusercontent.com/d/1ioNTNyvt_r9JxPBr3bapDAyoLb89jxb8" },
             { id: 9, title: "競賽重點摘要", desc: "競賽評比與獎勵積分說明", src: "./競賽重點摘要_圖宣.png" },
@@ -403,6 +403,20 @@
                 if (hash === '#briefing') setActiveTab('briefing');
             }, []);
 
+            // Right-click protection for images (Strict Mode)
+            useEffect(() => {
+                const handleContextmenu = (e) => {
+                    // Prevent context menu on images and their overlays
+                    if (e.target.tagName === 'IMG' || e.target.closest('.group')) {
+                        e.preventDefault();
+                    }
+                };
+                document.addEventListener('contextmenu', handleContextmenu, { capture: true }); // Use capture phase
+                return () => {
+                    document.removeEventListener('contextmenu', handleContextmenu, { capture: true });
+                };
+            }, []);
+
             const handleSectionChange = (id) => {
                 if (id === 'video' || id === 'poster' || id === 'doc' || id === 'briefing') {
                     setActiveTab(id);
@@ -421,17 +435,85 @@
                     });
                 }
 
-                // Transform Google Drive View URL to Download URL
+                // 1. Get High-Res URL (Google Drive)
+                let imageUrl = src;
+                if (src.includes('lh3.googleusercontent.com/d/')) {
+                     // Use the direct link which usually supports CORS if configured, 
+                     // or use a proxy if needed. Google lh3 links often support CORS.
+                     imageUrl = src; 
+                } else if (src.includes('drive.google.com')) {
+                    // Convert view URL to direct download URL (might have CORS issues for Canvas)
+                    // Try to use the lh3 version if possible, otherwise this might fallback.
+                }
+
+                // 2. Canvas Watermarking
+                const img = new Image();
+                img.crossOrigin = "Anonymous"; // Try to enable CORS
+                img.src = imageUrl;
+
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+
+                    // Draw original image
+                    ctx.drawImage(img, 0, 0);
+
+                    // Draw Watermark
+                    const text = "© 2025 大腸癌擴篩完治 × AI 轉診智慧平台精進計畫";
+                    
+                    // Dynamic font size based on image width
+                    const fontSize = Math.max(12, canvas.width * 0.015); 
+                    ctx.font = `bold ${fontSize}px "Noto Sans TC", sans-serif`;
+                    
+                    // Positioning (Bottom Right)
+                    const padding = fontSize;
+                    const textMetrics = ctx.measureText(text);
+                    const textWidth = textMetrics.width;
+                    const x = canvas.width - textWidth - padding;
+                    const y = canvas.height - padding;
+
+                    // Background for text (Semi-transparent black) - Reduced Opacity
+                    ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+                    ctx.fillRect(x - padding/2, y - fontSize, textWidth + padding, fontSize + padding/2);
+
+                    // Text Color (White) - Reduced Opacity
+                    ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+                    ctx.fillText(text, x, y);
+
+                    // Trigger Download
+                    try {
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
+                        const link = document.createElement('a');
+                        link.href = dataUrl;
+                        link.download = title + "_watermarked.jpg";
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    } catch (e) {
+                         console.error("Canvas export failed (likely CORS)", e);
+                         fallbackDownload(src, title);
+                    }
+                };
+
+                img.onerror = () => {
+                    console.error("Image load failed for canvas");
+                    fallbackDownload(src, title);
+                };
+            };
+
+            const fallbackDownload = (src, title) => {
+                 // Original logic
                 let downloadUrl = src;
                 if (src.includes('lh3.googleusercontent.com/d/')) {
                     const fileId = src.split('lh3.googleusercontent.com/d/')[1];
                     downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
                 }
-
                 const link = document.createElement('a');
                 link.href = downloadUrl;
-                link.download = title; // This attribute might be ignored for cross-origin, but the export URL forces download
-                link.target = "_blank"; // Open in new tab as fallback
+                link.download = title; 
+                link.target = "_blank"; 
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -692,10 +774,14 @@
                                                                 e.target.src = 'https://placehold.co/1200x675/e2e8f0/64748b?text=Image+Loading...';
                                                             }}
                                                         />
-                                                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center space-y-3">
-                                                            <button onClick={() => handleDownload(poster.src, poster.title)} className="bg-pink-500 text-white px-6 py-2 rounded-full font-bold text-sm hover:bg-pink-600 transition-colors flex items-center shadow-lg">
+                                                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center space-y-3 z-20">
+                                                            <button onClick={() => handleDownload(poster.src, poster.title)} className="bg-pink-500 text-white px-6 py-2 rounded-full font-bold text-sm hover:bg-pink-600 transition-colors flex items-center shadow-lg transform hover:scale-105 active:scale-95">
                                                                 <i className="ph-bold ph-download-simple mr-2"></i> 下載原圖
                                                             </button>
+                                                        </div>
+                                                        {/* Watermark */}
+                                                        <div className="absolute bottom-1 right-2 text-[8px] md:text-[10px] text-white/50 font-bold drop-shadow-sm pointer-events-none z-10 bg-black/10 px-1 rounded backdrop-blur-[1px]">
+                                                            © 2025 大腸癌擴篩完治 × AI 轉診智慧平台精進計畫
                                                         </div>
                                                     </div>
                                                     <div className="p-5 flex-1">
@@ -726,10 +812,14 @@
                                                                 e.target.src = 'https://placehold.co/1000x1500/e2e8f0/64748b?text=Image+Loading...';
                                                             }}
                                                         />
-                                                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center space-y-3">
-                                                            <button onClick={() => handleDownload(poster.src, poster.title)} className="bg-blue-500 text-white px-6 py-2 rounded-full font-bold text-sm hover:bg-blue-600 transition-colors flex items-center shadow-lg">
+                                                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center space-y-3 z-20">
+                                                            <button onClick={() => handleDownload(poster.src, poster.title)} className="bg-blue-500 text-white px-6 py-2 rounded-full font-bold text-sm hover:bg-blue-600 transition-colors flex items-center shadow-lg transform hover:scale-105 active:scale-95">
                                                                 <i className="ph-bold ph-download-simple mr-2"></i> 下載原圖
                                                             </button>
+                                                        </div>
+                                                        {/* Watermark */}
+                                                        <div className="absolute bottom-1 right-2 text-[8px] md:text-[10px] text-white/50 font-bold drop-shadow-sm pointer-events-none z-10 bg-black/10 px-1 rounded backdrop-blur-[1px]">
+                                                            © 2025 大腸癌擴篩完治 × AI 轉診智慧平台精進計畫
                                                         </div>
                                                     </div>
                                                     <div className="p-5 flex-1">
@@ -756,10 +846,14 @@
                                                         <div className="absolute top-2 right-2 bg-white/90 backdrop-blur text-purple-600 text-[10px] font-bold px-2 py-0.5 rounded shadow-sm border border-purple-100">
                                                             {item.tag}
                                                         </div>
-                                                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-20">
                                                             <button onClick={() => handleDownload(item.src, item.title)} className="text-white bg-purple-600 p-3 rounded-full shadow-lg hover:bg-purple-700 transform hover:scale-110 transition-all">
                                                                 <i className="ph-bold ph-download-simple text-xl"></i>
                                                             </button>
+                                                        </div>
+                                                        {/* Watermark */}
+                                                        <div className="absolute bottom-1 right-2 text-[8px] text-white/50 font-bold drop-shadow-sm pointer-events-none z-10 bg-black/10 px-1 rounded backdrop-blur-[1px]">
+                                                            © 2025 AI 轉診
                                                         </div>
                                                     </div>
                                                     <h4 className="text-center font-bold text-slate-700 text-sm">{item.title}</h4>
@@ -788,10 +882,14 @@
                                                                 e.target.src = 'https://placehold.co/400x533/f0fdf4/166534?text=Template';
                                                             }}
                                                         />
-                                                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-20">
                                                             <button onClick={() => handleDownload(item.src, item.title)} className="text-white bg-green-600 p-3 rounded-full shadow-lg hover:bg-green-700 transform hover:scale-110 transition-all">
                                                                 <i className="ph-bold ph-download-simple text-xl"></i>
                                                             </button>
+                                                        </div>
+                                                        {/* Watermark */}
+                                                        <div className="absolute bottom-1 right-2 text-[8px] text-white/50 font-bold drop-shadow-sm pointer-events-none z-10 bg-black/10 px-1 rounded backdrop-blur-[1px]">
+                                                            © 2025 AI 轉診
                                                         </div>
                                                     </div>
                                                     <h4 className="text-center font-bold text-slate-700 text-sm">{item.title}</h4>
