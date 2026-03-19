@@ -250,9 +250,9 @@
                                             }}
                                             className="flex-1 flex items-center p-3 font-bold"
                                         >
-                                            <i className={`ph-fill ${item.icon} mr-3 text-xl ${item.active ? 'text-blue-600' : 'text-slate-400'}`}></i>
+                                            <i className={`ph-fill ${item.icon} mr-3 text-2xl ${item.active ? 'text-blue-600' : 'text-slate-400'}`}></i>
                                             {item.title}
-                                            {item.active && <span className="ml-2 text-[10px] bg-blue-200 text-blue-800 px-2 py-0.5 rounded-full">目前</span>}
+                                            {item.active && <span className="ml-2 text-xs bg-blue-200 text-blue-800 px-2.5 py-1 rounded-full">目前頁面</span>}
                                         </a>
 
                                         {item.subItems && (
@@ -299,8 +299,8 @@
                         </div>
 
                         {/* Drawer Footer */}
-                        <div className="p-4 border-t border-slate-100 bg-slate-50 text-center">
-                            <p className="text-xs text-slate-400">臺南愛(AI)腸篩計畫</p>
+                        <div className="p-6 border-t border-slate-100 bg-slate-50 text-center">
+                            <p className="text-sm text-slate-500 font-medium">臺南愛(AI)腸篩計畫</p>
                         </div>
                     </div>
                 </>
@@ -315,17 +315,17 @@
                 <div className="w-full mb-2 last:mb-0 transition-all duration-300">
                     <button
                         onClick={() => setIsOpen(!isOpen)}
-                        className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all text-xs font-bold text-${color}-600 bg-white border-${color}-200 hover:bg-${color}-50 shadow-sm`}
+                        className={`w-full flex items-center justify-between p-3.5 rounded-xl border transition-all text-sm font-bold text-${color}-600 bg-white border-${color}-200 hover:bg-${color}-50 shadow-sm`}
                     >
-                        <div className="flex items-center text-left overflow-hidden">
-                            <i className={`ph-bold ${icon} mr-2 flex-shrink-0 text-base`}></i>
-                            <span className="truncate">{label}</span>
+                        <div className="flex items-center text-left">
+                            <i className={`ph-bold ${icon} mr-3 flex-shrink-0 text-lg`}></i>
+                            <span className="leading-tight">{label}</span>
                         </div>
-                        <i className={`ph-bold ph-caret-down transition-transform duration-300 ${isOpen ? 'rotate-180' : ''} ml-2 flex-shrink-0`}></i>
+                        <i className={`ph-bold ph-caret-down transition-transform duration-300 ${isOpen ? 'rotate-180' : ''} ml-2 flex-shrink-0 text-xs`}></i>
                     </button>
 
                     <div
-                        className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'}`}
+                        className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[1000px] opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'}`}
                     >
                         <div className={`bg-slate-50 border border-slate-200 rounded-xl overflow-hidden border-l-4 border-l-${color}-400`}>
                             {options.map((opt, idx) => (
@@ -342,9 +342,9 @@
                                             });
                                         }
                                     }}
-                                    className="block px-3 py-2.5 text-[11px] text-slate-600 hover:bg-white hover:text-blue-600 border-b last:border-b-0 border-slate-200 break-words leading-relaxed flex items-start group"
+                                    className="block px-4 py-3 text-xs md:text-sm text-slate-700 hover:bg-white hover:text-blue-600 border-b last:border-b-0 border-slate-200 break-words leading-relaxed flex items-center group font-medium"
                                 >
-                                    <i className="ph-fill ph-download-simple mr-2 mt-0.5 text-slate-400 group-hover:text-blue-500 transition-colors"></i>
+                                    <i className="ph-fill ph-download-simple mr-3 text-slate-400 group-hover:text-blue-500 transition-colors text-lg"></i>
                                     <span>{opt.name}</span>
                                 </a>
                             ))}
@@ -363,8 +363,8 @@
                             <i className="ph-fill ph-stethoscope text-xl"></i>
                         </div>
                         <div>
-                            <h1 className="text-base md:text-lg font-bold text-gray-800 leading-none">{title}</h1>
-                            <p className="text-[10px] md:text-xs text-gray-500 mt-1">{subtitle}</p>
+                            <h1 className="text-lg md:text-xl font-bold text-gray-800 leading-tight">{title}</h1>
+                            <p className="text-xs md:text-sm text-gray-500 mt-1">{subtitle}</p>
                         </div>
                     </div>
 
@@ -388,8 +388,8 @@
         );
 
         const Footer = () => (
-            <footer className="mt-12 py-8 bg-white border-t border-slate-200 text-center">
-                <p className="text-slate-400 text-xs">© 2025 臺南愛(AI)腸篩計畫 | 台南市醫師公會 x 成大醫院</p>
+            <footer className="mt-16 py-12 bg-white border-t border-slate-200 text-center">
+                <p className="text-slate-500 text-sm font-medium">© 2025 臺南愛(AI)腸篩計畫 | 台南市醫師公會 x 成大醫院</p>
             </footer>
         );
 
@@ -415,19 +415,19 @@
                 <div className="border border-slate-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow bg-white mb-3">
                     <button onClick={() => setIsOpen(!isOpen)} className="w-full text-left px-4 py-4 font-bold text-slate-800 flex items-start justify-between bg-slate-50 hover:bg-slate-100 transition-colors">
                         <div className="flex-1 pr-4">
-                            <div className="flex items-center mb-1">
-                                <span className={`text-[10px] px-2 py-0.5 rounded border ${tagColor} mr-2`}>{tagText}</span>
+                            <div className="flex items-center mb-2">
+                                <span className={`text-xs px-2.5 py-1 rounded-md border font-bold ${tagColor} mr-2`}>{tagText}</span>
                             </div>
                             <div className="flex items-start">
-                                <span className="bg-slate-800 text-white text-xs px-2 py-0.5 rounded mr-2 mt-1 flex-shrink-0">Q</span>
-                                <span className="leading-snug text-sm md:text-base">{q}</span>
+                                <span className="bg-slate-800 text-white text-xs px-2 py-0.5 rounded mr-3 mt-1.5 flex-shrink-0">Q</span>
+                                <span className="leading-relaxed text-base md:text-lg font-bold">{q}</span>
                             </div>
                         </div>
                         <i className={`ph-bold ph-caret-down text-slate-400 transition-transform mt-2 ${isOpen ? 'rotate-180' : ''}`}></i>
                     </button>
                     {isOpen && (
-                        <div className="px-4 py-4 bg-white text-slate-600 text-sm leading-relaxed border-t border-slate-100 animate-in fade-in slide-in-from-top-1 pl-12">
-                            <span className="font-bold text-green-600 mr-1">A:</span> {a}
+                        <div className="px-6 py-5 bg-white text-slate-700 text-base md:text-lg leading-relaxed border-t border-slate-100 animate-in fade-in slide-in-from-top-1 pl-16">
+                            <span className="font-black text-green-600 mr-2">A:</span> {a}
                         </div>
                     )}
                 </div>
@@ -493,10 +493,10 @@
                 { category: 'referral', q: "民眾是否可同時參與其他政府或衛生局獎勵活動？", a: "原則上可以同時領取。但仍須依各計畫規定辦理。" },
 
                 // 3. 行政核銷與經費撥款
-                { category: 'admin', q: "如果診所在季結前提前發完受試者營養費，請問可以領取下一筆嗎？", a: "可以。請檢附民眾簽收單正本(A01.A02)，與送件清單(B03)、受試者營養費確認單(B01)、診所獎勵金領據(B02)，並請計算總獎勵金額填妥領據，一起寄回公會與平台核對。待核對後由公會匯款給診所。" },
+                { category: 'admin', q: "如果診所提早發完受試者營養費，請問可以領取下一筆嗎？", a: "可以。請檢附民眾簽收單正本(A01.A02)，與送件清單(B03)、受試者營養費確認單(B01)、診所獎勵金領據(B02)，並請計算總獎勵金額填妥領據，一起寄回公會與平台核對。待核對後由公會匯款給診所。" },
                 { category: 'admin', q: "如果診所已發完受試者營養費，那領取下筆款項中間空窗期如何處理？", a: "若受試者營養費於款項撥付期間出現銜接空窗，請診所視實際情況先行代墊費用；亦可選擇暫停發放，待款項撥付完成後再行啟動。" },
-                { category: 'admin', q: "如果診所在季結前沒有發完受試者營養費？", a: "請檢附民眾簽收單正本(A01.A02)，與送件清單(B03)、診所獎勵金領據(B02)，並請計算當季總獎勵金額填妥領據，一起寄回公會與平台核對。待餘款發放完畢後，即可再次申請。" },
-                { category: 'admin', q: "B02 領據什麼時候要寄回？", a: "B02 是「診所獎勵金領據」。請在每季結算，連同民眾簽收單正本(A01.A02)和送件清單(B03)一起寄回公會，並同步 email 電子檔至 tma.nckuh@gmail.com。待核對後由公會匯款給診所。" },
+                { category: 'admin', q: "如果診所尚未發完受試者營養費，可以辦理結算嗎？", a: "需將民眾簽收單完整填寫所有欄位後，並將所有資料備齊，才能進行結算。" },
+                { category: 'admin', q: "B02 領據什麼時候要寄回？", a: "B02 是「診所獎勵金領據」。請在辦理結算時，連同民眾簽收單正本(A01.A02)和送件清單(B03)一起寄回公會，並同步 email 電子檔至 tma.nckuh@gmail.com。待核對後由公會匯款給診所。" },
                 { category: 'admin', q: "若不小心發到自費民眾該怎麼辦？", a: "誤發金額請診所端自行補齊。" },
                 { category: 'admin', q: "匯款帳號有指定銀行嗎？", a: "建議使用診所的銀行帳號（私人的亦可），推薦使用玉山銀行可免匯款手續費。若非玉山銀行帳戶，相關手續費將由診所自行吸收。" },
 
@@ -565,9 +565,9 @@
                                                     : 'text-gray-600 hover:bg-slate-100 bg-slate-50 md:bg-transparent'} 
                                                 ${item.highlight && activeSection !== item.id ? 'bg-orange-50 text-orange-600 border border-orange-200' : ''}`}
                                         >
-                                            <i className={`ph-fill ${item.icon} text-lg md:text-xl mr-2 md:mr-3`}></i>
-                                            <span className="font-medium text-sm md:text-base">{item.label}</span>
-                                            {item.highlight && <span className="ml-auto w-2 h-2 bg-orange-500 rounded-full animate-ping hidden md:block"></span>}
+                                            <i className={`ph-fill ${item.icon} text-xl md:text-2xl mr-3 md:mr-4`}></i>
+                                            <span className="font-bold text-base md:text-lg">{item.label}</span>
+                                            {item.highlight && <span className="ml-auto w-2.5 h-2.5 bg-orange-500 rounded-full animate-ping hidden md:block"></span>}
                                         </button>
                                     ))}
                                 </nav>
@@ -576,82 +576,82 @@
                                 <div className="mt-6 md:mt-8 bg-blue-50 rounded-xl border border-blue-100 animate-in fade-in slide-in-from-top-2 overflow-hidden">
                                     <button
                                         onClick={() => setIsDocSectionOpen(!isDocSectionOpen)}
-                                        className="w-full p-4 flex items-center justify-between text-left focus:outline-none"
+                                        className="w-full p-5 flex items-center justify-between text-left focus:outline-none"
                                     >
-                                        <h4 className="font-bold text-blue-800 text-sm">診所各式文件下載</h4>
+                                        <h4 className="font-extrabold text-blue-900 text-base">診所各式文件下載</h4>
                                         <i className={`ph-bold ph-caret-down text-blue-600 transition-transform duration-300 ${isDocSectionOpen ? 'rotate-180' : ''}`}></i>
                                     </button>
 
-                                    <div className={`px-4 transition-all duration-300 ease-in-out ${isDocSectionOpen ? 'max-h-[800px] opacity-100 pb-4' : 'max-h-0 opacity-0'}`}>
+                                    <div className={`px-4 transition-all duration-300 ease-in-out ${isDocSectionOpen ? 'max-h-[2000px] opacity-100 pb-4' : 'max-h-0 opacity-0'}`}>
                                         <div className="mb-4 space-y-2">
-                                            <a href="https://drive.google.com/file/d/1EG7Y_YralbOAUr9uJVUQgtKvs8IWrA3Z/view" target="_blank" className="flex items-center hover:underline hover:text-blue-800 text-xs font-bold text-blue-700 bg-white p-2 rounded border border-blue-200 shadow-sm transition-shadow hover:shadow">
-                                                <i className="ph-bold ph-download-simple mr-2"></i> 診所端注意事項
+                                            <a href="https://drive.google.com/file/d/1EG7Y_YralbOAUr9uJVUQgtKvs8IWrA3Z/view" target="_blank" className="flex items-center hover:underline hover:text-blue-800 text-sm font-bold text-blue-700 bg-white p-3 rounded-xl border border-blue-200 shadow-sm transition-shadow hover:shadow">
+                                                <i className="ph-bold ph-download-simple mr-3 text-lg"></i> 診所端注意事項
                                             </a>
 
                                             {/* 信封下載區 */}
-                                            <div className="border border-blue-200 bg-white rounded-lg p-2 shadow-sm">
-                                                <p className="text-[10px] text-slate-400 mb-1 uppercase font-bold tracking-wider">寄件信封封面</p>
+                                            <div className="border border-blue-200 bg-white rounded-xl p-3 shadow-sm">
+                                                <p className="text-xs text-slate-500 mb-2 uppercase font-bold tracking-wider px-1">寄件信封封面</p>
                                                 <div className="flex gap-2">
-                                                    <a href="https://drive.google.com/file/d/1nBx3s4ensDmTCoporeX3sRBvoyONZJfW/view" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'clinic_doc', 'event_label': '寄件信封封面-PDF' })} className="flex-1 flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 py-1.5 rounded text-xs font-bold transition-all hover:-translate-y-0.5 hover:shadow-md">
-                                                        <i className="ph-bold ph-file-pdf mr-1"></i> PDF
+                                                    <a href="https://drive.google.com/file/d/1nBx3s4ensDmTCoporeX3sRBvoyONZJfW/view" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'clinic_doc', 'event_label': '寄件信封封面-PDF' })} className="flex-1 flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 py-2.5 rounded-lg text-sm font-bold transition-all hover:-translate-y-0.5 hover:shadow-md border border-red-100">
+                                                        <i className="ph-bold ph-file-pdf mr-1.5"></i> PDF
                                                     </a>
-                                                    <a href="https://docs.google.com/document/d/1q-u65ZMDTOlVyIwXK_WX1dsp5OfrEqOY/edit" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'clinic_doc', 'event_label': '寄件信封封面-Word' })} className="flex-1 flex items-center justify-center bg-blue-50 text-blue-600 hover:bg-blue-100 py-1.5 rounded text-xs font-bold transition-all hover:-translate-y-0.5 hover:shadow-md">
-                                                        <i className="ph-bold ph-file-doc mr-1"></i> Word
+                                                    <a href="https://docs.google.com/document/d/1q-u65ZMDTOlVyIwXK_WX1dsp5OfrEqOY/edit" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'clinic_doc', 'event_label': '寄件信封封面-Word' })} className="flex-1 flex items-center justify-center bg-blue-50 text-blue-600 hover:bg-blue-100 py-2.5 rounded-lg text-sm font-bold transition-all hover:-translate-y-0.5 hover:shadow-md border border-blue-100">
+                                                        <i className="ph-bold ph-file-doc mr-1.5"></i> Word
                                                     </a>
                                                 </div>
                                             </div>
 
-                                            <div className="pt-2 space-y-2">
-                                                <span className="text-[10px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded">診所行政用 (依序)</span>
+                                            <div className="pt-4 space-y-3">
+                                                <span className="text-xs font-bold text-gray-400 bg-gray-100 px-3 py-1 rounded-lg">診所行政用 (依序)</span>
 
                                                 {/* B01 (Old B02) */}
-                                                <div className="bg-white border border-slate-200 rounded p-2 mb-2 shadow-sm">
-                                                    <div className="flex items-center text-xs text-slate-700 font-bold mb-1.5">
-                                                        <i className="ph-fill ph-file-text mr-1.5 text-blue-500"></i> B01 撥款確認單
+                                                <div className="bg-white border border-slate-200 rounded-xl p-3 mb-3 shadow-sm">
+                                                    <div className="flex items-center text-sm text-slate-700 font-bold mb-2">
+                                                        <i className="ph-fill ph-file-text mr-2 text-blue-500 text-lg"></i> B01 撥款確認單
                                                     </div>
-                                                    <div className="flex gap-1">
-                                                        <a href="https://drive.google.com/file/d/14yg8zbVg1orXaDmpVfhgdNVEvt449gSz/view" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'clinic_doc', 'event_label': 'B01 撥款確認單 (PDF)' })} className="flex-1 flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 py-1 rounded text-[10px] font-bold transition-all hover:shadow-sm border border-red-100">
+                                                    <div className="flex gap-2">
+                                                        <a href="https://drive.google.com/file/d/14yg8zbVg1orXaDmpVfhgdNVEvt449gSz/view" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'clinic_doc', 'event_label': 'B01 撥款確認單 (PDF)' })} className="flex-1 flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 py-2 rounded-lg text-xs font-bold transition-all hover:shadow-sm border border-red-100">
                                                             <i className="ph-bold ph-file-pdf mr-1"></i> PDF
                                                         </a>
-                                                        <a href="https://docs.google.com/document/d/1xKpDVu9eGhWrwcdWOuzUmvUGVq0Pujnw/edit" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'clinic_doc', 'event_label': 'B01 撥款確認單 (Word)' })} className="flex-1 flex items-center justify-center bg-blue-50 text-blue-600 hover:bg-blue-100 py-1 rounded text-[10px] font-bold transition-all hover:shadow-sm border border-blue-100">
+                                                        <a href="https://docs.google.com/document/d/1xKpDVu9eGhWrwcdWOuzUmvUGVq0Pujnw/edit" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'clinic_doc', 'event_label': 'B01 撥款確認單 (Word)' })} className="flex-1 flex items-center justify-center bg-blue-50 text-blue-600 hover:bg-blue-100 py-2 rounded-lg text-xs font-bold transition-all hover:shadow-sm border border-blue-100">
                                                             <i className="ph-bold ph-file-doc mr-1"></i> Word
                                                         </a>
                                                     </div>
                                                 </div>
                                                 
                                                 {/* B02 (Old B04) */}
-                                                <div className="bg-white border border-slate-200 rounded p-2 mb-2 shadow-sm">
-                                                    <div className="flex items-center text-xs text-slate-700 font-bold mb-1.5">
-                                                        <i className="ph-fill ph-file-text mr-1.5 text-blue-500"></i> B02 診所獎勵金領據
+                                                <div className="bg-white border border-slate-200 rounded-xl p-3 mb-3 shadow-sm">
+                                                    <div className="flex items-center text-sm text-slate-700 font-bold mb-2">
+                                                        <i className="ph-fill ph-file-text mr-2 text-blue-500 text-lg"></i> B02 診所獎勵金領據
                                                     </div>
-                                                    <div className="flex gap-1">
-                                                        <a href="https://drive.google.com/file/d/1l3bMgpGsyJzMPxODULMWhUn1LWBAfV3B/view" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'clinic_doc', 'event_label': 'B02 診所獎勵金領據 (PDF)' })} className="flex-1 flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 py-1 rounded text-[10px] font-bold transition-all hover:shadow-sm border border-red-100">
+                                                    <div className="flex gap-2">
+                                                        <a href="https://drive.google.com/file/d/1l3bMgpGsyJzMPxODULMWhUn1LWBAfV3B/view" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'clinic_doc', 'event_label': 'B02 診所獎勵金領據 (PDF)' })} className="flex-1 flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 py-2 rounded-lg text-xs font-bold transition-all hover:shadow-sm border border-red-100">
                                                             <i className="ph-bold ph-file-pdf mr-1"></i> PDF
                                                         </a>
-                                                        <a href="https://docs.google.com/document/d/14TgGy21RXaP4Uo0RoBSSVuislnI2u-_Z/edit" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'clinic_doc', 'event_label': 'B02 診所獎勵金領據 (Word)' })} className="flex-1 flex items-center justify-center bg-blue-50 text-blue-600 hover:bg-blue-100 py-1 rounded text-[10px] font-bold transition-all hover:shadow-sm border border-blue-100">
+                                                        <a href="https://docs.google.com/document/d/14TgGy21RXaP4Uo0RoBSSVuislnI2u-_Z/edit" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'clinic_doc', 'event_label': 'B02 診所獎勵金領據 (Word)' })} className="flex-1 flex items-center justify-center bg-blue-50 text-blue-600 hover:bg-blue-100 py-2 rounded-lg text-xs font-bold transition-all hover:shadow-sm border border-blue-100">
                                                             <i className="ph-bold ph-file-doc mr-1"></i> Word
                                                         </a>
                                                     </div>
                                                 </div>
 
                                                 {/* B03 (Old B01) */}
-                                                <div className="bg-white border border-slate-200 rounded p-2 mb-2 shadow-sm">
-                                                    <div className="flex items-center text-xs text-slate-700 font-bold mb-1.5">
-                                                        <i className="ph-fill ph-file-text mr-1.5 text-blue-500"></i> B03 診所送件清單
+                                                <div className="bg-white border border-slate-200 rounded-xl p-3 mb-3 shadow-sm">
+                                                    <div className="flex items-center text-sm text-slate-700 font-bold mb-2">
+                                                        <i className="ph-fill ph-file-text mr-2 text-blue-500 text-lg"></i> B03 診所送件清單
                                                     </div>
-                                                    <div className="flex gap-1">
-                                                        <a href="https://drive.google.com/file/d/1mkBbCkVtqBnNaZ-EyriJz_9YGms0x_Yi/view" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'clinic_doc', 'event_label': 'B03 診所送件清單 (PDF)' })} className="flex-1 flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 py-1 rounded text-[10px] font-bold transition-all hover:shadow-sm border border-red-100">
+                                                    <div className="flex gap-2">
+                                                        <a href="https://drive.google.com/file/d/1mkBbCkVtqBnNaZ-EyriJz_9YGms0x_Yi/view" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'clinic_doc', 'event_label': 'B03 診所送件清單 (PDF)' })} className="flex-1 flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 py-2 rounded-lg text-xs font-bold transition-all hover:shadow-sm border border-red-100">
                                                             <i className="ph-bold ph-file-pdf mr-1"></i> PDF
                                                         </a>
-                                                        <a href="https://docs.google.com/document/d/11vf3K21LgCh2Nl1IRHP14xcgUjGR1oQm/edit" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'clinic_doc', 'event_label': 'B03 診所送件清單 (Word)' })} className="flex-1 flex items-center justify-center bg-blue-50 text-blue-600 hover:bg-blue-100 py-1 rounded text-[10px] font-bold transition-all hover:shadow-sm border border-blue-100">
+                                                        <a href="https://docs.google.com/document/d/11vf3K21LgCh2Nl1IRHP14xcgUjGR1oQm/edit" target="_blank" onClick={() => typeof gtag === 'function' && gtag('event', 'download', { 'event_category': 'clinic_doc', 'event_label': 'B03 診所送件清單 (Word)' })} className="flex-1 flex items-center justify-center bg-blue-50 text-blue-600 hover:bg-blue-100 py-2 rounded-lg text-xs font-bold transition-all hover:shadow-sm border border-blue-100">
                                                             <i className="ph-bold ph-file-doc mr-1"></i> Word
                                                         </a>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div className="pt-2 space-y-2">
-                                                <span className="text-[10px] font-bold text-orange-400 bg-orange-50 px-2 py-0.5 rounded">民眾簽署用</span>
+                                            <div className="pt-4 space-y-3">
+                                                <span className="text-xs font-bold text-orange-400 bg-orange-50 px-3 py-1 rounded-lg">民眾簽署用</span>
 
                                                 {/* A01 Dropdown */}
                                                 <DocDropdown
@@ -749,10 +749,10 @@
                                     <div className="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
                                         <div className="bg-blue-600 text-white px-4 md:px-6 py-3 font-bold flex items-center justify-between">
                                             <div className="flex items-center">
-                                                <span className="bg-white text-blue-600 text-xs px-2 py-1 rounded mr-2">A</span>
-                                                糞便潛血篩檢 (FIT)
+                                                <span className="bg-white text-blue-600 text-sm px-2.5 py-1 rounded-md mr-3 font-bold shadow-sm">A</span>
+                                                <span className="text-lg md:text-xl">糞便潛血篩檢 (FIT)</span>
                                             </div>
-                                            <span className="text-[10px] md:text-xs bg-blue-500 px-2 py-1 rounded text-white/90">第一階段</span>
+                                            <span className="text-xs font-bold bg-blue-500 px-3 py-1.5 rounded-lg text-white">第一階段</span>
                                         </div>
                                         <div className="p-4 md:p-6">
                                             <div className="flex flex-col md:flex-row gap-4 items-stretch">
@@ -764,10 +764,10 @@
                                                     { title: "陽性回診", text: "若陽性，診所於系統回報並上傳轉診單 (啟動第二階段)" }
                                                 ].map((step, idx) => (
                                                     <div key={idx} className="flex-1 flex flex-col relative group">
-                                                        <div className={`p-4 rounded-lg h-full border-2 ${step.highlight ? 'bg-yellow-50 border-yellow-300' : 'bg-white border-slate-200'} transition-all hover:shadow-md`}>
-                                                            <div className="text-[10px] font-bold text-slate-400 mb-1">STEP {idx + 1}</div>
-                                                            <div className="font-bold text-slate-800 mb-2 text-sm md:text-base">{step.title}</div>
-                                                            <div className="text-xs md:text-sm text-slate-600">{step.text}</div>
+                                                        <div className={`p-5 rounded-xl h-full border-2 ${step.highlight ? 'bg-yellow-50 border-yellow-300' : 'bg-white border-slate-200'} transition-all hover:shadow-md`}>
+                                                            <div className="text-xs font-bold text-slate-400 mb-2 tracking-wider">STEP {idx + 1}</div>
+                                                            <div className="font-extrabold text-slate-800 mb-2.5 text-base md:text-lg">{step.title}</div>
+                                                            <div className="text-sm md:text-base text-slate-600 leading-relaxed">{step.text}</div>
                                                         </div>
                                                         {idx !== 4 && <div className="hidden md:block absolute top-1/2 -right-3 w-4 h-4 text-slate-300 z-10 transform -translate-y-1/2">➜</div>}
                                                     </div>
@@ -780,10 +780,10 @@
                                     <div className="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
                                         <div className="bg-indigo-600 text-white px-4 md:px-6 py-3 font-bold flex items-center justify-between">
                                             <div className="flex items-center">
-                                                <span className="bg-white text-indigo-600 text-xs px-2 py-1 rounded mr-2">B</span>
-                                                大腸鏡檢查 (限陽性個案)
+                                                <span className="bg-white text-indigo-600 text-sm px-2.5 py-1 rounded-md mr-3 font-bold shadow-sm">B</span>
+                                                <span className="text-lg md:text-xl">大腸鏡檢查 (限陽性個案)</span>
                                             </div>
-                                            <span className="text-[10px] md:text-xs bg-indigo-500 px-2 py-1 rounded text-white/90">第二階段</span>
+                                            <span className="text-xs font-bold bg-indigo-500 px-3 py-1.5 rounded-lg text-white">第二階段</span>
                                         </div>
 
                                         <div className="p-4 md:p-6 space-y-8">
@@ -819,20 +819,20 @@
                                                 <p className="text-xs md:text-sm text-slate-500 mb-3">病人於 A 診所篩檢陽性，持轉診單至 B 診所做大腸鏡。</p>
 
                                                 <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm space-y-3">
-                                                    <div className="flex flex-col md:flex-row md:gap-3 text-sm">
+                                                    <div className="flex flex-col md:flex-row md:gap-3 text-base">
                                                         <span className="font-bold text-slate-700 md:min-w-[70px] mb-1 md:mb-0">糞篩階段：</span>
                                                         <span className="text-slate-600">民眾於 A 診所完成篩檢與 A05 民眾電子問卷 (FOBT篩檢)。</span>
                                                     </div>
-                                                    <div className="flex flex-col md:flex-row md:gap-3 text-sm">
+                                                    <div className="flex flex-col md:flex-row md:gap-3 text-base">
                                                         <span className="font-bold text-slate-700 md:min-w-[70px] mb-1 md:mb-0">大腸鏡：</span>
                                                         <div className="text-slate-600">
-                                                            <p className="mb-1">B 診所透過系統新增的<span className="text-purple-600 font-bold mx-1">「轉診病人查詢」</span>頁面搜尋該病患。</p>
+                                                            <p className="mb-1.5">B 診所透過系統新增的<span className="text-purple-600 font-black mx-1">「轉診病人查詢」</span>頁面搜尋該病患。</p>
                                                             <p className="mb-1">點選系統產出的專屬 QR Code，自動帶入資料 → B 診所人員填寫執行日期。</p>
                                                         </div>
                                                     </div>
-                                                    <div className="flex flex-col md:flex-row md:gap-3 text-sm bg-yellow-50 p-3 rounded">
+                                                    <div className="flex flex-col md:flex-row md:gap-3 text-base bg-yellow-50 p-4 rounded-xl border border-yellow-100 shadow-sm">
                                                         <span className="font-bold text-yellow-800 md:min-w-[70px] mb-1 md:mb-0">獎金核銷：</span>
-                                                        <span className="text-yellow-900">同上，出示 QR Code 進入 A06 民眾電子問卷 (大腸鏡檢查) 流程 → 確認填寫後發放 → <span className="font-bold text-red-600 underline">平台點擊扣款</span>。</span>
+                                                        <span className="text-yellow-950 font-medium">同上，出示 QR Code 進入 A06 民眾電子問卷 (大腸鏡檢查) 流程 → 確認填寫後發放 → <strong className="text-red-600 underline decoration-2 underline-offset-4">平台點擊扣款</strong>。</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -846,87 +846,96 @@
                                 <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                                     <div className="border-b pb-4 mb-6">
                                         <h2 className="text-xl md:text-2xl font-bold text-gray-800 flex items-center">
-                                            <i className="ph-fill ph-currency-circle-dollar text-green-600 mr-3"></i> 經費與核銷原則
+                                            <i className="ph-fill ph-currency-circle-dollar text-green-600 mr-3 text-2xl"></i> 經費與核銷原則
                                         </h2>
-                                        <div className="bg-orange-50 text-orange-900 p-4 rounded-lg mt-4 text-sm flex items-start border border-orange-200">
-                                            <i className="ph-fill ph-info text-lg mr-2 mt-0.5 flex-shrink-0"></i>
-                                            <div>
-                                                <strong>核心原則：</strong> 原則上以<span className="text-red-600 font-bold mx-1">每季核算</span>，即使該季款項未發放完畢，也請務必以季為單位，將目前的所有資料繳回醫師公會，也請務必同步寄送電子檔副本，以利加速核銷。
-                                            </div>
-                                        </div>
+                                        <div className="h-4"></div>
                                     </div>
 
                                     {/* 資金空窗期 Alert */}
                                     <div className="bg-red-50 p-4 rounded-xl border-l-4 border-red-500 shadow-sm mb-6">
-                                        <h3 className="font-bold text-red-800 text-sm mb-1 flex items-center">
-                                            <i className="ph-bold ph-warning-circle mr-2"></i> 若遇「資金空窗期」怎麼辦？
+                                        <h3 className="font-extrabold text-red-900 text-base mb-2 flex items-center">
+                                            <i className="ph-bold ph-warning-circle mr-2 text-xl"></i> 若遇「資金空窗期」怎麼辦？
                                         </h3>
-                                        <p className="text-sm text-red-700">
-                                            若受試者營養費於款項撥付期間出現銜接空窗（錢發完了，新錢還沒到），請診所視實際情況<strong className="underline">先行代墊費用</strong>，後續將於下一筆款項撥付時一併補回。請盡量避免讓民眾撲空，以維持良好醫病關係。
+                                        <p className="text-base text-red-700 leading-relaxed font-medium">
+                                            若受試者營養費於款項撥付期間出現銜接空窗（錢發完了，新錢還沒到），請診所視實際情況<strong className="underline decoration-2 underline-offset-4 text-red-800">先行代墊費用</strong>，後續將於下一筆款項撥付時一併補回。請盡量避免讓民眾撲空，以維持良好醫病關係。
                                         </p>
                                     </div>
 
                                     <div className="grid md:grid-cols-2 gap-6">
 
-                                        {/* Case 1: Quarterly Settlement */}
-                                        <div className="bg-white p-6 rounded-xl border-2 border-slate-200 shadow-sm relative">
+                                        {/* Case 1: Settlement */}
+                                        <div className="bg-white p-6 rounded-2xl border-2 border-slate-200 shadow-sm relative">
                                             <div className="absolute -top-3 left-4 bg-slate-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                                                原則 1：每季統計寄回
+                                                原則 1：發放完畢即辦理
                                             </div>
-                                            <h3 className="font-bold text-lg mb-3 mt-2 text-slate-700">尚未發放完畢 (季結)</h3>
-                                            <p className="text-gray-600 text-sm mb-4">
-                                                即使當季預撥款項還沒發完，<strong>季結是一定得繳回的時機！</strong>請統計當季名單並寄回資料。
-                                            </p>
-                                            <div className="bg-slate-50 p-3 rounded-lg border border-slate-100">
-                                                <p className="text-xs font-bold text-slate-500 mb-2">寄回項目：</p>
-                                                <ul className="text-sm text-slate-700 space-y-1 list-disc list-inside">
-                                                    <li>民眾簽收單 (A01 或 A02)</li>
-                                                    <li>公會 送件清單 (B03)</li>
+                                            <h3 className="font-bold text-xl mb-4 mt-3 text-slate-800">辦理結算規範</h3>
+                                            <div className="bg-blue-50 p-5 rounded-2xl border border-blue-100 mb-5 shadow-inner">
+                                                <p className="text-base text-blue-900 leading-relaxed">
+                                                    <strong className="text-blue-700">核心結算機制：</strong><br />
+                                                    為配合帳務核銷作業順利進行，調整為<span className="text-red-600 font-black text-lg mx-1">「當次獎勵金發放完畢後辦理結算」</span>。辦理結算時，請將下列文件正本寄回，同時提供電子副本。
+                                                </p>
+                                            </div>
+
+                                            <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+                                                <p className="text-sm font-bold text-slate-400 mb-3 uppercase tracking-wider">核銷應檢附文件：</p>
+                                                <ul className="text-base text-slate-800 space-y-2 list-inside font-medium">
+                                                    <li>(一) A01 或 A02 簽收單正本</li>
+                                                    <li>(二) B01 撥付確認單 (民眾獎金)</li>
                                                     <li>
-                                                        公會 診所獎勵領據 (B02) <br />
-                                                        <span className="text-xs text-red-500 bg-red-50 px-1 rounded ml-4 font-bold">
-                                                            ! 務必自行計算總額並填入
+                                                        (三) B02 領據 (診所獎金) <br />
+                                                        <span className="text-sm text-red-600 bg-red-50 px-2 py-1 rounded-md ml-6 font-bold flex items-center mt-2 border border-red-100 inline-flex">
+                                                            <i className="ph-bold ph-warning-circle mr-1.5 text-lg"></i> 單張金額不得超過 20,000 元
                                                         </span>
                                                     </li>
+                                                    <li>(四) B03 送件清單 (彙整當次資料)</li>
                                                 </ul>
                                             </div>
                                         </div>
 
                                         {/* Case 2: Early Replenishment */}
-                                        <div className="bg-yellow-50 p-6 rounded-xl border-2 border-yellow-400 shadow-md relative">
+                                        <div className="bg-yellow-50 p-6 rounded-2xl border-2 border-yellow-400 shadow-md relative">
                                             <div className="absolute -top-3 left-4 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full">
                                                 原則 2：提早請領機制
                                             </div>
                                             <div className="absolute top-4 right-4 text-yellow-500 opacity-20">
                                                 <i className="ph-fill ph-lightning text-6xl"></i>
                                             </div>
-                                            <h3 className="font-bold text-lg mb-3 mt-2 text-yellow-900">執行率高 (已發放完畢)</h3>
-                                            <p className="text-yellow-900 text-sm mb-4">
-                                                若受試者營養費已提前發放完畢，<strong>無須等待季結時間</strong>，可提前將資料寄回申請。
+                                            <h3 className="font-bold text-xl mb-4 mt-3 text-yellow-950">提早發放完畢</h3>
+                                            <p className="text-yellow-900 text-base mb-5 leading-relaxed font-medium">
+                                                若受試者營養費已提前發放完畢，<span className="text-red-600 font-extrabold underline underline-offset-4 decoration-2">無需等待</span>，可立即將資料寄回申請撥付下一筆款項。
                                             </p>
-                                            <div className="bg-white/60 p-3 rounded-lg border border-yellow-200">
-                                                <p className="text-xs font-bold text-yellow-800 mb-2">寄回項目 (需含B01)：</p>
-                                                <ul className="text-sm text-yellow-900 space-y-1 list-disc list-inside">
-                                                    <li>民眾簽收單 (A01 或 A02)</li>
-                                                    <li>公會 送件清單 (B03)</li>
-                                                    <li>
-                                                        公會 診所獎勵領據 (B02) <br />
-                                                        <span className="text-xs text-red-600 font-bold ml-4">! 務必自行計算填入</span>
+                                            <div className="bg-white/70 p-5 rounded-2xl border border-yellow-200">
+                                                <p className="text-sm font-bold text-yellow-800 mb-3 uppercase tracking-wider">重要注意事項：</p>
+                                                <ul className="text-base text-yellow-950 space-y-4 list-inside font-medium">
+                                                    <li className="flex items-start">
+                                                        <i className="ph-bold ph-caret-right mt-1.5 mr-2 flex-shrink-0 text-yellow-600"></i>
+                                                        <span>文件請務必填寫完整並蓋章。</span>
                                                     </li>
-                                                    <li className="font-bold text-red-600">公會 撥款確認單 (B01)</li>
+                                                    <li className="flex items-start">
+                                                        <i className="ph-bold ph-caret-right mt-1.5 mr-2 flex-shrink-0 text-yellow-600"></i>
+                                                        <span><strong>電子副本：</strong>除 Email 外，亦可透過 <strong className="text-[#06C755]">官方 LINE</strong> 傳送照片。</span>
+                                                    </li>
+                                                    <li className="flex items-start">
+                                                        <i className="ph-bold ph-caret-right mt-1.5 mr-2 flex-shrink-0 text-yellow-600"></i>
+                                                        <span>如有疑問請洽專人：<strong className="text-lg">(06) 208-3662</strong>。</span>
+                                                    </li>
+                                                    <li className="flex items-start">
+                                                        <i className="ph-bold ph-caret-right mt-1.5 mr-2 flex-shrink-0 text-yellow-600"></i>
+                                                        <span>若核銷文件中有塗改痕跡，<strong>請務必在修改處旁簽名或蓋章</strong>。</span>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
 
                                     {/* Workflow Summary */}
-                                    <div className="bg-blue-50 p-4 rounded-xl border border-blue-100 flex items-center justify-between mt-4">
+                                    <div className="bg-blue-50 p-5 rounded-2xl border border-blue-100 flex items-center justify-between mt-4 shadow-sm">
                                         <div className="flex items-center">
-                                            <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mr-3 text-xl">
+                                            <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mr-4 text-2xl shadow-sm">
                                                 <i className="ph-bold ph-paper-plane-right"></i>
                                             </div>
-                                            <div className="text-sm text-blue-900">
-                                                診所寄回資料（正本與電子檔）裝飾 → 醫師公會核對名單 → <span className="font-bold">無誤後撥付下次款項及診所獎勵金</span>
+                                            <div className="text-base text-blue-900 leading-relaxed font-bold">
+                                                診所寄回資料（正本與電子檔） → 醫師公會核對名單 → <span className="text-indigo-600 border-b-2 border-indigo-200">無誤後撥付下次款項及診所獎勵金</span>
                                             </div>
                                         </div>
                                     </div>
@@ -943,70 +952,63 @@
                                     </div>
 
                                     {/* Table */}
-                                    <div className="overflow-x-auto mb-8">
-                                        <table className="min-w-full text-sm text-left whitespace-nowrap md:whitespace-normal">
-                                            <thead className="bg-slate-100 text-slate-600 font-bold uppercase">
+                                    <div className="overflow-x-auto mb-10 shadow-sm border border-slate-200 rounded-2xl">
+                                        <table className="min-w-full text-base text-left whitespace-nowrap md:whitespace-normal">
+                                            <thead className="bg-slate-50 text-slate-500 font-bold uppercase tracking-wider border-b border-slate-200">
                                                 <tr>
-                                                    <th className="px-4 py-3 rounded-tl-lg">代號</th>
-                                                    <th className="px-4 py-3">表單名稱</th>
-                                                    <th className="px-4 py-3">用途</th>
-                                                    <th className="px-4 py-3 rounded-tr-lg">處理方式</th>
+                                                    <th className="px-6 py-4">代號</th>
+                                                    <th className="px-6 py-4">表單名稱</th>
+                                                    <th className="px-6 py-4">用途</th>
+                                                    <th className="px-6 py-4">處理方式</th>
                                                 </tr>
                                             </thead>
-                                            <tbody className="divide-y divide-slate-200">
-                                                <tr className="hover:bg-slate-50">
-                                                    <td className="px-4 py-3 font-mono font-bold text-blue-600">A01</td>
-                                                    <td className="px-4 py-3">
-                                                        民眾 FOBT A01
-                                                    </td>
-                                                    <td className="px-4 py-3">證明民眾已領300元</td>
-                                                    <td className="px-4 py-3"><span className="text-red-500 font-bold">正本寄回</span> (每季結算前)</td>
+                                            <tbody className="divide-y divide-slate-100 font-medium">
+                                                <tr className="hover:bg-blue-50/30 transition-colors">
+                                                    <td className="px-6 py-4 font-mono font-black text-blue-600">A01</td>
+                                                    <td className="px-6 py-4 text-slate-800">民眾 FOBT A01</td>
+                                                    <td className="px-6 py-4 text-slate-600">證明民眾已領 300 元</td>
+                                                    <td className="px-6 py-4"><span className="text-red-500 font-bold bg-red-50 px-2 py-0.5 rounded">正本寄回</span></td>
                                                 </tr>
-                                                <tr className="hover:bg-slate-50">
-                                                    <td className="px-4 py-3 font-mono font-bold text-blue-600">A02</td>
-                                                    <td className="px-4 py-3">
-                                                        民眾 大腸鏡 A02
-                                                    </td>
-                                                    <td className="px-4 py-3">證明民眾已領300元</td>
-                                                    <td className="px-4 py-3"><span className="text-red-500 font-bold">正本寄回</span> (每季結算前)</td>
+                                                <tr className="hover:bg-blue-50/30 transition-colors">
+                                                    <td className="px-6 py-4 font-mono font-black text-blue-600">A02</td>
+                                                    <td className="px-6 py-4 text-slate-800">民眾 大腸鏡 A02</td>
+                                                    <td className="px-6 py-4 text-slate-600">證明民眾已領 300 元</td>
+                                                    <td className="px-6 py-4"><span className="text-red-500 font-bold bg-red-50 px-2 py-0.5 rounded">正本寄回</span></td>
                                                 </tr>
-                                                {/* Reordered B forms: B01, B02, B03 */}
-                                                <tr className="hover:bg-slate-50">
-                                                    <td className="px-4 py-3 font-mono font-bold text-gray-600">B01</td>
-                                                    <td className="px-4 py-3">公會 撥款確認單 B01</td>
-                                                    <td className="px-4 py-3">申請下一筆款項用</td>
-                                                    <td className="px-4 py-3">欲請款時一併寄回</td>
+                                                <tr className="hover:bg-slate-50 transition-colors">
+                                                    <td className="px-6 py-4 font-mono font-black text-gray-500">B01</td>
+                                                    <td className="px-6 py-4 text-slate-800">公會 撥款確認單 B01</td>
+                                                    <td className="px-6 py-4 text-slate-600">申請下一筆款項用</td>
+                                                    <td className="px-6 py-4 text-slate-500">欲請款時一併寄回</td>
                                                 </tr>
-                                                <tr className="hover:bg-slate-50">
-                                                    <td className="px-4 py-3 font-mono font-bold text-gray-600">B02</td>
-                                                    <td className="px-4 py-3">公會 診所獎勵領據 B02</td>
-                                                    <td className="px-4 py-3">領取診所獎勵金</td>
-                                                    <td className="px-4 py-3">
-                                                        <span className="text-red-500 font-bold">正本寄回</span>
-                                                        <br /><span className="text-xs text-red-500 font-bold">! 務必自行計算總額並填入</span>
+                                                <tr className="hover:bg-slate-50 transition-colors">
+                                                    <td className="px-6 py-4 font-mono font-black text-gray-500">B02</td>
+                                                    <td className="px-6 py-4 text-slate-800">公會 診所獎勵領據 B02</td>
+                                                    <td className="px-6 py-4 text-slate-600">領取診所獎勵金</td>
+                                                    <td className="px-6 py-4">
+                                                        <span className="text-red-500 font-bold bg-red-50 px-2 py-0.5 rounded">正本寄回</span>
+                                                        <div className="text-xs text-red-400 mt-1">! 務必自行計算總額並填入</div>
                                                     </td>
                                                 </tr>
-                                                <tr className="hover:bg-slate-50">
-                                                    <td className="px-4 py-3 font-mono font-bold text-gray-600">B03</td>
-                                                    <td className="px-4 py-3">
-                                                        公會 送件清單 B03
-                                                    </td>
-                                                    <td className="px-4 py-3">彙整當次送件資料</td>
-                                                    <td className="px-4 py-3"><span className="text-red-500 font-bold">正本寄回</span> (每季結算前)</td>
+                                                <tr className="hover:bg-slate-50 transition-colors">
+                                                    <td className="px-6 py-4 font-mono font-black text-gray-500">B03</td>
+                                                    <td className="px-6 py-4 text-slate-800">公會 送件清單 B03</td>
+                                                    <td className="px-6 py-4 text-slate-600">彙整當次送件資料</td>
+                                                    <td className="px-6 py-4"><span className="text-red-500 font-bold bg-red-50 px-2 py-0.5 rounded">正本寄回</span></td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
 
                                     {/* Envelope Preview Section (UPDATED) */}
-                                    <div className="bg-slate-50 p-6 rounded-2xl border-2 border-dashed border-slate-300 mb-8">
-                                        <h3 className="text-lg font-bold text-slate-700 mb-4 flex items-center">
-                                            <i className="ph-fill ph-envelope-open text-blue-500 mr-2"></i> 統一寄件封面 (建議使用)
+                                    <div className="bg-slate-50 p-6 md:p-10 rounded-3xl border-2 border-dashed border-slate-300 mb-8 shadow-inner">
+                                        <h3 className="text-xl md:text-2xl font-black text-slate-700 mb-8 flex items-center">
+                                            <i className="ph-fill ph-envelope-open text-blue-500 mr-3 text-3xl"></i> 統一寄件封面 (建議使用)
                                         </h3>
-                                        <div className="flex flex-col md:flex-row gap-8 items-center">
+                                        <div className="flex flex-col lg:flex-row gap-10 items-center">
                                             {/* Visual Preview Container */}
-                                            <div className="w-full md:w-2/3 bg-white shadow-lg p-1 rounded-sm rotate-1 hover:rotate-0 transition-transform duration-300 relative">
-                                                <div className="envelope-pattern mb-2"></div>
+                                            <div className="w-full lg:w-3/5 bg-white shadow-2xl p-2 rounded-sm rotate-1 hover:rotate-0 transition-transform duration-500 relative border border-slate-200">
+                                                <div className="envelope-pattern mb-4"></div>
 
                                                 <div className="aspect-[1.414/1] relative border border-slate-100 overflow-hidden bg-white">
                                                     <img
@@ -1020,55 +1022,57 @@
                                                     />
 
                                                     {/* Fallback HTML Content */}
-                                                    <div className="hidden absolute inset-0 flex-col justify-between p-4 md:p-8" style={{ display: 'none' }}>
-                                                        <div className="text-xs md:text-sm text-slate-500 font-serif">
-                                                            <p className="mb-1">診所名稱：_________________</p>
-                                                            <p className="mb-1">地　　址：_______________________</p>
+                                                    <div className="hidden absolute inset-0 flex-col justify-between p-8 md:p-12" style={{ display: 'none' }}>
+                                                        <div className="text-sm md:text-lg text-slate-500 font-serif">
+                                                            <p className="mb-3">診所名稱：_________________</p>
+                                                            <p className="mb-3">地　　址：_______________________</p>
                                                             <p>電　　話：_______________________</p>
-                                                            <div className="absolute top-4 right-4 border border-slate-300 w-16 h-20 flex items-center justify-center text-xs text-slate-300">
+                                                            <div className="absolute top-8 right-8 border-2 border-slate-300 w-24 h-32 flex items-center justify-center text-base text-slate-300 font-bold">
                                                                 郵票<br />黏貼處
                                                             </div>
                                                         </div>
 
-                                                        <div className="self-center text-center mt-4">
+                                                        <div className="self-center text-center mt-8">
                                                             <div className="inline-block text-left">
-                                                                <p className="text-xl md:text-2xl font-black text-slate-800 tracking-widest mb-1">70163</p>
-                                                                <p className="text-lg md:text-xl font-bold text-slate-800 mb-2">台南市中西區民生路一段 82 號 2 樓</p>
-                                                                <div className="border-l-4 border-red-500 pl-3 py-1">
-                                                                    <p className="text-base font-bold text-slate-700">社團法人臺南市醫師公會 收</p>
-                                                                    <p className="text-sm font-bold text-blue-600 mt-1">深耕計畫 愛腸篩小組</p>
+                                                                <p className="text-3xl md:text-4xl font-black text-slate-800 tracking-widest mb-3 font-mono">70163</p>
+                                                                <p className="text-xl md:text-2xl font-black text-slate-800 mb-4">台南市中西區民生路一段 82 號 2 樓</p>
+                                                                <div className="border-l-[6px] border-red-500 pl-6 py-2">
+                                                                    <p className="text-xl md:text-2xl font-black text-slate-700">社團法人臺南市醫師公會 收</p>
+                                                                    <p className="text-lg md:text-xl font-black text-blue-600 mt-2">深耕計畫 愛腸篩小組</p>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        <div className="mt-4 border-t border-slate-200 pt-2">
-                                                            <p className="text-[10px] text-slate-400 mb-1 text-center">--- 請勾選內容物 ---</p>
-                                                            <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-slate-600">
-                                                                <label className="flex items-center"><input type="checkbox" className="mr-1" disabled /> IC85組</label>
-                                                                <label className="flex items-center"><input type="checkbox" className="mr-1" disabled /> 大腸鏡檢查組</label>
-                                                                <label className="flex items-center"><input type="checkbox" className="mr-1" disabled /> A01 民眾簽收單</label>
-                                                                <label className="flex items-center"><input type="checkbox" className="mr-1" disabled /> B03 送件清單</label>
-                                                                <label className="flex items-center"><input type="checkbox" className="mr-1" disabled /> B01 撥款確認單</label>
-                                                                <label className="flex items-center"><input type="checkbox" className="mr-1" disabled /> B02 診所領據</label>
+                                                        <div className="mt-8 border-t-2 border-slate-200 pt-4">
+                                                            <p className="text-xs text-slate-400 mb-3 text-center uppercase tracking-widest font-bold">--- 請勾選內容物 ---</p>
+                                                            <div className="grid grid-cols-2 gap-x-8 gap-y-3 text-base text-slate-700 font-bold">
+                                                                <label className="flex items-center"><input type="checkbox" className="mr-3 w-5 h-5" disabled /> IC85組</label>
+                                                                <label className="flex items-center"><input type="checkbox" className="mr-3 w-5 h-5" disabled /> 大腸鏡檢查組</label>
+                                                                <label className="flex items-center"><input type="checkbox" className="mr-3 w-5 h-5" disabled /> A01 民眾簽收單</label>
+                                                                <label className="flex items-center"><input type="checkbox" className="mr-3 w-5 h-5" disabled /> B03 送件清單</label>
+                                                                <label className="flex items-center"><input type="checkbox" className="mr-3 w-5 h-5" disabled /> B01 撥款確認單</label>
+                                                                <label className="flex items-center"><input type="checkbox" className="mr-3 w-5 h-5" disabled /> B02 診所領據</label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div className="envelope-pattern mt-2"></div>
+                                                <div className="envelope-pattern mt-4"></div>
                                             </div>
 
                                             {/* Action Side */}
-                                            <div className="w-full md:w-1/3 flex flex-col justify-center">
-                                                <p className="text-sm text-slate-600 mb-4">
-                                                    為加速公會收件與分類，建議診所<strong className="text-red-500">統一使用此格式</strong>作為信封封面。
-                                                </p>
-                                                <div className="space-y-2">
-                                                    <a href="https://drive.google.com/file/d/1nBx3s4ensDmTCoporeX3sRBvoyONZJfW/view" target="_blank" className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 w-full py-3 rounded-xl font-bold flex items-center justify-center transition-colors shadow-sm text-sm">
-                                                        <i className="ph-bold ph-file-pdf mr-2"></i> 下載 PDF 封面
+                                            <div className="w-full lg:w-2/5 flex flex-col justify-center">
+                                                <div className="bg-white p-6 rounded-2xl border border-blue-100 shadow-sm mb-8">
+                                                    <p className="text-lg text-slate-700 leading-relaxed font-medium">
+                                                        為加速公會收件與分類，建議診所<strong className="text-red-500 underline underline-offset-4 decoration-2 font-black">統一使用此格式</strong>作為信封封面。
+                                                    </p>
+                                                </div>
+                                                <div className="space-y-4">
+                                                    <a href="https://drive.google.com/file/d/1nBx3s4ensDmTCoporeX3sRBvoyONZJfW/view" target="_blank" className="bg-red-50 hover:bg-red-100 text-red-600 border-2 border-red-200 w-full py-5 rounded-2xl font-black flex items-center justify-center transition-all shadow-md hover:shadow-lg hover:-translate-y-1 text-lg">
+                                                        <i className="ph-bold ph-file-pdf mr-3 text-2xl"></i> 下載 PDF 封面
                                                     </a>
-                                                    <a href="https://docs.google.com/document/d/1q-u65ZMDTOlVyIwXK_WX1dsp5OfrEqOY/edit" target="_blank" className="bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200 w-full py-3 rounded-xl font-bold flex items-center justify-center transition-colors shadow-sm text-sm">
-                                                        <i className="ph-bold ph-file-doc mr-2"></i> 下載 Word 封面
+                                                    <a href="https://docs.google.com/document/d/1q-u65ZMDTOlVyIwXK_WX1dsp5OfrEqOY/edit" target="_blank" className="bg-blue-50 hover:bg-blue-100 text-blue-600 border-2 border-blue-200 w-full py-5 rounded-2xl font-black flex items-center justify-center transition-all shadow-md hover:shadow-lg hover:-translate-y-1 text-lg">
+                                                        <i className="ph-bold ph-file-doc mr-3 text-2xl"></i> 下載 Word 封面
                                                     </a>
                                                 </div>
                                             </div>
@@ -1089,16 +1093,18 @@
                                         </div>
 
                                         <div className="bg-white border-2 border-slate-200 rounded-xl p-5 flex items-start min-w-0">
-                                            <div className="bg-slate-100 p-3 rounded-full mr-4 text-slate-600 flex-shrink-0">
-                                                <i className="ph-fill ph-envelope-simple text-2xl"></i>
+                                            <div className="bg-blue-100 p-3 rounded-full mr-4 text-blue-600 flex-shrink-0">
+                                                <i className="ph-fill ph-camera text-2xl"></i>
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <h4 className="font-bold text-slate-800 mb-1">電子掃描檔 (副本)</h4>
-                                                <a href="mailto:tma.nckuh@gmail.com" className="text-blue-600 hover:text-blue-800 hover:underline text-sm font-mono select-all bg-slate-50 p-1 rounded break-all whitespace-normal block">
-                                                    tma.nckuh@gmail.com
-                                                </a>
-                                                <p className="text-slate-500 text-xs mt-1">
-                                                    <span className="text-red-500 font-bold">請務必同步寄送電子檔</span>，以利加速核銷。
+                                                <h4 className="font-bold text-slate-800 mb-1">電子初審 (副本)</h4>
+                                                <p className="text-slate-600 text-sm mb-2">
+                                                    <span className="font-bold">Email：</span>
+                                                    <a href="mailto:tma.nckuh@gmail.com" className="text-blue-600 hover:underline font-mono ml-1">tma.nckuh@gmail.com</a>
+                                                </p>
+                                                <p className="text-slate-600 text-sm">
+                                                    <span className="font-bold">LINE：</span>
+                                                    <span>拍照至<strong className="text-green-600 mx-1">官方 LINE (@776qjbre)</strong> 直接聯繫專人。</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -1111,9 +1117,9 @@
                                 <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                                     <div className="border-b pb-4 mb-6">
                                         <h2 className="text-xl md:text-2xl font-bold text-gray-800 flex items-center">
-                                            <i className="ph-fill ph-question text-orange-500 mr-3"></i> 必做任務與常見 QA
+                                            <i className="ph-fill ph-question text-orange-500 mr-3 text-2xl"></i> 必做任務與常見 QA
                                         </h2>
-                                        <p className="text-sm md:text-base text-gray-500 mt-1">診所行政流程中的關鍵提醒</p>
+                                        <p className="text-base text-gray-500 mt-2 font-medium">診所行政流程中的關鍵提醒</p>
                                     </div>
 
                                     {/* Mandatory Tasks */}
@@ -1125,36 +1131,36 @@
                                             <div className="bg-white p-4 rounded-xl border border-orange-100 shadow-sm flex items-start">
                                                 <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mr-3 font-bold flex-shrink-0">1</div>
                                                 <div>
-                                                    <h4 className="font-bold text-gray-800 mb-1">準備民眾掃描用 QR Code</h4>
-                                                    <p className="text-sm text-gray-600">完成簽約取得專屬帳號後，請務必<strong className="text-orange-600">下載並列印專屬 QR Code</strong>，置於櫃檯供民眾填寫電子表單。</p>
+                                                    <h4 className="font-bold text-gray-800 mb-1 text-base">準備民眾掃描用 QR Code</h4>
+                                                    <p className="text-base text-gray-600 font-medium">完成簽約取得專屬帳號後，請務必<strong className="text-orange-600">下載並列印專屬 QR Code</strong>，置於櫃檯供民眾填寫電子表單。</p>
                                                 </div>
                                             </div>
-                                            <div className="bg-white p-4 rounded-xl border border-orange-100 shadow-sm flex items-start">
-                                                <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mr-3 font-bold flex-shrink-0">2</div>
+                                            <div className="bg-white p-5 rounded-xl border border-orange-100 shadow-sm flex items-start">
+                                                <div className="w-9 h-9 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mr-4 font-black flex-shrink-0 text-lg shadow-sm">2</div>
                                                 <div>
-                                                    <h4 className="font-bold text-gray-800 mb-1">資金空窗期預備</h4>
-                                                    <p className="text-sm text-gray-600">若公會撥款銜接不及，建議診所內部先協調<strong className="text-orange-600">小額代墊機制</strong>，避免民眾因無法當場領獎而引發抱怨。</p>
+                                                    <h4 className="font-bold text-gray-800 mb-1 text-base">資金空窗期預備</h4>
+                                                    <p className="text-base text-gray-600 font-medium">若公會撥款銜接不及，建議診所內部先協調<strong className="text-orange-600">小額代墊機制</strong>，避免民眾因無法當場領獎而引發抱怨。</p>
                                                 </div>
                                             </div>
-                                            <div className="bg-white p-4 rounded-xl border border-orange-100 shadow-sm flex items-start">
-                                                <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mr-3 font-bold flex-shrink-0">3</div>
+                                            <div className="bg-white p-5 rounded-xl border border-orange-100 shadow-sm flex items-start">
+                                                <div className="w-9 h-9 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mr-4 font-black flex-shrink-0 text-lg shadow-sm">3</div>
                                                 <div>
-                                                    <h4 className="font-bold text-gray-800 mb-1">護理人員內部訓練</h4>
-                                                    <p className="text-sm text-gray-600">請務必監督確認櫃台與護理人員熟悉「發放、回收、填表、領獎」完整流程，確保民眾不會白跑一趟或資料缺漏。</p>
+                                                    <h4 className="font-bold text-gray-800 mb-1 text-base">護理人員內部訓練</h4>
+                                                    <p className="text-base text-gray-600 font-medium">請務必監督確認櫃台與護理人員熟悉「發放、回收、填表、領獎」完整流程，確保民眾不會白跑一趟或資料缺漏。</p>
                                                 </div>
                                             </div>
-                                            <div className="bg-white p-4 rounded-xl border border-orange-100 shadow-sm flex items-start">
-                                                <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mr-3 font-bold flex-shrink-0">4</div>
+                                            <div className="bg-white p-5 rounded-xl border border-orange-100 shadow-sm flex items-start">
+                                                <div className="w-9 h-9 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mr-4 font-black flex-shrink-0 text-lg shadow-sm">4</div>
                                                 <div>
-                                                    <h4 className="font-bold text-gray-800 mb-1">家屬代簽注意</h4>
-                                                    <p className="text-sm text-gray-600">若由家屬代簽民眾簽收單 (A01/A02)，務必確認簽署的是<strong className="text-orange-600">「病患本人的姓名」</strong>。</p>
+                                                    <h4 className="font-bold text-gray-800 mb-1 text-base">家屬代簽注意</h4>
+                                                    <p className="text-base text-gray-600 font-medium">若由家屬代簽民眾簽收單 (A01/A02)，務必確認簽署的是<strong className="text-orange-600">「病患本人的姓名」</strong>。</p>
                                                 </div>
                                             </div>
                                             <div className="bg-white p-4 rounded-xl border border-orange-100 shadow-sm flex items-start col-span-1 md:col-span-2">
                                                 <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mr-3 font-bold flex-shrink-0">5</div>
                                                 <div>
-                                                    <h4 className="font-bold text-gray-800 mb-1">醫師看診加強宣導 <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full ml-2">重點</span></h4>
-                                                    <p className="text-sm text-gray-600">除護理人員外，<strong className="text-orange-600">醫師的建議最具公信力</strong>。請醫師於看診時主動提醒符合資格民眾參與篩檢，可大幅提升民眾意願。</p>
+                                                    <h4 className="font-extrabold text-gray-800 mb-1 text-base">醫師看診加強宣導 <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full ml-2">重點</span></h4>
+                                                    <p className="text-base text-gray-700 leading-relaxed">除護理人員外，<strong className="text-orange-600">醫師的建議最具公信力</strong>。請醫師於看診時主動提醒符合資格民眾參與篩檢，可大幅提升民眾意願。</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -1168,45 +1174,45 @@
                                             {/* Filter Tabs */}
                                             <div className="w-full md:w-auto">
                                                 <div className="md:hidden flex justify-end mb-2">
-                                                    <span className="text-[11px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-2 py-1 rounded-full animate-pulse flex items-center shadow-sm">
-                                                        <i className="ph-bold ph-hand-swipe-left mr-1.5 text-blue-500"></i> 左右滑動查看分類
+                                                    <span className="text-xs font-bold text-slate-500 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-full animate-pulse flex items-center shadow-sm">
+                                                        <i className="ph-bold ph-hand-swipe-left mr-2 text-blue-500 text-base"></i> 左右滑動查看分類
                                                     </span>
                                                 </div>
                                                 <div className="relative">
-                                                    <div className="bg-white p-1 rounded-lg border border-slate-200 flex text-sm overflow-x-auto no-scrollbar w-full md:w-auto relative z-0">
+                                                    <div className="bg-white p-1.5 rounded-xl border border-slate-200 flex text-base overflow-x-auto no-scrollbar w-full md:w-auto relative z-0 shadow-sm">
                                                         <button
                                                             onClick={() => setQaFilter('all')}
-                                                            className={`px-3 py-1 rounded-md transition-all whitespace-nowrap ${qaFilter === 'all' ? 'bg-slate-800 text-white font-bold' : 'text-slate-500 hover:bg-slate-50'}`}
+                                                            className={`px-4 py-1.5 rounded-lg transition-all whitespace-nowrap ${qaFilter === 'all' ? 'bg-slate-800 text-white font-bold' : 'text-slate-500 hover:bg-slate-50'}`}
                                                         >
                                                             全部
                                                         </button>
                                                         <button
                                                             onClick={() => setQaFilter('eligibility')}
-                                                            className={`px-3 py-1 rounded-md transition-all whitespace-nowrap ${qaFilter === 'eligibility' ? 'bg-green-600 text-white font-bold' : 'text-slate-500 hover:bg-slate-50'}`}
+                                                            className={`px-4 py-1.5 rounded-lg transition-all whitespace-nowrap ${qaFilter === 'eligibility' ? 'bg-green-600 text-white font-bold' : 'text-slate-500 hover:bg-slate-50'}`}
                                                         >
                                                             民眾權益
                                                         </button>
                                                         <button
                                                             onClick={() => setQaFilter('referral')}
-                                                            className={`px-3 py-1 rounded-md transition-all whitespace-nowrap ${qaFilter === 'referral' ? 'bg-purple-600 text-white font-bold' : 'text-slate-500 hover:bg-slate-50'}`}
+                                                            className={`px-4 py-1.5 rounded-lg transition-all whitespace-nowrap ${qaFilter === 'referral' ? 'bg-purple-600 text-white font-bold' : 'text-slate-500 hover:bg-slate-50'}`}
                                                         >
                                                             轉診規範
                                                         </button>
                                                         <button
                                                             onClick={() => setQaFilter('admin')}
-                                                            className={`px-3 py-1 rounded-md transition-all whitespace-nowrap ${qaFilter === 'admin' ? 'bg-blue-600 text-white font-bold' : 'text-slate-500 hover:bg-slate-50'}`}
+                                                            className={`px-4 py-1.5 rounded-lg transition-all whitespace-nowrap ${qaFilter === 'admin' ? 'bg-blue-600 text-white font-bold' : 'text-slate-500 hover:bg-slate-50'}`}
                                                         >
                                                             行政核銷
                                                         </button>
                                                         <button
                                                             onClick={() => setQaFilter('system')}
-                                                            className={`px-3 py-1 rounded-md transition-all whitespace-nowrap ${qaFilter === 'system' ? 'bg-orange-600 text-white font-bold' : 'text-slate-500 hover:bg-slate-50'}`}
+                                                            className={`px-4 py-1.5 rounded-lg transition-all whitespace-nowrap ${qaFilter === 'system' ? 'bg-orange-600 text-white font-bold' : 'text-slate-500 hover:bg-slate-50'}`}
                                                         >
                                                             系統操作
                                                         </button>
                                                         <button
                                                             onClick={() => setQaFilter('resources')}
-                                                            className={`px-3 py-1 rounded-md transition-all whitespace-nowrap ${qaFilter === 'resources' ? 'bg-cyan-600 text-white font-bold' : 'text-slate-500 hover:bg-slate-50'}`}
+                                                            className={`px-4 py-1.5 rounded-lg transition-all whitespace-nowrap ${qaFilter === 'resources' ? 'bg-cyan-600 text-white font-bold' : 'text-slate-500 hover:bg-slate-50'}`}
                                                         >
                                                             計畫諮詢
                                                         </button>
@@ -1238,28 +1244,28 @@
                                                 <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-4 text-2xl shadow-sm">
                                                     <i className="ph-bold ph-users"></i>
                                                 </div>
-                                                <h4 className="font-bold text-gray-800 text-base mb-4">成大醫院計畫小組</h4>
+                                                 <h4 className="font-bold text-gray-800 text-lg mb-4">成大醫院計畫小組</h4>
                                                 <div className="w-full flex flex-col items-center flex-1">
-                                                    <div className="bg-white/60 p-3 rounded-xl w-full max-w-[200px] mb-4">
-                                                        <div className="flex items-center mb-2">
-                                                            <div className="w-6 flex justify-center mr-2">
-                                                                <i className="ph-bold ph-phone text-blue-500 text-lg"></i>
+                                                    <div className="bg-white/60 p-4 rounded-xl w-full max-w-[220px] mb-4 shadow-sm">
+                                                        <div className="flex items-center mb-3">
+                                                            <div className="w-8 flex justify-center mr-2">
+                                                                <i className="ph-bold ph-phone text-blue-500 text-xl"></i>
                                                             </div>
-                                                            <span className="text-sm font-bold text-gray-800">(06) 208-3662</span>
+                                                            <span className="text-base font-black text-gray-800">(06) 208-3662</span>
                                                         </div>
                                                         <div className="flex items-center">
-                                                            <div className="w-6 flex justify-center mr-2">
-                                                                <i className="ph-bold ph-envelope-simple text-blue-500 text-lg"></i>
+                                                            <div className="w-8 flex justify-center mr-2">
+                                                                <i className="ph-bold ph-envelope-simple text-blue-500 text-xl"></i>
                                                             </div>
-                                                            <a href="mailto:tma.nckuh@gmail.com" className="text-blue-600 hover:underline font-mono text-xs truncate">
+                                                            <a href="mailto:tma.nckuh@gmail.com" className="text-blue-600 hover:underline font-mono text-sm truncate font-bold">
                                                                 tma.nckuh@gmail.com
                                                             </a>
                                                         </div>
                                                     </div>
 
-                                                    <div className="mt-auto w-full pt-2 border-t border-blue-100/50">
-                                                        <span className="text-xs font-bold text-blue-400 block mb-1">服務時間</span>
-                                                        <span className="text-xs text-slate-500">平日 08:00-12:00 / 13:00-17:00</span>
+                                                    <div className="mt-auto w-full pt-3 border-t border-blue-100/50">
+                                                        <span className="text-xs font-bold text-blue-400 block mb-1 uppercase tracking-wider">服務時間</span>
+                                                        <span className="text-sm text-slate-500 font-bold">平日 08:00-12:00 / 13:00-17:00</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1269,34 +1275,34 @@
                                                 <div className="flex-shrink-0 w-12 h-12 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center mb-4 text-2xl shadow-sm">
                                                     <i className="ph-bold ph-buildings"></i>
                                                 </div>
-                                                <h4 className="font-bold text-gray-800 text-base mb-4">社團法人台南市醫師公會</h4>
+                                                <h4 className="font-bold text-gray-800 text-lg mb-4">社團法人台南市醫師公會</h4>
                                                 <div className="w-full flex flex-col items-center flex-1">
-                                                     {/* Contact Info Block: Centered in card, but items are left-aligned */}
-                                                     <div className="bg-white/60 p-3 rounded-xl w-full max-w-[200px] mb-4">
-                                                        <div className="flex items-center mb-2">
-                                                            <div className="w-6 flex justify-center mr-2">
-                                                                <i className="ph-bold ph-phone text-green-500 text-lg"></i>
+                                                     {/* Contact Info Block */}
+                                                     <div className="bg-white/60 p-4 rounded-xl w-full max-w-[220px] mb-4 shadow-sm">
+                                                        <div className="flex items-center mb-3">
+                                                            <div className="w-8 flex justify-center mr-2">
+                                                                <i className="ph-bold ph-phone text-green-500 text-xl"></i>
                                                             </div>
-                                                            <span className="text-sm font-bold text-gray-800">(06) 208-0758</span>
+                                                            <span className="text-base font-black text-gray-800">(06) 208-0758</span>
                                                         </div>
-                                                        <div className="flex items-center">
-                                                            <div className="w-6 flex justify-center mr-2">
-                                                                <i className="ph-bold ph-map-pin text-green-500 text-lg"></i>
+                                                        <div className="flex items-start">
+                                                            <div className="w-8 flex justify-center mr-2 mt-0.5">
+                                                                <i className="ph-bold ph-map-pin text-green-500 text-xl"></i>
                                                             </div>
-                                                            <span className="text-sm text-gray-800 text-left">台南市中西區民生路一段 82 號 2 樓</span>
+                                                            <span className="text-sm text-gray-800 text-left font-bold leading-relaxed">台南市中西區民生路一段 82 號 2 樓</span>
                                                         </div>
                                                     </div>
 
-                                                    <div className="w-full mt-auto mb-3 bg-red-50 border border-red-100/50 rounded-lg p-2">
-                                                        <span className="text-xs font-bold text-red-600 flex items-center justify-center leading-tight">
-                                                            <i className="ph-bold ph-warning-circle mr-1 text-sm"></i>
-                                                            若要前往醫師公會拜訪請先行打電話預約
+                                                    <div className="w-full mt-auto mb-4 bg-red-50 border border-red-200 rounded-xl p-3 shadow-sm">
+                                                        <span className="text-sm font-black text-red-600 flex items-center justify-center leading-tight">
+                                                            <i className="ph-bold ph-warning-circle mr-2 text-base"></i>
+                                                            欲前往拜訪請先電話預約
                                                         </span>
                                                     </div>
 
-                                                    <div className="w-full pt-2 border-t border-green-100/50">
-                                                        <span className="text-xs font-bold text-green-400 block mb-1">服務時間</span>
-                                                        <span className="text-xs text-slate-500">平日 09:00-12:00 / 13:00-17:00</span>
+                                                    <div className="w-full pt-3 border-t border-green-100/50">
+                                                        <span className="text-xs font-bold text-green-400 block mb-1 uppercase tracking-wider">服務時間</span>
+                                                        <span className="text-sm text-slate-500 font-bold">平日 09:00-12:00 / 13:00-17:00</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1306,11 +1312,11 @@
                                                 <div className="w-12 h-12 bg-[#06C755] text-white rounded-2xl flex items-center justify-center text-2xl mb-4 shadow-lg shadow-green-200">
                                                     <i className="ph-fill ph-chat-circle-dots"></i>
                                                 </div>
-                                                <h4 className="font-bold text-gray-800 text-base mb-1">健康台灣深耕計畫</h4>
-                                                <p className="text-s text-[#06C755] font-bold mb-6">@776qjbre</p>
+                                                <h4 className="font-bold text-gray-800 text-lg mb-1">健康台灣深耕計畫</h4>
+                                                <p className="text-base text-[#06C755] font-black mb-6">@776qjbre</p>
                                                 
-                                                <a href="https://lin.ee/ca9byaV" target="_blank" className="w-full mt-auto bg-[#06C755] hover:bg-[#05b34c] text-white font-bold py-2.5 rounded-xl transition-all shadow-sm hover:shadow-green-200">
-                                                    <i className="ph-bold ph-plus mr-1"></i> 加入好友
+                                                <a href="https://lin.ee/ca9byaV" target="_blank" className="w-full mt-auto bg-[#06C755] hover:bg-[#05b34c] text-white font-bold py-3.5 rounded-2xl transition-all shadow-md hover:shadow-green-300 text-lg">
+                                                    <i className="ph-bold ph-plus mr-2"></i> 加入官方 LINE
                                                 </a>
                                             </div>
                                         </div>
