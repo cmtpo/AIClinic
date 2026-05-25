@@ -655,7 +655,7 @@
                     <ul className="text-sm text-slate-500 space-y-2">
                       <li className="flex items-center justify-center md:justify-start">
                         <i className="ph-fill ph-phone text-blue-400 mr-2"></i>
-                        (06) 208-3662
+                        <span className="whitespace-nowrap">(06) 208-3662 <span className="ml-2 bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-sm font-bold">簽約專線</span></span>
                       </li>
                       <li className="flex items-center justify-center md:justify-start">
                         <i className="ph-fill ph-envelope text-blue-400 mr-2"></i>
@@ -685,7 +685,7 @@
                     <ul className="text-sm text-slate-500 space-y-2">
                       <li className="flex items-center justify-center md:justify-start">
                         <i className="ph-fill ph-phone text-green-400 mr-2"></i>
-                        (06) 208-0758
+                        <span className="whitespace-nowrap">(06) 208-0758 <span className="ml-2 bg-green-100 text-green-700 px-2 py-0.5 rounded text-sm font-bold">會計帳務專線</span></span>
                       </li>
                       <li className="flex items-center justify-center md:justify-start">
                         <div className="flex items-center justify-center">
@@ -717,17 +717,27 @@
                     </h4>
 
                     <div className="bg-gradient-to-br from-[#06C755]/10 to-[#06C755]/5 border border-[#06C755]/20 rounded-2xl p-5 md:p-6 text-center shadow-sm hover:shadow-md transition-shadow">
-                      <p className="text-sm font-extrabold text-[#06C755] mb-4">
+                      <p className="text-sm font-extrabold text-[#06C755] mb-3">
                         健康台灣深耕計畫
                       </p>
-                      <a
-                        href="https://lin.ee/ca9byaV"
-                        target="_blank"
-                        className="w-full bg-[#06C755] hover:bg-[#05b34c] text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center transition-all transform hover:scale-[1.02] shadow-sm"
-                      >
-                        <i className="ph-fill ph-chat-circle-dots mr-2 text-xl"></i>
-                        加入好友 (@776qjbre)
-                      </a>
+                      <div className="flex flex-col gap-2">
+                        <a
+                          href="https://lin.ee/ca9byaV"
+                          target="_blank"
+                          className="w-full bg-[#06C755] hover:bg-[#05b34c] text-white font-bold py-2.5 px-4 rounded-xl flex items-center justify-center transition-all transform hover:scale-[1.02] shadow-sm text-sm"
+                        >
+                          <i className="ph-fill ph-chat-circle-dots mr-2 text-lg"></i>
+                          加入好友 (@776qjbre)
+                        </a>
+                        <a
+                          href="https://line.me/ti/g2/Pteinj3fuxvIwsLmqL9RvdoWI5NhApwycVA9tw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
+                          target="_blank"
+                          className="w-full bg-white hover:bg-slate-50 text-[#06C755] border border-[#06C755] font-bold py-2.5 px-4 rounded-xl flex items-center justify-center transition-all transform hover:scale-[1.02] shadow-sm text-sm"
+                        >
+                          <i className="ph-fill ph-users-three mr-2 text-lg"></i>
+                          本計畫官方社群
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
