@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>合作診所專區 - 臺南愛(AI)腸篩計畫</title>
+    <title>合作院所專區 - 臺南愛(AI)腸篩計畫</title>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2GEKEXG4VF"></script>
     <script>
@@ -163,7 +163,7 @@
                 },
                 {
                     id: 'clinic',
-                    title: '合作診所專區',
+                    title: '合作院所專區',
                     url: 'clinic.html',
                     icon: 'ph-stethoscope',
                     active: true, // 標記為當前頁面
@@ -369,13 +369,13 @@
                 },
                 {
                     id: 'B02',
-                    name: 'B02 公會 診所獎勵金領據 (診所用)',
+                    name: 'B02 公會 院所獎勵金領據 (診所用)',
                     pdf: "https://drive.google.com/file/d/1l3bMgpGsyJzMPxODULMWhUn1LWBAfV3B/view",
                     docx: "https://docs.google.com/document/d/14TgGy21RXaP4Uo0RoBSSVuislnI2u-_Z/edit"
                 },
                 {
                     id: 'B03',
-                    name: 'B03 公會 診所送件清單 (診所用)',
+                    name: 'B03 公會 院所送件清單 (診所用)',
                     pdf: "https://drive.google.com/file/d/1mkBbCkVtqBnNaZ-EyriJz_9YGms0x_Yi/view",
                     docx: "https://docs.google.com/document/d/11vf3K21LgCh2Nl1IRHP14xcgUjGR1oQm/edit"
                 }
@@ -538,41 +538,41 @@
             const qaData = [
                 // 1. 民眾資格與領獎權益
                 { category: 'eligibility', q: "民眾簽收單可以由家屬代簽嗎？", a: "可以。但務必簽署「病患本人的姓名」。注意！雖然可以代簽領錢，但「病患本人仍須親自到現場」完成篩檢或檢查，不可僅由家屬代為繳回檢體或代診。(補充：若病患不會簽名，可以蓋手印，再由家屬代簽病患姓名)" },
-                { category: 'eligibility', q: "民眾簽收單讓大家簽在同一張，會有個資疑慮嗎？不能一人簽一張嗎？", a: "這樣的簽署方式在實務上很常見，各診所加上紙片遮擋即可。主要是為了配合整批核銷作業，因此不建議病人一人簽一張。" },
+                { category: 'eligibility', q: "民眾簽收單讓大家簽在同一張，會有個資疑慮嗎？不能一人簽一張嗎？", a: "這樣的簽署方式在實務上很常見，各院所加上紙片遮擋即可。主要是為了配合整批核銷作業，因此不建議病人一人簽一張。" },
                 { category: 'eligibility', q: "兩年內做過篩檢，還可以參加嗎？", a: "不行。計畫規定須為「兩年內未做過」公費糞便潛血檢查或大腸鏡檢查的民眾。請務必先查詢健保卡資格，避免重複執行導致無法核銷。" },
                 { category: 'eligibility', q: "戶籍不在臺南，但住在臺南可以嗎？", a: "不行。依計畫補助規定，必須「設籍臺南市」才能申請補助 (需查驗身分證背面)。" },
                 { category: 'eligibility', q: "40-44歲的民眾可以參加嗎？", a: "一般民眾需 45-74 歲。但若 40-44 歲民眾有「二等親內大腸癌家族病史」，出示證明後亦符合公費補助資格。(補充：若無證明文件，需簽切結書；若能提供一等直系罹癌親屬之健保卡供系統確認亦可)" },
-                { category: 'eligibility', q: "民眾做完檢查當下就可以領 300 元嗎？", a: "是的。只要民眾繳回糞篩檢體/完成檢查，並在診所協助下完成電子問卷與簽收單，診所即可當場發放 300 元現金。(補充：請使用計畫提供的紅包袋裝入現金發放)" },
-                { category: 'eligibility', q: "民眾於計畫開始前繳交檢體，是否可以追溯領取 300 元獎勵金？", a: "自計畫正式推動並開放診所參與起，一律不提供追溯發放，僅適用於計畫啟動後完成檢體繳交之個案。" },
+                { category: 'eligibility', q: "民眾做完檢查當下就可以領 300 元嗎？", a: "是的。只要民眾繳回糞篩檢體/完成檢查，並在院所協助下完成電子問卷與簽收單，院所即可當場發放 300 元現金。(補充：請使用計畫提供的紅包袋裝入現金發放)" },
+                { category: 'eligibility', q: "民眾於計畫開始前繳交檢體，是否可以追溯領取 300 元獎勵金？", a: "自計畫正式推動並開放院所參與起，一律不提供追溯發放，僅適用於計畫啟動後完成檢體繳交之個案。" },
                 { category: 'eligibility', q: "民眾問為什麼不能補發，怎麼說？", a: "本計畫正式推動後為求公平與作業一致，獎勵金僅適用於計畫啟動後繳交檢體之案件，恕不提供追溯。" },
 
                 // 2. 轉診認定與補助規範
-                { category: 'referral', q: "民眾在衛生所繳糞篩檢體，但來我們診所做大腸鏡可以領 300 元嗎？", a: "不行。只限定本計畫合作診所轉診民眾。" },
-                { category: 'referral', q: "若民眾從別間未參與計畫的診所轉診來，想做大腸鏡檢並領 300 元，可以領嗎？", a: "不行，本計畫目的為改善轉診流程，因此僅補助由合作診所轉診之民眾。" },
+                { category: 'referral', q: "民眾在衛生所繳糞篩檢體，但來我們院所做大腸鏡可以領 300 元嗎？", a: "不行。只限定本計畫合作院所轉診民眾。" },
+                { category: 'referral', q: "若民眾從別間未參與計畫的院所轉診來，想做大腸鏡檢並領 300 元，可以領嗎？", a: "不行，本計畫目的為改善轉診流程，因此僅補助由合作院所轉診之民眾。" },
                 
                 { category: 'referral', q: "民眾是否可同時參與其他政府或衛生局獎勵活動？", a: "原則上可以同時領取。但仍須依各計畫規定辦理。" },
 
                 // 3. 行政核銷與經費撥款
-                { category: 'admin', q: "如果診所提早發完受試者營養費，請問可以領取下一筆嗎？", a: "可以。請檢附民眾簽收單正本(A01.A02)，與送件清單(B03)、受試者營養費確認單(B01)、診所獎勵金領據(B02)，並請計算總獎勵金額填妥領據，一起寄回公會與平台核對。待核對後由公會匯款給診所。" },
-                { category: 'admin', q: "如果診所已發完受試者營養費，那領取下筆款項中間空窗期如何處理？", a: "若受試者營養費於款項撥付期間出現銜接空窗，請診所視實際情況先行代墊費用；亦可選擇暫停發放，待款項撥付完成後再行啟動。" },
-                { category: 'admin', q: "如果診所尚未發完受試者營養費，可以辦理結算嗎？", a: "需將民眾簽收單完整填寫所有欄位後，並將所有資料備齊，才能進行結算。" },
-                { category: 'admin', q: "B02 領據什麼時候要寄回？", a: "B02 是「診所獎勵金領據」。請在辦理結算時，連同民眾簽收單正本(A01.A02)和送件清單(B03)一起寄回公會，並同步 email 電子檔至 tma.nckuh@gmail.com。待核對後由公會匯款給診所。" },
-                { category: 'admin', q: "若不小心發到自費民眾該怎麼辦？", a: "誤發金額請診所端自行補齊。" },
-                { category: 'admin', q: "匯款帳號有指定銀行嗎？", a: "建議使用診所的銀行帳號（私人的亦可），推薦使用玉山銀行可免匯款手續費。若非玉山銀行帳戶，相關手續費將由診所自行吸收。" },
+                { category: 'admin', q: "如果院所提早發完受試者營養費，請問可以領取下一筆嗎？", a: "可以。請檢附民眾簽收單正本(A01.A02)，與送件清單(B03)、受試者營養費確認單(B01)、院所獎勵金領據(B02)，並請計算總獎勵金額填妥領據，一起寄回公會與平台核對。待核對後由公會匯款給院所。" },
+                { category: 'admin', q: "如果院所已發完受試者營養費，那領取下筆款項中間空窗期如何處理？", a: "若受試者營養費於款項撥付期間出現銜接空窗，請院所視實際情況先行代墊費用；亦可選擇暫停發放，待款項撥付完成後再行啟動。" },
+                { category: 'admin', q: "如果院所尚未發完受試者營養費，可以辦理結算嗎？", a: "需將民眾簽收單完整填寫所有欄位後，並將所有資料備齊，才能進行結算。" },
+                { category: 'admin', q: "B02 領據什麼時候要寄回？", a: "B02 是「院所獎勵金領據」。請在辦理結算時，連同民眾簽收單正本(A01.A02)和送件清單(B03)一起寄回公會，並同步 email 電子檔至 tma.nckuh@gmail.com。待核對後由公會匯款給院所。" },
+                { category: 'admin', q: "若不小心發到自費民眾該怎麼辦？", a: "誤發金額請院所端自行補齊。" },
+                { category: 'admin', q: "匯款帳號有指定銀行嗎？", a: "建議使用院所的銀行帳號（私人的亦可），推薦使用玉山銀行可免匯款手續費。若非玉山銀行帳戶，相關手續費將由院所自行吸收。" },
 
                 // 4. 系統平台操作與欄位填寫
-                { category: 'system', q: "平台的資料怎麼填？", a: "請參照平台的教育訓練說明網中的「數位教材與海報—影片教材」，或官方 LINE 中「診所端衛教入口網—數位教材與海報—影片教材」。" },
+                { category: 'system', q: "平台的資料怎麼填？", a: "請參照平台的教育訓練說明網中的「數位教材與海報—影片教材」，或官方 LINE 中「院所端衛教入口網—數位教材與海報—影片教材」。" },
                 { category: 'system', q: "若糞便檢查結果為「陰性」，平台欄位如何填寫？", a: "1.糞便檢查告知日期、2.糞便採檢結果、3.上傳糞便潛血檢查報告，完成後即可結案。" },
                 { category: 'system', q: "若糞便檢查結果為「陽性」，平台欄位如何填寫？", a: "1.糞便檢查告知日期、2.糞便採檢結果、3.上傳糞便潛血檢查報告、4.開立轉診單日期、5.上傳轉診單、6.於「其他」欄位輸入「轉診院所名稱」，完成後即可結案。" },
-                { category: 'system', q: "若病人遲遲未決定轉診日期，該怎麼填？", a: "請診所追蹤至少 14 日，如仍未有結論，請在「其他」欄位填寫「未轉診原因」後結案。" },
-                { category: 'system', q: "若診所本身可執行大腸鏡檢，遇到陽性個案該怎麼填？", a: "須先完成前述糞篩欄位（告知日期、結果、報告），接著填寫「大腸鏡檢診所須填」欄位：1.管狀腺瘤(顆)、2.鋸齒狀腺瘤(顆)、3.大腸癌(陰性/陽性)、4.上傳病理檢查報告(息肉切片)、5.上傳病理檢查報告(腫瘤切片)，即可結案。" },
-                { category: 'system', q: "線上表單若沒有「糞篩檢驗所名稱及代號」該如何填寫？", a: "若貴診所之前沒做過，請填寫未來「預計送件」的檢驗所資料即可。" },
-                { category: 'system', q: "病患的 QR Code 在哪裡？", a: "糞篩診所：進入平台「病患管理」頁面內，右上角有一格 QR 碼圖示。大腸鏡檢診所：若是糞篩結果陽性病人才會自動產生。" },
+                { category: 'system', q: "若病人遲遲未決定轉診日期，該怎麼填？", a: "請院所追蹤至少 14 日，如仍未有結論，請在「其他」欄位填寫「未轉診原因」後結案。" },
+                { category: 'system', q: "若院所本身可執行大腸鏡檢，遇到陽性個案該怎麼填？", a: "須先完成前述糞篩欄位（告知日期、結果、報告），接著填寫「大腸鏡檢院所須填」欄位：1.管狀腺瘤(顆)、2.鋸齒狀腺瘤(顆)、3.大腸癌(陰性/陽性)、4.上傳病理檢查報告(息肉切片)、5.上傳病理檢查報告(腫瘤切片)，即可結案。" },
+                { category: 'system', q: "線上表單若沒有「糞篩檢驗所名稱及代號」該如何填寫？", a: "若貴院所之前沒做過，請填寫未來「預計送件」的檢驗所資料即可。" },
+                { category: 'system', q: "病患的 QR Code 在哪裡？", a: "糞篩院所：進入平台「病患管理」頁面內，右上角有一格 QR 碼圖示。大腸鏡檢院所：若是糞篩結果陽性病人才會自動產生。" },
                 { category: 'system', q: "帳號無法登入怎麼辦？", a: "1. 請確認您的帳號（醫事機構代碼）與密碼是否輸入正確（注意大小寫及特殊符號）。2. 若問題持續，請聯繫官方 LINE 客服人員協助處理。" },
 
                 // 5. 計畫諮詢與資源
                 { category: 'resources', q: "本計畫活動期限到何時？", a: "本計畫為衛生福利部補助之健康台灣深耕計畫，第一年補助至 115 年 12 月 31 日截止，如獎勵金提早發放用罄，將提前截止，相關訊息會於愛腸篩官方 LINE 中通知。【愛腸篩官方 LINE ID: @776qjbre】。" },
-                { category: 'resources', q: "我沒有參加說明會，要如何加入計畫？有資料可以參考嗎？", a: "請先加入愛腸篩官方 LINE (ID: @776qjbre)，填妥合作意願表單連結後，計畫小組會於官方 LINE 中與貴診所聯繫。相關計畫說明會資料可於官方 LINE 中「診所端衛教入口網—數位教材與海報—說明會簡報、文件下載、影片教材」下載參考。" },
+                { category: 'resources', q: "我沒有參加說明會，要如何加入計畫？有資料可以參考嗎？", a: "請先加入愛腸篩官方 LINE (ID: @776qjbre)，填妥合作意願表單連結後，計畫小組會於官方 LINE 中與貴院所聯繫。相關計畫說明會資料可於官方 LINE 中「院所端衛教入口網—數位教材與海報—說明會簡報、文件下載、影片教材」下載參考。" },
                 { category: 'resources', q: "參與此計畫，臨床執行方式跟原本 IC85 有不同嗎？", a: "整體臨床執行方式與以往相同，並沒有改變原本的作業內容。僅是配合本計畫，在「行政流程」上需要多協助完成資料上傳與確認的步驟。" },
                 { category: 'resources', q: "有相關的操作手冊或教學檔案可以下載嗎？", a: <span>平台操作教學與相關文件可參考此連結：<a href="https://drive.google.com/file/d/1Ci2HDBeABfkWKXhOkgVyAs2ucIDAVq-2/view?pli=1" target="_blank" className="text-blue-600 underline break-all hover:text-blue-800">點此進入</a>。</span> }
                 
@@ -588,7 +588,7 @@
             return (
                 <div className="min-h-screen bg-slate-50 fade-in relative">
                     <Header
-                        title="合作診所專區"
+                        title="合作院所專區"
                         subtitle="流程規範、表單與經費核銷"
                         themeColor="blue"
                         onMenuClick={() => setIsGlobalNavOpen(true)}
@@ -609,7 +609,7 @@
                     <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8 min-h-[calc(100vh-160px)]">
 
                         {/* Sidebar Navigation */}
-                        <aside className="w-full md:w-64 flex-shrink-0 relative z-20">
+                        <aside className="w-full md:w-80 flex-shrink-0 relative z-20">
                             <div className="bg-white rounded-2xl shadow-sm p-4 md:sticky md:top-24 max-h-[calc(100vh-100px)] overflow-y-auto custom-scrollbar transition-all duration-300">
 
                                 <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4 px-2 hidden md:block">功能導航</h3>
@@ -638,7 +638,7 @@
                                         onClick={() => setIsDocSectionOpen(!isDocSectionOpen)}
                                         className="w-full p-5 flex items-center justify-between text-left focus:outline-none"
                                     >
-                                        <h4 className="font-extrabold text-blue-900 text-base">診所各式文件下載</h4>
+                                        <h4 className="font-extrabold text-blue-900 text-base">院所各式文件下載</h4>
                                         <i className={`ph-bold ph-caret-down text-blue-600 transition-transform duration-300 ${isDocSectionOpen ? 'rotate-180' : ''}`}></i>
                                     </button>
 
@@ -695,13 +695,20 @@
                                                 <span className="text-[10px] font-bold text-gray-400 bg-gray-100 px-3 py-1 rounded-lg uppercase tracking-wider">行政核銷用</span>
 
                                                 {(docSubTab === 'clinic' ? CLINIC_DOCS.forms : HOSPITAL_DOCS.forms).map(form => (
-                                                    <div key={form.id} className="bg-white border border-slate-200 rounded-xl p-3 mb-3 shadow-sm">
-                                                        <div className="text-sm font-bold text-slate-800 mb-2 flex items-center flex-wrap">
-                                                            <i className="ph-fill ph-file-text mr-2 text-blue-500 text-lg"></i> 
-                                                            <span>{form.name.split(' (')[0]}</span>
-                                                            <span className={`ml-2 text-[10px] px-1.5 py-0.5 rounded font-bold ${docSubTab === 'clinic' ? 'bg-blue-100 text-blue-600 border border-blue-200' : 'bg-purple-100 text-purple-600 border border-purple-200'}`}>
-                                                                ({form.name.split(' (')[1]}
-                                                            </span>
+                                                    <div key={form.id} className="bg-white border border-slate-200 rounded-xl p-4 mb-3 shadow-sm">
+                                                        <div className="text-sm font-bold text-slate-800 mb-2.5 flex flex-col gap-1.5">
+                                                            <div className="flex items-center flex-wrap gap-x-1.5">
+                                                                <i className="ph-fill ph-file-text text-blue-500 text-lg flex-shrink-0"></i>
+                                                                <span>{form.name.split(' (')[0]}</span>
+                                                                <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold flex-shrink-0 ${docSubTab === 'clinic' ? 'bg-blue-100 text-blue-600 border border-blue-200' : 'bg-purple-100 text-purple-600 border border-purple-200'}`}>
+                                                                    ({form.name.split(' (')[1]}
+                                                                </span>
+                                                            </div>
+                                                            {docSubTab === 'hospital' && (form.id === 'B01' || form.id === 'B02') && (
+                                                                <span className="ml-6 text-xs bg-amber-100 text-amber-700 border border-amber-300 px-2.5 py-1 rounded-lg font-bold flex items-center gap-1 w-fit">
+                                                                    <i className="ph-bold ph-info text-sm"></i> 醫院方收據為準，此為範本
+                                                                </span>
+                                                            )}
                                                         </div>
                                                         <div className="flex gap-2">
                                                             {form.pdf && (
@@ -774,7 +781,7 @@
                                             民眾填寫完表單後<span className="font-bold text-red-600 mx-1">不會自動扣款</span>。
                                         </p>
                                         <p className="text-yellow-800 text-sm">
-                                            請診所人員發放現金獎勵後，務必於平台點擊<span className="bg-yellow-200 px-2 py-0.5 rounded font-bold mx-1">「扣款/發放獎金」按鈕</span> (系統已設定點擊一次即扣$300，無需自行輸入金額)，以完成扣款動作。
+                                            請院所人員發放現金獎勵後，務必於平台點擊<span className="bg-yellow-200 px-2 py-0.5 rounded font-bold mx-1">「扣款/發放獎金」按鈕</span> (系統已設定點擊一次即扣$300，無需自行輸入金額)，以完成扣款動作。
                                         </p>
                                     </div>
 
@@ -826,7 +833,7 @@
                                                     { title: "發放/回收", text: "發放篩檢盒 → 待民眾繳回" },
                                                     { title: "數位填表", text: "民眾掃描 QR Code，填寫 A05 民眾電子問卷 (FOBT篩檢)", highlight: true },
                                                     { title: "發放獎勵金", text: "確認填畢 → 請民眾填寫 A01 民眾領款簽收單 → 發放 $300 → 並於平台點擊「扣款」", highlight: true },
-                                                    { title: "陽性回診", text: "若陽性，診所於系統回報並上傳轉診單 (啟動第二階段)" }
+                                                    { title: "陽性回診", text: "若陽性，院所於系統回報並上傳轉診單 (啟動第二階段)" }
                                                 ].map((step, idx) => (
                                                     <div key={idx} className="flex-1 flex flex-col relative group">
                                                         <div className={`p-5 rounded-xl h-full border-2 ${step.highlight ? 'bg-yellow-50 border-yellow-300' : 'bg-white border-slate-200'} transition-all hover:shadow-md`}>
@@ -856,7 +863,7 @@
                                             <div className="relative pl-4 md:pl-6 border-l-4 border-indigo-200">
                                                 <div className="absolute -left-2.5 top-0 w-5 h-5 rounded-full bg-indigo-500 border-4 border-white"></div>
                                                 <h4 className="text-base md:text-lg font-bold text-indigo-900 mb-2">情境 A：同院執行 (一站式)</h4>
-                                                <p className="text-xs md:text-sm text-slate-500 mb-3">病人於同一診所完成「糞便篩檢」與「大腸鏡」。</p>
+                                                <p className="text-xs md:text-sm text-slate-500 mb-3">病人於同一院所完成「糞便篩檢」與「大腸鏡」。</p>
 
                                                 <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm space-y-3">
                                                     <div className="flex flex-col md:flex-row md:gap-3 text-sm">
@@ -866,13 +873,13 @@
                                                     <div className="flex flex-col md:flex-row md:gap-3 text-sm">
                                                         <span className="font-bold text-slate-700 md:min-w-[70px] mb-1 md:mb-0">大腸鏡：</span>
                                                         <div className="text-slate-600">
-                                                            <p className="mb-1">若糞篩陽性，診所人員於系統病患清單<span className="text-red-500 font-bold mx-1">補填「大腸鏡執行日期」</span>。</p>
+                                                            <p className="mb-1">若糞篩陽性，院所人員於系統病患清單<span className="text-red-500 font-bold mx-1">補填「大腸鏡執行日期」</span>。</p>
                                                             <p className="text-xs text-slate-400 bg-slate-50 p-1 rounded inline-block mt-1">注意：系統直接更新原有資料，不新增新筆數 (一筆資料走到底)。</p>
                                                         </div>
                                                     </div>
                                                     <div className="flex flex-col md:flex-row md:gap-3 text-sm bg-yellow-50 p-3 rounded">
                                                         <span className="font-bold text-yellow-800 md:min-w-[70px] mb-1 md:mb-0">獎金核銷：</span>
-                                                        <span className="text-yellow-900">檢查完成 → 診所出示該病患專屬 QR Code → 協助確認填寫 A06 民眾電子問卷 (大腸鏡檢查) → 完成簽收單與發放 → <span className="font-bold text-red-600 underline">平台點擊扣款</span>。</span>
+                                                        <span className="text-yellow-900">檢查完成 → 院所出示該病患專屬 QR Code → 協助確認填寫 A06 民眾電子問卷 (大腸鏡檢查) → 完成簽收單與發放 → <span className="font-bold text-red-600 underline">平台點擊扣款</span>。</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -881,18 +888,18 @@
                                             <div className="relative pl-4 md:pl-6 border-l-4 border-purple-200">
                                                 <div className="absolute -left-2.5 top-0 w-5 h-5 rounded-full bg-purple-500 border-4 border-white"></div>
                                                 <h4 className="text-base md:text-lg font-bold text-purple-900 mb-2">情境 B：跨院轉診 (轉診病人)</h4>
-                                                <p className="text-xs md:text-sm text-slate-500 mb-3">病人於 A 診所篩檢陽性，持轉診單至 B 診所做大腸鏡。</p>
+                                                <p className="text-xs md:text-sm text-slate-500 mb-3">病人於 A 院所篩檢陽性，持轉診單至 B 院所做大腸鏡。</p>
 
                                                 <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm space-y-3">
                                                     <div className="flex flex-col md:flex-row md:gap-3 text-base">
                                                         <span className="font-bold text-slate-700 md:min-w-[70px] mb-1 md:mb-0">糞篩階段：</span>
-                                                        <span className="text-slate-600">民眾於 A 診所完成篩檢與 A05 民眾電子問卷 (FOBT篩檢)。</span>
+                                                        <span className="text-slate-600">民眾於 A 院所完成篩檢與 A05 民眾電子問卷 (FOBT篩檢)。</span>
                                                     </div>
                                                     <div className="flex flex-col md:flex-row md:gap-3 text-base">
                                                         <span className="font-bold text-slate-700 md:min-w-[70px] mb-1 md:mb-0">大腸鏡：</span>
                                                         <div className="text-slate-600">
-                                                            <p className="mb-1.5">B 診所透過系統新增的<span className="text-purple-600 font-black mx-1">「轉診病人查詢」</span>頁面搜尋該病患。</p>
-                                                            <p className="mb-1">點選系統產出的專屬 QR Code，自動帶入資料 → B 診所人員填寫執行日期。</p>
+                                                            <p className="mb-1.5">B 院所透過系統新增的<span className="text-purple-600 font-black mx-1">「轉診病人查詢」</span>頁面搜尋該病患。</p>
+                                                            <p className="mb-1">點選系統產出的專屬 QR Code，自動帶入資料 → B 院所人員填寫執行日期。</p>
                                                         </div>
                                                     </div>
                                                     <div className="flex flex-col md:flex-row md:gap-3 text-base bg-yellow-50 p-4 rounded-xl border border-yellow-100 shadow-sm">
@@ -922,7 +929,7 @@
                                             <i className="ph-bold ph-warning-circle mr-2 text-xl"></i> 若遇「資金空窗期」怎麼辦？
                                         </h3>
                                         <p className="text-base text-red-700 leading-relaxed font-medium">
-                                            若受試者營養費於款項撥付期間出現銜接空窗（錢發完了，新錢還沒到），請診所視實際情況<strong className="underline decoration-2 underline-offset-4 text-red-800">先行代墊費用</strong>，後續將於下一筆款項撥付時一併補回。請盡量避免讓民眾撲空，以維持良好醫病關係。
+                                            若受試者營養費於款項撥付期間出現銜接空窗（錢發完了，新錢還沒到），請院所視實際情況<strong className="underline decoration-2 underline-offset-4 text-red-800">先行代墊費用</strong>，後續將於下一筆款項撥付時一併補回。請盡量避免讓民眾撲空，以維持良好醫病關係。
                                         </p>
                                     </div>
 
@@ -947,7 +954,7 @@
                                                     <li>(一) A01 或 A02 簽收單正本</li>
                                                     <li>(二) B01 撥付確認單 (民眾獎金)</li>
                                                     <li>
-                                                        (三) B02 領據 (診所獎金) <br />
+                                                        (三) B02 領據 (院所獎金) <br />
                                                         <span className="text-sm text-red-600 bg-red-50 px-2 py-1 rounded-md ml-6 font-bold flex items-center mt-2 border border-red-100 inline-flex">
                                                             <i className="ph-bold ph-warning-circle mr-1.5 text-lg"></i> 單張金額不得超過 20,000 元
                                                         </span>
@@ -1000,7 +1007,7 @@
                                                 <i className="ph-bold ph-paper-plane-right"></i>
                                             </div>
                                             <div className="text-base text-blue-900 leading-relaxed font-bold">
-                                                診所寄回資料（正本與電子檔） → 醫師公會核對名單 → <span className="text-indigo-600 border-b-2 border-indigo-200">無誤後撥付下次款項及診所獎勵金</span>
+                                                院所寄回資料（正本與電子檔） → 醫師公會核對名單 → <span className="text-indigo-600 border-b-2 border-indigo-200">無誤後撥付下次款項及院所獎勵金</span>
                                             </div>
                                         </div>
                                     </div>
@@ -1048,8 +1055,8 @@
                                                 </tr>
                                                 <tr className="hover:bg-slate-50 transition-colors">
                                                     <td className="px-6 py-4 font-mono font-black text-gray-500">B02</td>
-                                                    <td className="px-6 py-4 text-slate-800">公會 診所獎勵領據 B02</td>
-                                                    <td className="px-6 py-4 text-slate-600">領取診所獎勵金</td>
+                                                    <td className="px-6 py-4 text-slate-800">公會 院所獎勵領據 B02</td>
+                                                    <td className="px-6 py-4 text-slate-600">領取院所獎勵金</td>
                                                     <td className="px-6 py-4">
                                                         <span className="text-red-500 font-bold bg-red-50 px-2 py-0.5 rounded">正本寄回</span>
                                                         <div className="text-xs text-red-400 mt-1">! 務必自行計算總額並填入</div>
@@ -1089,7 +1096,7 @@
                                                     {/* Fallback HTML Content */}
                                                     <div className="hidden absolute inset-0 flex-col justify-between p-8 md:p-12" style={{ display: 'none' }}>
                                                         <div className="text-sm md:text-lg text-slate-500 font-serif">
-                                                            <p className="mb-3">診所名稱：_________________</p>
+                                                            <p className="mb-3">院所名稱：_________________</p>
                                                             <p className="mb-3">地　　址：_______________________</p>
                                                             <p>電　　話：_______________________</p>
                                                             <div className="absolute top-8 right-8 border-2 border-slate-300 w-24 h-32 flex items-center justify-center text-base text-slate-300 font-bold">
@@ -1116,7 +1123,7 @@
                                                                 <label className="flex items-center"><input type="checkbox" className="mr-3 w-5 h-5" disabled /> A01 民眾簽收單</label>
                                                                 <label className="flex items-center"><input type="checkbox" className="mr-3 w-5 h-5" disabled /> B03 送件清單</label>
                                                                 <label className="flex items-center"><input type="checkbox" className="mr-3 w-5 h-5" disabled /> B01 撥款確認單</label>
-                                                                <label className="flex items-center"><input type="checkbox" className="mr-3 w-5 h-5" disabled /> B02 診所領據</label>
+                                                                <label className="flex items-center"><input type="checkbox" className="mr-3 w-5 h-5" disabled /> B02 院所領據</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1129,7 +1136,7 @@
                                             <div className="w-full lg:w-2/5 flex flex-col justify-center">
                                                 <div className="bg-white p-6 rounded-2xl border border-blue-100 shadow-sm mb-8">
                                                     <p className="text-lg text-slate-700 leading-relaxed font-medium">
-                                                        為加速公會收件與分類，建議診所<strong className="text-red-500 underline underline-offset-4 decoration-2 font-black">統一使用此格式</strong>作為信封封面。
+                                                        為加速公會收件與分類，建議院所<strong className="text-red-500 underline underline-offset-4 decoration-2 font-black">統一使用此格式</strong>作為信封封面。
                                                     </p>
                                                 </div>
                                                 <div className="space-y-4">
@@ -1184,13 +1191,13 @@
                                         <h2 className="text-xl md:text-2xl font-bold text-gray-800 flex items-center">
                                             <i className="ph-fill ph-question text-orange-500 mr-3 text-2xl"></i> 必做任務與常見 QA
                                         </h2>
-                                        <p className="text-base text-gray-500 mt-2 font-medium">診所行政流程中的關鍵提醒</p>
+                                        <p className="text-base text-gray-500 mt-2 font-medium">院所行政流程中的關鍵提醒</p>
                                     </div>
 
                                     {/* Mandatory Tasks */}
                                     <div className="bg-orange-50 rounded-2xl p-6 border border-orange-200 mb-8">
                                         <h3 className="text-base md:text-lg font-bold text-orange-800 mb-4 flex items-center">
-                                            <i className="ph-fill ph-check-square-offset text-xl mr-2"></i> 診所必做任務 (特別注意事項)
+                                            <i className="ph-fill ph-check-square-offset text-xl mr-2"></i> 院所必做任務 (特別注意事項)
                                         </h3>
                                         <div className="grid md:grid-cols-2 gap-4">
                                             <div className="bg-white p-4 rounded-xl border border-orange-100 shadow-sm flex items-start">
@@ -1204,7 +1211,7 @@
                                                 <div className="w-9 h-9 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mr-4 font-black flex-shrink-0 text-lg shadow-sm">2</div>
                                                 <div>
                                                     <h4 className="font-bold text-gray-800 mb-1 text-base">資金空窗期預備</h4>
-                                                    <p className="text-base text-gray-600 font-medium">若公會撥款銜接不及，建議診所內部先協調<strong className="text-orange-600">小額代墊機制</strong>，避免民眾因無法當場領獎而引發抱怨。</p>
+                                                    <p className="text-base text-gray-600 font-medium">若公會撥款銜接不及，建議院所內部先協調<strong className="text-orange-600">小額代墊機制</strong>，避免民眾因無法當場領獎而引發抱怨。</p>
                                                 </div>
                                             </div>
                                             <div className="bg-white p-5 rounded-xl border border-orange-100 shadow-sm flex items-start">
