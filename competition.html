@@ -1,10 +1,20 @@
 <!DOCTYPE html>
+<!-- font-size bump for elderly users -->
 <html lang="zh-TW">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>系統維護中 - 競賽評比專區</title>
+    <title>競賽評比專區 - 臺南愛(AI)腸篩計畫</title>
+    <meta name="description" content="臺南愛(AI)腸篩計畫診所端競賽評比辦法，包含FIT組與大腸鏡檢組獎勵機制、活動期間、參加資格與評分方式。">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2GEKEXG4VF"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-2GEKEXG4VF');
+    </script>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- React & ReactDOM -->
@@ -19,10 +29,37 @@
         rel="stylesheet">
 
     <style>
+        html { font-size: 18px; }
         body {
             font-family: 'Noto Sans TC', sans-serif;
-            background-color: #FEF9C3;
+            background-color: #F0F9FF;
+            scroll-behavior: smooth;
         }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-hover {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .medal-gold { background: linear-gradient(135deg, #FCD34D, #F59E0B); }
+        .medal-silver { background: linear-gradient(135deg, #E2E8F0, #94A3B8); }
+        .medal-bronze { background: linear-gradient(135deg, #FCA572, #D97706); }
+        .medal-special { background: linear-gradient(135deg, #A78BFA, #7C3AED); }
     </style>
 </head>
 
@@ -32,128 +69,299 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        const MaintenancePage = () => {
-            const [countdown, setCountdown] = useState(5);
-            const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-            const [showMobilePopup, setShowMobilePopup] = useState(false);
-
+        const BackToTop = () => {
+            const [isVisible, setIsVisible] = useState(false);
             useEffect(() => {
-                // Mobile detection
-                const handleResize = () => {
-                    const isNowMobile = window.innerWidth < 768;
-                    setIsMobile(isNowMobile);
-                    if (isNowMobile) {
-                        setShowMobilePopup(true);
-                    }
-                };
-
-                // Initial check
-                if (window.innerWidth < 768) {
-                    setShowMobilePopup(true);
-                }
-
-                window.addEventListener('resize', handleResize);
-
-                // Countdown Logic
-                const timer = setInterval(() => {
-                    setCountdown((prev) => {
-                        if (prev <= 1) {
-                            clearInterval(timer);
-                            window.location.href = 'index.html';
-                            return 0;
-                        }
-                        return prev - 1;
-                    });
-                }, 1000);
-
-                return () => {
-                    clearInterval(timer);
-                    window.removeEventListener('resize', handleResize);
-                };
+                const toggle = () => setIsVisible(window.scrollY > 300);
+                window.addEventListener("scroll", toggle);
+                return () => window.removeEventListener("scroll", toggle);
             }, []);
-
-            // Right-click protection for images (Strict Mode)
-            useEffect(() => {
-                const handleContextmenu = (e) => {
-                    // Prevent context menu on images and their overlays
-                    if (e.target.tagName === 'IMG' || e.target.closest('.group')) {
-                        e.preventDefault();
-                    }
-                };
-                document.addEventListener('contextmenu', handleContextmenu, { capture: true }); // Use capture phase
-                return () => {
-                    document.removeEventListener('contextmenu', handleContextmenu, { capture: true });
-                };
-            }, []);
-
             return (
-                <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
-                    {/* Background Pattern */}
-                    <div className="absolute inset-0 opacity-10 pointer-events-none">
-                        <i className="ph-fill ph-cone text-yellow-500 absolute top-10 left-10 text-9xl transform -rotate-12"></i>
-                        <i className="ph-fill ph-barrier text-yellow-500 absolute bottom-10 right-10 text-9xl transform rotate-12"></i>
-                    </div>
-
-                    <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 max-w-xl w-full text-center border-b-8 border-yellow-400 relative z-10">
-                        <div className="w-24 h-24 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center text-5xl mx-auto mb-6 shadow-inner animate-pulse">
-                            <i className="ph-fill ph-wrench"></i>
-                        </div>
-
-                        <h1 className="text-2xl md:text-3xl font-black text-gray-800 mb-4 flex flex-col items-center justify-center md:block">
-                            <span>競賽評比專區</span>
-                            <span className="hidden md:inline"> </span>
-                            <span>系統維護更新中</span>
-                        </h1>
-
-                        <p className="text-gray-500 mb-8 leading-relaxed px-2 md:px-8 text-sm md:text-base">
-                            為了提供更好的服務體驗，本專區正在進行功能優化與改版。造成不便，敬請見諒。
-                        </p>
-
-                        <div className="bg-yellow-50 rounded-xl p-4 mb-6 border border-yellow-100">
-                            <p className="text-yellow-700 font-bold mb-1">
-                                <i className="ph-bold ph-timer mr-2 animate-spin-slow"></i>
-                                即將自動返回首頁
-                            </p>
-                            <div className="text-3xl font-black text-yellow-600">
-                                {countdown} <span className="text-sm font-normal text-yellow-500">秒</span>
-                            </div>
-                        </div>
-
-                        <button
-                            onClick={() => window.location.href = 'index.html'}
-                            className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-full transition-all shadow-lg hover:shadow-yellow-300/50 w-full"
-                        >
-                            <i className="ph-bold ph-arrow-u-up-left mr-2"></i>
-                            立即返回首頁
-                        </button>
-                    </div>
-
-                    {/* Mobile Popup Modal */}
-                    {showMobilePopup && (
-                        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-6 animate-in fade-in zoom-in duration-300">
-                            <div className="bg-white rounded-2xl p-6 w-full max-w-xs text-center shadow-2xl border-4 border-yellow-400">
-                                <div className="w-16 h-16 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
-                                    <i className="ph-fill ph-warning-circle"></i>
-                                </div>
-                                <h3 className="text-xl font-bold text-gray-800 mb-2">專區維護中</h3>
-                                <p className="text-sm text-gray-500 mb-5">
-                                    競賽專區目前正在進行改版，請稍後再試。
-                                </p>
-                                <button
-                                    onClick={() => window.location.href = 'index.html'}
-                                    className="bg-gray-800 text-white font-bold py-3 px-4 rounded-xl w-full text-sm"
-                                >
-                                    我知道了 (返回首頁 {countdown})
-                                </button>
-                            </div>
-                        </div>
-                    )}
+                <div className={`fixed bottom-6 right-6 z-40 transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}>
+                    <button
+                        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                        className="bg-sky-600 hover:bg-sky-700 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110"
+                        aria-label="返回頂部"
+                    >
+                        <i className="ph-bold ph-arrow-up text-xl"></i>
+                    </button>
                 </div>
             );
         };
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<MaintenancePage />);
+        const NavigationDrawer = ({ isOpen, onClose }) => {
+            const navItems = [
+                { id: 'home', title: '首頁', url: 'index.html', icon: 'ph-house', active: false },
+                { id: 'clinic', title: '合作院所專區', url: 'clinic.html', icon: 'ph-stethoscope', active: false },
+                { id: 'materials', title: '數位教材與海報', url: 'materials.html', icon: 'ph-graduation-cap', active: false },
+                { id: 'competition', title: '競賽評比專區', url: 'competition.html', icon: 'ph-trophy', active: true },
+            ];
+            return (
+                <>
+                    <div
+                        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                        onClick={onClose}
+                    />
+                    <div className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-[70] transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'} flex flex-col`}>
+                        <div className="p-5 border-b border-slate-100 flex justify-between items-center bg-sky-50">
+                            <h3 className="font-bold text-slate-800 flex items-center">
+                                <i className="ph-fill ph-list text-sky-600 mr-2 text-xl"></i>
+                                網站導航
+                            </h3>
+                            <button onClick={onClose} className="w-8 h-8 rounded-full bg-white text-slate-500 hover:text-red-500 hover:bg-red-50 flex items-center justify-center transition-colors">
+                                <i className="ph-bold ph-x text-lg"></i>
+                            </button>
+                        </div>
+                        <div className="flex-1 overflow-y-auto p-4 space-y-2">
+                            {navItems.map((item) => (
+                                <a
+                                    key={item.id}
+                                    href={item.active ? '#' : item.url}
+                                    onClick={(e) => { if (item.active) e.preventDefault(); }}
+                                    className={`flex items-center p-3 rounded-xl font-bold transition-all ${item.active ? 'bg-sky-100 text-sky-800' : 'text-slate-600 hover:bg-slate-50'}`}
+                                >
+                                    <i className={`ph-fill ${item.icon} mr-3 text-xl ${item.active ? 'text-sky-600' : 'text-slate-400'}`}></i>
+                                    {item.title}
+                                    {item.active && <span className="ml-auto text-[10px] bg-sky-200 text-sky-800 px-2 py-0.5 rounded-full">目前</span>}
+                                </a>
+                            ))}
+                        </div>
+                        <div className="p-4 border-t border-slate-100 bg-slate-50 text-center">
+                            <p className="text-xs text-slate-400">臺南愛(AI)腸篩計畫</p>
+                        </div>
+                    </div>
+                </>
+            );
+        };
+
+        const Header = ({ onMenuClick }) => (
+            <header className="bg-white/90 backdrop-blur shadow-sm sticky top-0 z-50 border-b-4 border-sky-500">
+                <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+                    <div className="flex items-center cursor-pointer" onClick={() => window.location.href = 'index.html'}>
+                        <div className="p-2 rounded-full bg-sky-100 text-sky-600 mr-3">
+                            <i className="ph-fill ph-trophy text-xl"></i>
+                        </div>
+                        <h1 className="text-lg font-bold text-gray-800">競賽評比專區</h1>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <a href="index.html" className="hidden md:flex text-sm text-gray-500 hover:text-gray-800 items-center bg-gray-100 px-3 py-1.5 rounded-lg transition-colors mr-2">
+                            <i className="ph-bold ph-arrow-u-up-left mr-2"></i> 回首頁
+                        </a>
+                        <button
+                            onClick={onMenuClick}
+                            className="w-10 h-10 rounded-xl bg-slate-50 hover:bg-sky-50 text-slate-600 hover:text-sky-600 flex items-center justify-center transition-all focus:ring-2 focus:ring-sky-200"
+                            aria-label="開啟選單"
+                        >
+                            <i className="ph-bold ph-list text-2xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+        );
+
+        const MedalRow = ({ medal, colorClass, iconClass, count, prize }) => (
+            <div className="flex items-center justify-between py-2.5 border-b border-slate-100 last:border-0">
+                <div className="flex items-center gap-2.5">
+                    <div className={`w-8 h-8 rounded-full ${colorClass} flex items-center justify-center shadow`}>
+                        <i className={`ph-fill ${iconClass} text-white text-sm`}></i>
+                    </div>
+                    <span className="font-bold text-slate-700">{medal}</span>
+                </div>
+                <div className="flex items-center gap-4 text-sm text-slate-500">
+                    <span>{count} 名</span>
+                    <span className="font-bold text-slate-800">獎金 {prize}</span>
+                </div>
+            </div>
+        );
+
+        const CompetitionPage = () => {
+            const [isNavOpen, setIsNavOpen] = useState(false);
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50">
+                    <Header onMenuClick={() => setIsNavOpen(true)} />
+                    <NavigationDrawer isOpen={isNavOpen} onClose={() => setIsNavOpen(false)} />
+                    <BackToTop />
+
+                    <main className="max-w-5xl mx-auto px-4 py-8 fade-in">
+
+                        {/* Hero Banner */}
+                        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-sky-600 to-blue-700 text-white p-8 mb-8 shadow-xl">
+                            <div className="absolute inset-0 opacity-10">
+                                <div className="absolute top-4 right-8 w-40 h-40 rounded-full bg-white"></div>
+                                <div className="absolute bottom-0 left-0 w-64 h-32 rounded-full bg-white"></div>
+                            </div>
+                            <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                                <div>
+                                    <div className="inline-flex items-center bg-white/20 rounded-full px-3 py-1 text-sm font-medium mb-3">
+                                        <i className="ph-fill ph-calendar mr-2"></i>
+                                        115年 2/1 至 9/30
+                                    </div>
+                                    <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-2">
+                                        臺南愛(AI)腸篩<br />
+                                        <span className="text-yellow-300">診所端競賽評比辦法</span>
+                                    </h2>
+                                    <p className="text-sky-100 text-sm">FIT 組 ＆ 大腸鏡檢組 — 一起提升大腸癌篩檢品質</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 完整海報 */}
+                        <div className="bg-white rounded-2xl shadow-sm overflow-hidden mb-8">
+                            <div className="flex items-center gap-2 px-6 py-4 border-b border-slate-100">
+                                <div className="w-9 h-9 bg-sky-100 text-sky-600 rounded-lg flex items-center justify-center">
+                                    <i className="ph-fill ph-image text-xl"></i>
+                                </div>
+                                <h3 className="font-bold text-slate-800 text-lg">完整競賽海報</h3>
+                                <a
+                                    href="https://drive.google.com/file/d/1Yxve0dy8TzEUYnJ6JEeY_GLXkk4BBqLF/view"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="ml-auto flex items-center gap-1.5 text-sm text-sky-600 hover:text-sky-800 bg-sky-50 hover:bg-sky-100 px-3 py-2 rounded-lg transition-colors"
+                                >
+                                    <i className="ph-fill ph-arrow-square-out"></i>
+                                    在新分頁開啟
+                                </a>
+                            </div>
+                            <div className="p-4 bg-slate-50">
+                                <img
+                                    src="https://lh3.googleusercontent.com/d/1Yxve0dy8TzEUYnJ6JEeY_GLXkk4BBqLF"
+                                    alt="臺南愛(AI)腸篩競賽評比辦法完整海報"
+                                    style={{width: '100%', height: 'auto', display: 'block', borderRadius: '12px'}}
+                                />
+                            </div>
+                        </div>
+
+                        {/* 4 Key Points */}
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                            {[
+                                { icon: 'ph-star', color: 'bg-yellow-100 text-yellow-600', label: '提升篩檢品質', sub: '優化流程與品質指標' },
+                                { icon: 'ph-trophy', color: 'bg-sky-100 text-sky-600', label: '競賽拿獎金', sub: '名次眾多 把握機會' },
+                                { icon: 'ph-chart-line-up', color: 'bg-green-100 text-green-600', label: '數據即時回饋', sub: '掌握成效 持續精進' },
+                                { icon: 'ph-heart', color: 'bg-rose-100 text-rose-600', label: '守護社區健康', sub: '降低大腸癌發生率' },
+                            ].map((item, i) => (
+                                <div key={i} className="bg-white rounded-2xl p-5 shadow-sm card-hover text-center">
+                                    <div className={`w-12 h-12 rounded-xl ${item.color} flex items-center justify-center mx-auto mb-3`}>
+                                        <i className={`ph-fill ${item.icon} text-2xl`}></i>
+                                    </div>
+                                    <p className="font-bold text-slate-800 text-base">{item.label}</p>
+                                    <p className="text-sm text-slate-400 mt-1">{item.sub}</p>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* 活動期間 + 參加資格 */}
+                        <div className="grid md:grid-cols-2 gap-6 mb-8">
+                            <div className="bg-white rounded-2xl p-6 shadow-sm card-hover">
+                                <div className="flex items-center gap-2 mb-4">
+                                    <div className="w-8 h-8 bg-sky-100 text-sky-600 rounded-lg flex items-center justify-center">
+                                        <i className="ph-fill ph-calendar-check text-lg"></i>
+                                    </div>
+                                    <h3 className="font-bold text-slate-800">活動期間與評比時程</h3>
+                                </div>
+                                <div className="text-center bg-sky-50 rounded-xl py-3 mb-4">
+                                    <p className="text-sky-700 font-bold text-lg">115年 2/1 ～ 9/30</p>
+                                    <p className="text-xs text-slate-400 mt-0.5">共辦理 2 次評比與頒獎</p>
+                                </div>
+                                <div className="space-y-3">
+                                    <div className="flex items-start gap-3 bg-blue-50 rounded-xl p-3">
+                                        <span className="flex-shrink-0 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-lg mt-0.5">第一次</span>
+                                        <div>
+                                            <p className="font-medium text-slate-700 text-sm">2/1 ～ 5/31 資料</p>
+                                            <p className="text-xs text-slate-400">7月中旬公告得獎名單</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start gap-3 bg-indigo-50 rounded-xl p-3">
+                                        <span className="flex-shrink-0 bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded-lg mt-0.5">第二次</span>
+                                        <div>
+                                            <p className="font-medium text-slate-700 text-sm">6/1 ～ 9/30 資料</p>
+                                            <p className="text-xs text-slate-400">10月中旬公告得獎名單</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="bg-white rounded-2xl p-6 shadow-sm card-hover">
+                                <div className="flex items-center gap-2 mb-4">
+                                    <div className="w-8 h-8 bg-green-100 text-green-600 rounded-lg flex items-center justify-center">
+                                        <i className="ph-fill ph-users text-lg"></i>
+                                    </div>
+                                    <h3 className="font-bold text-slate-800">參加資格</h3>
+                                </div>
+                                <div className="space-y-3 mb-4">
+                                    {[
+                                        '台南市各院所（不含衛生所、醫學中心、區域醫院）',
+                                        'FIT組：須辦理定量免疫法糞便潛血檢查服務，並與台南市醫師公會簽署合作意向書',
+                                        '大腸鏡組：須進行大腸鏡檢查，並與台南市醫師公會簽署合作意向書',
+                                    ].map((text, i) => (
+                                        <div key={i} className="flex items-start gap-2.5">
+                                            <span className="flex-shrink-0 w-5 h-5 bg-green-500 text-white text-xs font-bold rounded-full flex items-center justify-center mt-0.5">{i + 1}</span>
+                                            <p className="text-sm text-slate-600 leading-relaxed">{text}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="bg-amber-50 border border-amber-200 rounded-xl p-3">
+                                    <p className="text-xs font-bold text-amber-700 mb-1.5 flex items-center gap-1">
+                                        <i className="ph-fill ph-crosshair-simple"></i> 篩檢目標族群
+                                    </p>
+                                    <ul className="text-xs text-amber-800 space-y-0.5 list-disc list-inside">
+                                        <li>45–74 歲民眾</li>
+                                        <li>40–44 歲且有大腸癌家族史（父母、兄弟姊妹、子女曾罹癌）</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 獎勵辦法 */}
+                        <div className="grid md:grid-cols-2 gap-6 mb-8">
+                            <div className="bg-white rounded-2xl p-6 shadow-sm card-hover">
+                                <div className="flex items-center gap-2 mb-4">
+                                    <div className="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center">
+                                        <i className="ph-fill ph-flask text-lg"></i>
+                                    </div>
+                                    <h3 className="font-bold text-slate-800">獎勵辦法 <span className="text-emerald-600">FIT 組</span></h3>
+                                </div>
+                                <div className="space-y-1">
+                                    <MedalRow medal="金牌" colorClass="medal-gold" iconClass="ph-medal" count="15" prize="10,000 元" />
+                                    <MedalRow medal="銀牌" colorClass="medal-silver" iconClass="ph-medal" count="25" prize="5,000 元" />
+                                    <MedalRow medal="銅牌" colorClass="medal-bronze" iconClass="ph-medal" count="30" prize="2,000 元" />
+                                    <MedalRow medal="特別獎" colorClass="medal-special" iconClass="ph-star" count="10" prize="5,000 元" />
+                                </div>
+                                <div className="mt-4 bg-emerald-50 rounded-xl p-3 text-xs text-emerald-700">
+                                    <i className="ph-fill ph-info mr-1"></i>
+                                    特別獎為「醫療資源缺乏地區」診所分數前10名；若該診所已獲金、銀、銅牌，則由次一名依序遞補。
+                                </div>
+                            </div>
+
+                            <div className="bg-white rounded-2xl p-6 shadow-sm card-hover">
+                                <div className="flex items-center gap-2 mb-4">
+                                    <div className="w-8 h-8 bg-violet-100 text-violet-600 rounded-lg flex items-center justify-center">
+                                        <i className="ph-fill ph-magnifying-glass text-lg"></i>
+                                    </div>
+                                    <h3 className="font-bold text-slate-800">獎勵辦法 <span className="text-violet-600">大腸鏡檢組</span></h3>
+                                </div>
+                                <div className="space-y-1">
+                                    <MedalRow medal="金牌" colorClass="medal-gold" iconClass="ph-medal" count="3" prize="10,000 元" />
+                                    <MedalRow medal="銀牌" colorClass="medal-silver" iconClass="ph-medal" count="4" prize="5,000 元" />
+                                    <MedalRow medal="銅牌" colorClass="medal-bronze" iconClass="ph-medal" count="5" prize="2,000 元" />
+                                    <MedalRow medal="特別獎" colorClass="medal-special" iconClass="ph-star" count="1" prize="5,000 元" />
+                                </div>
+                                <div className="mt-4 bg-violet-50 rounded-xl p-3 text-xs text-violet-700">
+                                    <i className="ph-fill ph-info mr-1"></i>
+                                    特別獎為「大腸鏡品質」最高分；若該診所已獲金、銀、銅牌，則由次一名順延遞補。
+                                </div>
+                            </div>
+                        </div>
+
+                        <p className="text-center text-xs text-slate-400 mt-2 pb-4">
+                            主辦單位：社團法人台南市醫師公會　合作單位：台南市政府衛生局
+                        </p>
+                    </main>
+                </div>
+            );
+        };
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<CompetitionPage />);
     </script>
 </body>
 
