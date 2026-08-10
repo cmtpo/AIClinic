@@ -95,6 +95,7 @@
                 { id: 'clinic', title: '合作院所專區', url: 'clinic.html', icon: 'ph-stethoscope', active: false },
                 { id: 'materials', title: '數位教材與海報', url: 'materials.html', icon: 'ph-graduation-cap', active: false },
                 { id: 'competition', title: '競賽評比專區', url: 'competition.html', icon: 'ph-trophy', active: true },
+                { id: 'quiz', title: '醫療健康題庫中心', url: 'https://oscar200011.github.io/medical-security-quiz/quiz/', icon: 'ph-brain', active: false, external: true },
             ];
             return (
                 <>
@@ -117,11 +118,16 @@
                                 <a
                                     key={item.id}
                                     href={item.active ? '#' : item.url}
+                                    target={item.external ? '_blank' : '_self'}
+                                    rel={item.external ? 'noopener noreferrer' : undefined}
                                     onClick={(e) => { if (item.active) e.preventDefault(); }}
                                     className={`flex items-center p-3 rounded-xl font-bold transition-all ${item.active ? 'bg-sky-100 text-sky-800' : 'text-slate-600 hover:bg-slate-50'}`}
                                 >
                                     <i className={`ph-fill ${item.icon} mr-3 text-xl ${item.active ? 'text-sky-600' : 'text-slate-400'}`}></i>
                                     {item.title}
+                                    {item.external && (
+                                        <i className="ph-bold ph-arrow-square-out ml-1.5 text-xs opacity-70"></i>
+                                    )}
                                     {item.active && <span className="ml-auto text-[10px] bg-sky-200 text-sky-800 px-2 py-0.5 rounded-full">目前</span>}
                                 </a>
                             ))}

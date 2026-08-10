@@ -181,6 +181,14 @@
             icon: "ph-trophy",
             active: false,
           },
+          {
+            id: "quiz",
+            title: "醫療健康題庫中心",
+            url: "https://oscar200011.github.io/medical-security-quiz/quiz/",
+            icon: "ph-brain",
+            active: false,
+            external: true,
+          },
         ];
 
         // 狀態管理：記錄哪些選單是展開的
@@ -241,6 +249,8 @@
                       {/* 主要連結區域 - 點擊大標題直接跳轉 */}
                       <a
                         href={item.active ? "#" : item.url}
+                        target={item.external ? "_blank" : "_self"}
+                        rel={item.external ? "noopener noreferrer" : undefined}
                         onClick={(e) => {
                           if (item.active) e.preventDefault();
                         }}
@@ -250,6 +260,9 @@
                           className={`ph-fill ${item.icon} mr-3 text-xl ${item.active ? "text-blue-600" : "text-slate-400"}`}
                         ></i>
                         {item.title}
+                        {item.external && (
+                          <i className="ph-bold ph-arrow-square-out ml-1.5 text-xs opacity-70"></i>
+                        )}
                         {item.active && (
                           <span className="ml-2 text-[10px] bg-blue-200 text-blue-800 px-2 py-0.5 rounded-full">
                             目前
@@ -456,8 +469,8 @@
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="hidden md:block text-xs md:text-sm font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded-full whitespace-nowrap">
-                  v3.0
+                <div className="hidden md:block text-xs md:text-sm font-bold text-slate-500 bg-slate-100 px-3.5 py-1 rounded-full whitespace-nowrap">
+                  最後更新：2026/08/10
                 </div>
 
                 {/* Menu Button */}
@@ -570,7 +583,7 @@
               {/* 3. Cards Navigation */}
               <div
                 id="cards-section"
-                className="grid md:grid-cols-3 gap-6 w-full max-w-6xl px-4 fade-in-up pb-10"
+                className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-7xl px-4 fade-in-up pb-10"
                 style={{ animationDelay: "0.4s" }}
               >
                 {/* Card 1: 合作診所 (Updated) */}
@@ -636,6 +649,30 @@
                   </p>
                   <span className="mt-auto px-4 py-2 rounded-xl bg-yellow-50 text-yellow-700 font-bold text-sm group-hover:bg-yellow-600 group-hover:text-white transition-colors w-full">
                     查看辦法
+                  </span>
+                </a>
+
+                {/* Card 4: 醫療健康題庫中心 */}
+                <a
+                  href="https://oscar200011.github.io/medical-security-quiz/quiz/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl hover:shadow-emerald-200/50 transition-all duration-300 border border-slate-100 hover:border-emerald-200 flex flex-col items-center text-center overflow-hidden"
+                >
+                  <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-teal-600"></div>
+                  <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-4 text-3xl group-hover:scale-110 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300">
+                    <i className="ph-duotone ph-brain"></i>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-800 mb-2">
+                    醫療健康題庫中心
+                  </h3>
+                  <p className="text-slate-500 mb-6 text-sm flex-1 leading-relaxed">
+                    線上衛教與醫療安全知識
+                    <br />
+                    測驗題庫與練習平台。
+                  </p>
+                  <span className="mt-auto px-4 py-2 rounded-xl bg-emerald-50 text-emerald-700 font-bold text-sm group-hover:bg-emerald-600 group-hover:text-white transition-colors w-full flex items-center justify-center">
+                    前往測驗 <i className="ph-bold ph-arrow-square-out ml-1"></i>
                   </span>
                 </a>
               </div>
